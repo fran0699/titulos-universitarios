@@ -7,6 +7,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Dar permisos de ejecucion a mvnw
+          command: chmod +x mvnw
+      - run:
           name: Compilar y correr pruebas
           command: ./mvnw clean test
 
