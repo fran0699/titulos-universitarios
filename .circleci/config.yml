@@ -1,0 +1,16 @@
+version: 2.1
+
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/openjdk:21.0
+    steps:
+      - checkout
+      - run:
+          name: Compilar y correr pruebas
+          command: ./mvnw clean test
+
+workflows:
+  ci-pipeline:
+    jobs:
+      - build-and-test
