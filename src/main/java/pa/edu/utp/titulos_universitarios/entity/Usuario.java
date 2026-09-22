@@ -18,6 +18,10 @@ public class Usuario{
     @Enumerated(EnumType.STRING)
     private Rol rol;
 
+    public Long getId() {
+        return id;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -29,6 +33,8 @@ public class Usuario{
     public Rol getRol() {
         return rol;
     }
+
+
 
     public void setUsername(String username) {
         this.username = username;
