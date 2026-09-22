@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de títulos</title>
+</head>
+<body>
+<main>
+    <h1>Registro de títulos universitarios</h1>
+
+    <p th:if="${mensaje}" th:text="${mensaje}" style="color: green;"></p>
+    <p th:if="${error}" th:text="${error}" style="color: #b00020;"></p>
+
+    <form th:action="@{/titulos}" th:object="${titulo}" method="post">
+        <p>
+            <label for="nombreGraduado">Nombre del graduado</label><br>
+            <input id="nombreGraduado" type="text" th:field="*{nombreGraduado}" required>
+        </p>
+        <p>
+            <label for="nombreTitulo">Nombre del título</label><br>
+            <input id="nombreTitulo" type="text" th:field="*{nombreTitulo}" required>
+        </p>
+        <button type="submit">Registrar título</button>
+    </form>
+
+    <h2>Títulos registrados</h2>
+    <p th:if="${#lists.isEmpty(titulos)}">Aún no hay títulos registrados.</p>
+    <table th:unless="${#lists.isEmpty(titulos)}">
+        <thead>
+        <tr>
+            <th>Graduado</th>
+            <th>Título</th>
+            <th>Fecha de registro</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="titulo : ${titulos}">
+            <td th:text="${titulo.nombreGraduado}"></td>
+            <td th:text="${titulo.nombreTitulo}"></td>
+            <td th:text="${titulo.fechaRegistro}"></td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>
