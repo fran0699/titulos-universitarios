@@ -35,7 +35,7 @@ public class SecurityConfig {
                                 + "style-src 'self' 'unsafe-inline'; "
                                 + "img-src 'self' data:; "
                                 + "form-action 'self'; "
-                                + "frame-ancestors 'self'; "
+                                + "frame-ancestors 'none'; "
                                 + "base-uri 'self'"))
                         // Referrer-Policy: no filtrar la URL completa a sitios externos.
                         .referrerPolicy(referrer -> referrer.policy(
