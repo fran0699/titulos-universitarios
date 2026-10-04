@@ -5,6 +5,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.time.LocalDate;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import java.time.LocalDateTime;
 
 @Entity
 public class Titulo {
@@ -52,5 +55,35 @@ public class Titulo {
 
     public void setFechaRegistro(LocalDate fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
+    }
+
+    @Enumerated(EnumType.STRING)
+    private EstadoTitulo estado;
+
+    private String revisadoPor;
+    private LocalDateTime fechaRevision;
+
+    public EstadoTitulo getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoTitulo estado) {
+        this.estado = estado;
+    }
+
+    public String getRevisadoPor() {
+        return revisadoPor;
+    }
+
+    public void setRevisadoPor(String revisadoPor) {
+        this.revisadoPor = revisadoPor;
+    }
+
+    public LocalDateTime getFechaRevision() {
+        return fechaRevision;
+    }
+
+    public void setFechaRevision(LocalDateTime fechaRevision) {
+        this.fechaRevision = fechaRevision;
     }
 }

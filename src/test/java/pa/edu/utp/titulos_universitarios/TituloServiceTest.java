@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,5 +45,21 @@ class TituloServiceTest {
 
         assertThrows(IllegalArgumentException.class, () -> tituloService.registrar(titulo));
         verifyNoInteractions(tituloRepository);
+    }
+
+    @Test
+    void tituloRegistrado_debeQuedarPendienteAunqueVengaConOtroEstado() {
+        Titulo titulo = new Titulo();
+        titulo.setNombreGraduado("Ana Pérez");
+        titulo.setNombreTitulo("Licenciatura en Desarrollo de Software");
+        titulo.setEstado(EstadoTitulo.APROBADO);
+        titulo.setRevisadoPor("intruso");
+        when(tituloRepository.save(titulo)).thenReturn(titulo);
+
+        Titulo resultado = tituloService.registrar(titulo);
+
+        assertEquals(EstadoTitulo.PENDIENTE, resultado.getEstado());
+        assertNull(resultado.getRevisadoPor());
+        assertNull(resultado.getFechaRevision());
     }
 }
