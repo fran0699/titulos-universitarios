@@ -22,6 +22,10 @@ public class TituloService {
             titulo.setFechaRegistro(LocalDate.now());
         }
 
+        titulo.setEstado(EstadoTitulo.PENDIENTE);
+        titulo.setRevisadoPor(null);
+        titulo.setFechaRevision(null);
+
         return tituloRepository.save(titulo);
     }
 
