@@ -3,6 +3,7 @@ package pa.edu.utp.titulos_universitarios;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import java.time.LocalDateTime;
 
 @Service
 public class TituloService {
@@ -31,5 +32,37 @@ public class TituloService {
 
     public List<Titulo> listar() {
         return tituloRepository.findAll();
+    }
+
+    public Titulo aprobar(Long id, String usuario) {
+        Titulo titulo = obtenerPendienteParaRevision(id, usuario);
+        registrarRevision(titulo, EstadoTitulo.APROBADO, usuario);
+        return tituloRepository.save(titulo);
+    }
+
+    public Titulo rechazar(Long id, String usuario) {
+        Titulo titulo = obtenerPendienteParaRevision(id, usuario);
+        registrarRevision(titulo, EstadoTitulo.RECHAZADO, usuario);
+        return tituloRepository.save(titulo);
+    }
+
+    private Titulo obtenerPendienteParaRevision(Long id, String usuario) {
+        if (usuario == null || usuario.isBlank()) {
+            throw new IllegalArgumentException("El usuario que revisa el título es obligatorio.");
+        }
+
+        Titulo titulo = tituloRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("No existe el título con id " + id + "."));
+
+        if (titulo.getEstado() != EstadoTitulo.PENDIENTE) {
+            throw new IllegalStateException("Solo se puede revisar un título en estado PENDIENTE.");
+        }
+        return titulo;
+    }
+
+    private void registrarRevision(Titulo titulo, EstadoTitulo nuevoEstado, String usuario) {
+        titulo.setEstado(nuevoEstado);
+        titulo.setRevisadoPor(usuario);
+        titulo.setFechaRevision(LocalDateTime.now());
     }
 }
