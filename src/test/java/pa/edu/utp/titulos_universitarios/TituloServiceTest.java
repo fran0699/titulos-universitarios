@@ -25,6 +25,9 @@ class TituloServiceTest {
     @Mock
     private TituloRepository tituloRepository;
 
+    @Mock
+    private IdentificadorGenerator identificadorGenerator;
+
     @InjectMocks
     private TituloService tituloService;
 
@@ -67,6 +70,7 @@ class TituloServiceTest {
         titulo.setNombreTitulo("Licenciatura en Desarrollo de Software");
         titulo.setEstado(EstadoTitulo.APROBADO);
         titulo.setRevisadoPor("intruso");
+        titulo.setIdentificador("falso");
         when(tituloRepository.save(titulo)).thenReturn(titulo);
 
         Titulo resultado = tituloService.registrar(titulo);
@@ -74,12 +78,15 @@ class TituloServiceTest {
         assertEquals(EstadoTitulo.PENDIENTE, resultado.getEstado());
         assertNull(resultado.getRevisadoPor());
         assertNull(resultado.getFechaRevision());
+        assertNull(resultado.getIdentificador());
     }
 
     @Test
-    void aprobarTituloPendiente_debeQuedarAprobadoConRevisorYFecha() {
+    void aprobarTituloPendiente_debeQuedarAprobadoConRevisorFechaEIdentificador() {
         Titulo titulo = tituloPendiente();
+
         when(tituloRepository.findById(1L)).thenReturn(Optional.of(titulo));
+        when(identificadorGenerator.generar()).thenReturn("ID-123");
         when(tituloRepository.save(titulo)).thenReturn(titulo);
 
         Titulo resultado = tituloService.aprobar(1L, "aprobador1");
@@ -87,6 +94,10 @@ class TituloServiceTest {
         assertEquals(EstadoTitulo.APROBADO, resultado.getEstado());
         assertEquals("aprobador1", resultado.getRevisadoPor());
         assertNotNull(resultado.getFechaRevision());
+        assertNotNull(resultado.getIdentificador());
+        assertEquals("ID-123", resultado.getIdentificador());
+
+        verify(identificadorGenerator).generar();
         verify(tituloRepository).save(titulo);
     }
 
@@ -101,6 +112,8 @@ class TituloServiceTest {
         assertEquals(EstadoTitulo.RECHAZADO, resultado.getEstado());
         assertEquals("aprobador1", resultado.getRevisadoPor());
         assertNotNull(resultado.getFechaRevision());
+        assertNull(resultado.getIdentificador());
+
         verify(tituloRepository).save(titulo);
     }
 
