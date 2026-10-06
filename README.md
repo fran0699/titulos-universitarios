@@ -33,6 +33,22 @@ Las pruebas (`mvnw test`) usan H2 en memoria automáticamente y **no** requieren
 
 ## Correr las pruebas
 
+## Generador de identificadores
+
+Para los títulos aprobados se utiliza un generador basado en UUID
+(`UUID.randomUUID()`).
+
+Se eligió UUID porque permite generar identificadores no secuenciales,
+sin depender de un contador incremental de la base de datos. Cada
+identificador generado tiene una probabilidad extremadamente baja de
+repetirse, lo que permite identificar los títulos de forma única.
+
+El identificador se genera mediante la clase `IdentificadorGenerator`,
+ubicada en:
+
+`src/main/java/pa/edu/utp/titulos_universitarios/IdentificadorGenerator.java`
+
+
 ```
 .\mvnw.cmd clean test
 ```

@@ -19,6 +19,7 @@ public class Titulo {
     private String nombreGraduado;
     private String nombreTitulo;
     private LocalDate fechaRegistro;
+    private String identificador;
 
     public Titulo() {
     }
@@ -56,6 +57,9 @@ public class Titulo {
     public void setFechaRegistro(LocalDate fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
+
+    public String getIdentificador() { return identificador; }
+    public void setIdentificador(String identificador) { this.identificador = identificador; }
 
     @Enumerated(EnumType.STRING)
     private EstadoTitulo estado;

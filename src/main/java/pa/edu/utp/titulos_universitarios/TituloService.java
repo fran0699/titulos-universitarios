@@ -9,9 +9,11 @@ import java.time.LocalDateTime;
 public class TituloService {
 
     private final TituloRepository tituloRepository;
+    private final IdentificadorGenerator identificadorGenerator;
 
-    public TituloService(TituloRepository tituloRepository) {
+    public TituloService(TituloRepository tituloRepository, IdentificadorGenerator identificadorGenerator) {
         this.tituloRepository = tituloRepository;
+        this.identificadorGenerator = identificadorGenerator;
     }
 
     public Titulo registrar(Titulo titulo) {
@@ -37,6 +39,7 @@ public class TituloService {
     public Titulo aprobar(Long id, String usuario) {
         Titulo titulo = obtenerPendienteParaRevision(id, usuario);
         registrarRevision(titulo, EstadoTitulo.APROBADO, usuario);
+        titulo.setIdentificador(identificadorGenerator.generar());
         return tituloRepository.save(titulo);
     }
 
