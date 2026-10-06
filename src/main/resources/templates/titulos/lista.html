@@ -4,44 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de títulos</title>
+    <link rel="stylesheet" th:href="@{/css/titulos.css}">
 </head>
 <body>
-<main>
-    <h1>Registro de títulos universitarios</h1>
+<main class="page-shell">
+    <section class="card">
+        <header class="page-header">
+            <p class="eyebrow">Gestión académica</p>
+            <h1>Registro de títulos universitarios</h1>
+            <p class="subtitle">Registra y consulta los títulos de los graduados.</p>
+        </header>
 
-    <p th:if="${mensaje}" th:text="${mensaje}" style="color: green;"></p>
-    <p th:if="${error}" th:text="${error}" style="color: #b00020;"></p>
+        <p class="notice notice-success" th:if="${mensaje}" th:text="${mensaje}" role="status"></p>
+        <p class="notice notice-error" th:if="${error}" th:text="${error}" role="alert"></p>
 
-    <form th:action="@{/titulos}" th:object="${titulo}" method="post">
-        <p>
-            <label for="nombreGraduado">Nombre del graduado</label><br>
-            <input id="nombreGraduado" type="text" th:field="*{nombreGraduado}" required>
-        </p>
-        <p>
-            <label for="nombreTitulo">Nombre del título</label><br>
-            <input id="nombreTitulo" type="text" th:field="*{nombreTitulo}" required>
-        </p>
-        <button type="submit">Registrar título</button>
-    </form>
+        <form class="form-grid" th:action="@{/titulos}" th:object="${titulo}" method="post">
+            <div class="form-field">
+                <label for="nombreGraduado">Nombre del graduado</label>
+                <input id="nombreGraduado" type="text" th:field="*{nombreGraduado}" autocomplete="name" required>
+            </div>
+            <div class="form-field">
+                <label for="nombreTitulo">Nombre del título</label>
+                <input id="nombreTitulo" type="text" th:field="*{nombreTitulo}" required>
+            </div>
+            <button class="button button-primary" type="submit">Registrar título</button>
+        </form>
+    </section>
 
-    <h2>Títulos registrados</h2>
-    <p th:if="${#lists.isEmpty(titulos)}">Aún no hay títulos registrados.</p>
-    <table th:unless="${#lists.isEmpty(titulos)}">
-        <thead>
-        <tr>
-            <th>Graduado</th>
-            <th>Título</th>
-            <th>Fecha de registro</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="titulo : ${titulos}">
-            <td th:text="${titulo.nombreGraduado}"></td>
-            <td th:text="${titulo.nombreTitulo}"></td>
-            <td th:text="${titulo.fechaRegistro}"></td>
-        </tr>
-        </tbody>
-    </table>
+    <section class="card">
+        <header class="section-header">
+            <h2>Títulos registrados</h2>
+        </header>
+        <p class="empty-state" th:if="${#lists.isEmpty(titulos)}">Aún no hay títulos registrados.</p>
+        <div class="table-scroll" th:unless="${#lists.isEmpty(titulos)}">
+            <table>
+                <thead>
+                <tr>
+                    <th scope="col">Graduado</th>
+                    <th scope="col">Título</th>
+                    <th scope="col">Fecha de registro</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="titulo : ${titulos}">
+                    <td th:text="${titulo.nombreGraduado}"></td>
+                    <td th:text="${titulo.nombreTitulo}"></td>
+                    <td th:text="${titulo.fechaRegistro}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 </main>
 </body>
 </html>
