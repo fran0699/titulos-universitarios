@@ -33,6 +33,10 @@ Las pruebas (`mvnw test`) usan H2 en memoria automáticamente y **no** requieren
 
 ## Correr las pruebas
 
+```
+.\mvnw.cmd clean test
+```
+
 ## Generador de identificadores
 
 Para los títulos aprobados se utiliza un generador basado en UUID
@@ -48,7 +52,3 @@ ubicada en:
 
 `src/main/java/pa/edu/utp/titulos_universitarios/IdentificadorGenerator.java`
 
-
-```
-.\mvnw.cmd clean test
-```

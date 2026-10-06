@@ -70,6 +70,7 @@ class TituloServiceTest {
         titulo.setNombreTitulo("Licenciatura en Desarrollo de Software");
         titulo.setEstado(EstadoTitulo.APROBADO);
         titulo.setRevisadoPor("intruso");
+        titulo.setIdentificador("falso");
         when(tituloRepository.save(titulo)).thenReturn(titulo);
 
         Titulo resultado = tituloService.registrar(titulo);
@@ -77,6 +78,7 @@ class TituloServiceTest {
         assertEquals(EstadoTitulo.PENDIENTE, resultado.getEstado());
         assertNull(resultado.getRevisadoPor());
         assertNull(resultado.getFechaRevision());
+        assertNull(resultado.getIdentificador());
     }
 
     @Test

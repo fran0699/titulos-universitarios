@@ -28,6 +28,8 @@ public class TituloService {
         titulo.setEstado(EstadoTitulo.PENDIENTE);
         titulo.setRevisadoPor(null);
         titulo.setFechaRevision(null);
+        titulo.setIdentificador(null);
+
 
         return tituloRepository.save(titulo);
     }
