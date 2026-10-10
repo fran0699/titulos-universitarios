@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Títulos pendientes</title>
+    <link rel="stylesheet" th:href="@{/css/titulos.css}">
+</head>
+<body>
+<main class="page-shell">
+    <section class="card">
+        <header class="page-header">
+            <p class="eyebrow">Gestión académica</p>
+            <h1>Títulos pendientes de revisión</h1>
+            <p class="subtitle">Aprueba o rechaza los títulos registrados que están a la espera de revisión.</p>
+            <p class="subtitle"><a th:href="@{/titulos}">&larr; Volver al registro</a></p>
+        </header>
+
+        <p class="notice notice-success" th:if="${mensaje}" th:text="${mensaje}" role="status"></p>
+        <p class="notice notice-error" th:if="${error}" th:text="${error}" role="alert"></p>
+
+        <p class="empty-state" th:if="${#lists.isEmpty(pendientes)}">No hay títulos pendientes de revisión.</p>
+        <div class="table-scroll" th:unless="${#lists.isEmpty(pendientes)}">
+            <table>
+                <thead>
+                <tr>
+                    <th scope="col">Graduado</th>
+                    <th scope="col">Título</th>
+                    <th scope="col">Fecha de registro</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="titulo : ${pendientes}">
+                    <td th:text="${titulo.nombreGraduado}"></td>
+                    <td th:text="${titulo.nombreTitulo}"></td>
+                    <td th:text="${titulo.fechaRegistro}"></td>
+                    <td>
+                        <form th:action="@{/titulos/{id}/aprobar(id=${titulo.id})}" method="post"
+                              style="display:inline;">
+                            <button class="button button-primary" type="submit">Aprobar</button>
+                        </form>
+                        <form th:action="@{/titulos/{id}/rechazar(id=${titulo.id})}" method="post"
+                              style="display:inline;">
+                            <button class="button" type="submit">Rechazar</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+</body>
+</html>

@@ -17,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 
+import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
@@ -139,5 +140,17 @@ class TituloServiceTest {
     void aprobarSinUsuario_debeFallarSinConsultarLaBase() {
         assertThrows(IllegalArgumentException.class, () -> tituloService.aprobar(1L, " "));
         verifyNoInteractions(tituloRepository);
+    }
+
+    @Test
+    void listarPendientes_devuelveSoloLosPendientesDelRepositorio() {
+        Titulo pendiente = tituloPendiente();
+        when(tituloRepository.findByEstado(EstadoTitulo.PENDIENTE)).thenReturn(List.of(pendiente));
+
+        List<Titulo> resultado = tituloService.listarPendientes();
+
+        assertEquals(1, resultado.size());
+        assertEquals(EstadoTitulo.PENDIENTE, resultado.get(0).getEstado());
+        verify(tituloRepository).findByEstado(EstadoTitulo.PENDIENTE);
     }
 }
