@@ -81,9 +81,29 @@ try (PDDocument pdf = new PDDocument()) {
 
 El ejemplo se centra en insertar la imagen QR. Para escribir campos de texto se agrega texto con `beginText`, `setFont`, `newLineAtOffset`, `showText` y `endText` en el mismo `PDPageContentStream`.
 
+## Resultados de la prueba
+
+La prueba de concepto se ejecutó en un proyecto Maven aparte de la aplicación, ubicado en `C:\Users\ramir\IdeaProjects\poc-pdf-qr`, usando JDK 21.0.12.1. Desde esa carpeta se ejecutó el Maven Wrapper del proyecto:
+
+```powershell
+& 'C:\Users\ramir\IdeaProjects\titulos-universitarios\mvnw.cmd' clean compile exec:java
+```
+
+Resultado: `BUILD SUCCESS`. Se generaron `target/titulo-demo.pdf`, `target/qr-demo.png` y una vista PNG de la página del PDF. La siguiente imagen es la captura/renderizado del PDF generado:
+
+![PDF de prueba generado con PDFBox y QR generado con ZXing](evidencias/pdf-qr/titulo-demo-preview.png)
+
+### Prueba de tildes
+
+Se incluyeron `José Martínez` y `Licenciatura de prueba con tildes` con la fuente Helvetica estándar de PDFBox. El PDF se volvió a abrir con PDFBox y `PDFTextStripper` extrajo ambas cadenas sin pérdida; la comprobación terminó correctamente. Esto confirma esos caracteres acentuados en la fuente probada, pero no demuestra compatibilidad con todos los caracteres Unicode. Para otros alfabetos o símbolos se debe probar una fuente Unicode incrustada con `PDType0Font`.
+
+### Prueba del QR
+
+ZXing volvió a decodificar el PNG generado y obtuvo exactamente `POC-TITULO-UTP-001`. La Responsable 4 confirmó que la cámara de un teléfono también leyó el QR y mostró ese mismo texto. No abrió una URL porque el contenido codificado es un identificador de prueba, no una dirección web.
+
 ## Consideraciones y posibles problemas
 
-- **Fuentes y tildes:** las fuentes estándar Type 1 no cubren de forma general Unicode. Para nombres como `José` o `María`, se debe probar con una fuente TTF/OTF embebida mediante `PDType0Font`; revisar también su licencia de redistribución. Sin ello, algunos caracteres pueden fallar o renderizarse incorrectamente.
+- **Fuentes y tildes:** la prueba confirmó `José Martínez` con Helvetica estándar. Las fuentes Type 1 no cubren Unicode de forma general; para otros alfabetos o símbolos se debe probar una fuente TTF/OTF embebida mediante `PDType0Font` y revisar su licencia de redistribución.
 - **Contraste y tamaño del QR:** conservar el margen blanco (quiet zone) que genera ZXing, usar alto contraste y probar impresión/escaneo con el tamaño real. Evitar estirar el QR de forma no proporcional.
 - **Contenido del QR:** no incluir nombre, número de identificación ni datos personales directamente en el QR. Preferir un identificador no predecible o URL de verificación que el servidor pueda validar y revocar.
 - **Verificación real pendiente:** el código del proyecto ya tiene `Titulo.identificador` y `IdentificadorGenerator`, pero no se encontró un controlador de verificación `/verificar/{id}`. El QR de la POC debe usar un valor de ejemplo; integrarlo con verificación real requiere esa ruta y reglas de autorización.
