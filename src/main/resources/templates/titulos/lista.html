@@ -13,6 +13,7 @@
             <p class="eyebrow">Gestión académica</p>
             <h1>Registro de títulos universitarios</h1>
             <p class="subtitle">Registra y consulta los títulos de los graduados.</p>
+            <p class="subtitle"><a th:href="@{/titulos/pendientes}">Ver títulos pendientes de revisión &rarr;</a></p>
         </header>
 
         <p class="notice notice-success" th:if="${mensaje}" th:text="${mensaje}" role="status"></p>

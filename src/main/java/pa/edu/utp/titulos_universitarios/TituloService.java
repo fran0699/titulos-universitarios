@@ -38,6 +38,10 @@ public class TituloService {
         return tituloRepository.findAll();
     }
 
+    public List<Titulo> listarPendientes() {
+        return tituloRepository.findByEstado(EstadoTitulo.PENDIENTE);
+    }
+
     public Titulo aprobar(Long id, String usuario) {
         Titulo titulo = obtenerPendienteParaRevision(id, usuario);
         registrarRevision(titulo, EstadoTitulo.APROBADO, usuario);
