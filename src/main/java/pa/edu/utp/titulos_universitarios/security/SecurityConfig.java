@@ -21,6 +21,11 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/verificar/**").permitAll()
                 .requestMatchers("/actuator/**").hasRole("APROBADOR")
+                // T-2.1.4 (HU-2.1): la revision de titulos (ver pendientes y
+                // aprobar/rechazar) es exclusiva del rol APROBADOR.
+                .requestMatchers("/titulos/pendientes",
+                        "/titulos/*/aprobar",
+                        "/titulos/*/rechazar").hasRole("APROBADOR")
                 .anyRequest().authenticated()
         )
                 .formLogin(form -> form.permitAll())
