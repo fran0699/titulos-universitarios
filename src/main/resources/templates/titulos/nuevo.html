@@ -18,7 +18,7 @@
 
         <p class="notice notice-error" th:if="${error}" th:text="${error}" role="alert"></p>
 
-        <form class="form-grid" th:action="@{/titulos}" th:object="${titulo}" method="post">
+        <form class="form-grid" th:action="@{/titulos/nuevo}" th:object="${titulo}" method="post">
             <div class="form-field">
                 <label for="nombreGraduado">Nombre del graduado *</label>
                 <input id="nombreGraduado" type="text" th:field="*{nombreGraduado}" autocomplete="name" required>

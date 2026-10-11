@@ -35,7 +35,7 @@ public class TituloController {
         return "titulos/nuevo";
     }
 
-    @PostMapping
+    @PostMapping("/nuevo")
     public String registrar(Titulo titulo, RedirectAttributes redirectAttributes) {
         try {
             tituloService.registrar(titulo);
