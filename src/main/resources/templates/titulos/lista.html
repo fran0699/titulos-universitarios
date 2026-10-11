@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de títulos</title>
+    <title>Títulos</title>
     <link rel="stylesheet" th:href="@{/css/titulos.css}">
 </head>
 <body>
@@ -11,31 +11,14 @@
     <section class="card">
         <header class="page-header">
             <p class="eyebrow">Gestión académica</p>
-            <h1>Registro de títulos universitarios</h1>
-            <p class="subtitle">Registra y consulta los títulos de los graduados.</p>
-            <p class="subtitle"><a th:href="@{/titulos/pendientes}">Ver títulos pendientes de revisión &rarr;</a></p>
+            <h1>Títulos registrados</h1>
+            <p class="subtitle">Consulta todos los títulos registrados.</p>
+            <p><a class="button button-primary" th:href="@{/titulos/nuevo}">Registrar título</a></p>
         </header>
 
         <p class="notice notice-success" th:if="${mensaje}" th:text="${mensaje}" role="status"></p>
         <p class="notice notice-error" th:if="${error}" th:text="${error}" role="alert"></p>
 
-        <form class="form-grid" th:action="@{/titulos}" th:object="${titulo}" method="post">
-            <div class="form-field">
-                <label for="nombreGraduado">Nombre del graduado</label>
-                <input id="nombreGraduado" type="text" th:field="*{nombreGraduado}" autocomplete="name" required>
-            </div>
-            <div class="form-field">
-                <label for="nombreTitulo">Nombre del título</label>
-                <input id="nombreTitulo" type="text" th:field="*{nombreTitulo}" required>
-            </div>
-            <button class="button button-primary" type="submit">Registrar título</button>
-        </form>
-    </section>
-
-    <section class="card">
-        <header class="section-header">
-            <h2>Títulos registrados</h2>
-        </header>
         <p class="empty-state" th:if="${#lists.isEmpty(titulos)}">Aún no hay títulos registrados.</p>
         <div class="table-scroll" th:unless="${#lists.isEmpty(titulos)}">
             <table>

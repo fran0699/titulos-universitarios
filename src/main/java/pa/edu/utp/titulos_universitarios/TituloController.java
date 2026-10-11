@@ -20,24 +20,32 @@ public class TituloController {
     }
 
     @GetMapping
-    public String mostrarRegistro(Model model) {
-        if (!model.containsAttribute("titulo")) {
-            model.addAttribute("titulo", new Titulo());
-        }
+    public String mostrarLista(Model model) {
         model.addAttribute("titulos", tituloService.listar());
         return "titulos/lista";
     }
 
-    @PostMapping
+    // T-1.9.1 (HU-1.9): el formulario de registro vive en su propia pagina;
+    // /titulos queda solo como lista.
+    @GetMapping("/nuevo")
+    public String mostrarFormularioNuevo(Model model) {
+        if (!model.containsAttribute("titulo")) {
+            model.addAttribute("titulo", new Titulo());
+        }
+        return "titulos/nuevo";
+    }
+
+    @PostMapping("/nuevo")
     public String registrar(Titulo titulo, RedirectAttributes redirectAttributes) {
         try {
             tituloService.registrar(titulo);
             redirectAttributes.addFlashAttribute("mensaje", "Título registrado correctamente.");
+            return "redirect:/titulos";
         } catch (IllegalArgumentException exception) {
             redirectAttributes.addFlashAttribute("error", exception.getMessage());
             redirectAttributes.addFlashAttribute("titulo", titulo);
+            return "redirect:/titulos/nuevo";
         }
-        return "redirect:/titulos";
     }
 
     // T-2.1.3 (HU-2.1): vista de titulos pendientes con acciones aprobar/rechazar.
