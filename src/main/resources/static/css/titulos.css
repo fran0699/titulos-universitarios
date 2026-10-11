@@ -196,3 +196,29 @@ tbody tr:hover {
         padding: 11px 12px;
     }
 }
+
+/* Botones que son enlaces (ej. "Registrar titulo" que navega a /titulos/nuevo) */
+a.button {
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+}
+
+/* Boton secundario (ej. "Cancelar"): blanco con borde */
+.button-secondary {
+    background: #fff;
+    color: var(--color-primary);
+    border: 1px solid var(--color-border);
+}
+
+.button-secondary:hover {
+    background: #f8fafc;
+}
+
+/* Fila de acciones del formulario: accion principal a la derecha */
+.form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    align-items: center;
+}

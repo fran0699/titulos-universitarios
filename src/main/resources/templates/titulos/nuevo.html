@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar título</title>
+    <link rel="stylesheet" th:href="@{/css/titulos.css}">
+</head>
+<body>
+<main class="page-shell">
+    <section class="card">
+        <header class="page-header">
+            <p class="eyebrow"><a th:href="@{/titulos}">Títulos</a> › Registrar</p>
+            <h1>Registrar título</h1>
+            <p class="subtitle">Los campos marcados con * son obligatorios.</p>
+            <p class="subtitle">El título quedará PENDIENTE hasta que un aprobador lo revise.</p>
+        </header>
+
+        <p class="notice notice-error" th:if="${error}" th:text="${error}" role="alert"></p>
+
+        <form class="form-grid" th:action="@{/titulos}" th:object="${titulo}" method="post">
+            <div class="form-field">
+                <label for="nombreGraduado">Nombre del graduado *</label>
+                <input id="nombreGraduado" type="text" th:field="*{nombreGraduado}" autocomplete="name" required>
+            </div>
+            <div class="form-field">
+                <label for="nombreTitulo">Nombre del título *</label>
+                <input id="nombreTitulo" type="text" th:field="*{nombreTitulo}" required>
+            </div>
+            <div class="form-actions">
+                <a class="button button-secondary" th:href="@{/titulos}">Cancelar</a>
+                <button class="button button-primary" type="submit">Registrar título</button>
+            </div>
+        </form>
+    </section>
+</main>
+</body>
+</html>
