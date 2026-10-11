@@ -1,0 +1,43 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R 5 0 R] /Count 2 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Resources << /Font << /F1 7 0 R >> >> /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 2658 >>
+stream
+BT /F1 10 Tf 50 800 Td 14 TL (INFORME DE VERIFICACION - HU-4.3 / NIKTO) Tj T* (Proyecto: Titulos Universitarios Digitales) Tj T* (Fecha: 10 de octubre de 2026 | Version: actualizado con escenarios ejecutados) Tj T* () Tj T* (RESUMEN) Tj T* (Se ejecutaron la bateria estandar de Nikto y comprobaciones manuales HTTP para) Tj T* (HU-4.3. La ruta /login responde 200 con CSP, Referrer-Policy y Permissions-Policy.) Tj T* (Las rutas privadas /titulos y /actuator/health redirigen a /login sin autenticar.) Tj T* (Nikto completo: 8,198 solicitudes, 0 errores, 2 observaciones. Maven: 14/14 tests) Tj T* (correctos. La validacion visual del navegador y HSTS sobre HTTPS quedan pendientes.) Tj T* () Tj T* (ESCENARIOS EJECUTADOS) Tj T* (E1 - GET /login \(T-4.3.2\): HTTP 200. CSP, Referrer-Policy y Permissions-Policy) Tj T* (presentes; se observaron tambien X-Content-Type-Options: nosniff y) Tj T* (X-Frame-Options: DENY. Cookie JSESSIONID incluye HttpOnly.) Tj T* (E2 - CSP en login: politica recibida con default-src self, script-src self,) Tj T* (style-src self unsafe-inline, frame-ancestors none y base-uri self. La pagina) Tj T* (HTML fue servida \(200\); la consola visual del navegador no se inspecciono.) Tj T* (E3 - Acceso sin autenticar a /titulos: HTTP 302 a /login \(proteccion observada\).) Tj T* (E4 - Acceso sin autenticar a /actuator/health: HTTP 302 a /login \(proteccion) Tj T* (observada; no se probo con el rol APROBADOR\).) Tj T* (E5 - Nikto 2.6.1 contra la instancia local HTTP:8080: 8,198 solicitudes,) Tj T* (0 errores. Sin banner de servidor y sin directorios CGI detectados.) Tj T* () Tj T* (RESULTADOS / LIMITES) Tj T* (HSTS: Nikto lo marca ausente en HTTP. SecurityConfig lo configura con max-age) Tj T* (de 31536000 segundos e includeSubDomains, pero Spring solo lo envia por HTTPS.) Tj T* (La aplicacion no tiene HTTPS activo en esta prueba; criterio HSTS no verificado.) Tj T* (Hallazgo 100.100.100.200/latest/meta-data: no reproducido manualmente. La ruta) Tj T* (responde con redireccion al login local; la solicitud absoluta de prueba devolvio) Tj T* (HTTP 400 sin encabezado Location con esa IP. Se considera falso positivo probable.) Tj T* (T-4.3.2 pide tambien confirmar visualmente la pagina sin errores CSP en consola.) Tj T* (No se ejecuta esa comprobacion visual en este entorno; queda pendiente manual.) Tj T* () Tj T* (PRUEBAS DEL PROYECTO) Tj T* (Comando: .\\mvnw.cmd clean test \(JDK 21\). Resultado: BUILD SUCCESS; 14 tests,) Tj T* (0 fallos, 0 errores, 0 omitidos. Son pruebas generales; no sustituyen la prueba) Tj T* (visual del navegador ni la comprobacion HSTS sobre HTTPS.) Tj T* () Tj T* (CONCLUSION) Tj T* ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Resources << /Font << /F1 7 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 548 >>
+stream
+BT /F1 10 Tf 50 800 Td 14 TL (Implementacion observada: CSP, Referrer-Policy y Permissions-Policy llegan a) Tj T* (/login y las rutas privadas redirigen al login. El escaneo no confirma una) Tj T* (vulnerabilidad explotable. HU-4.3 queda parcialmente validada: falta probar la) Tj T* (vista en navegador y HSTS bajo HTTPS. El PDF se actualiza para reflejar estos) Tj T* (escenarios y resultados.) Tj T* (Objetivo escaneado: http://172.28.160.1:8080 \(gateway WSL hacia la app local\).) Tj T* (La IP gateway puede cambiar al reiniciar WSL.) Tj T* ET
+endstream
+endobj
+7 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000121 00000 n 
+0000000247 00000 n 
+0000002957 00000 n 
+0000003083 00000 n 
+0000003682 00000 n 
+trailer
+<< /Size 8 /Root 1 0 R >>
+startxref
+3752
+%%EOF
