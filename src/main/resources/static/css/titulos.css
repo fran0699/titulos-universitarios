@@ -222,3 +222,77 @@ a.button {
     justify-content: flex-end;
     align-items: center;
 }
+
+
+/* T-1.7.1 (HU-1.7): encabezado comun de las pantallas con sesion */
+.app-header {
+    background: var(--color-heading);
+    color: #fff;
+}
+
+.app-header-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 28px;
+    width: min(100% - 32px, 960px);
+    min-height: 64px;
+    margin: 0 auto;
+}
+
+.app-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.app-brand-icon {
+    flex: none;
+}
+
+.app-nav {
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.app-nav-link {
+    padding: 20px 12px 17px;
+    border-bottom: 3px solid transparent;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.app-nav-link:hover {
+    border-bottom-color: #93c5fd;
+}
+
+.app-brand:focus-visible,
+.app-nav-link:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+.app-user {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+    line-height: 1.25;
+    text-align: right;
+}
+
+.app-user-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.app-user-role {
+    color: #cbd5e1;
+    font-size: 0.75rem;
+}
