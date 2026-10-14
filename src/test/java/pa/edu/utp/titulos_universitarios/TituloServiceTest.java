@@ -153,4 +153,15 @@ class TituloServiceTest {
         assertEquals(EstadoTitulo.PENDIENTE, resultado.get(0).getEstado());
         verify(tituloRepository).findByEstado(EstadoTitulo.PENDIENTE);
     }
+
+    @Test
+    void contarPendientes_devuelveLaCantidadDelRepositorio() {
+        when(tituloRepository.countByEstado(EstadoTitulo.PENDIENTE)).thenReturn(3L);
+
+        long resultado = tituloService.contarPendientes();
+
+        assertEquals(3L, resultado);
+        verify(tituloRepository).countByEstado(EstadoTitulo.PENDIENTE);
+    }
+
 }
