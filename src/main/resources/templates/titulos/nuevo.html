@@ -32,6 +32,24 @@
                 <a class="button button-secondary" th:href="@{/titulos}">Cancelar</a>
                 <button class="button button-primary" type="submit">Registrar título</button>
             </div>
+            <div class="form-field">
+                <label for="tipoDocumento">Tipo de documento *</label>
+                <select id="tipoDocumento" th:field="*{graduado.tipoDocumento}" required>
+                    <option value="">Seleccione...</option>
+                    <option th:each="tipo : ${tiposDocumento}"
+                            th:value="${tipo}"
+                            th:text="${tipo}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-field">
+                <label for="numeroDocumento">Número de documento *</label>
+                <input id="numeroDocumento"
+                       type="text"
+                       th:field="*{graduado.numeroDocumento}"
+                       required>
+            </div>
         </form>
     </section>
 </main>

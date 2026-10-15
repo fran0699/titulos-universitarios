@@ -1,25 +1,122 @@
+
 package pa.edu.utp.titulos_universitarios;
 
 import java.time.LocalDate;
-import java.util.List;
-import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import pa.edu.utp.titulos_universitarios.entity.Graduado;
+import pa.edu.utp.titulos_universitarios.entity.TipoDocumento;
+import pa.edu.utp.titulos_universitarios.repository.GraduadoRepository;
 
 @Service
 public class TituloService {
 
     private final TituloRepository tituloRepository;
+    private final GraduadoRepository graduadoRepository;
     private final IdentificadorGenerator identificadorGenerator;
 
-    public TituloService(TituloRepository tituloRepository, IdentificadorGenerator identificadorGenerator) {
+    public TituloService(
+            TituloRepository tituloRepository,
+            GraduadoRepository graduadoRepository,
+            IdentificadorGenerator identificadorGenerator) {
         this.tituloRepository = tituloRepository;
+        this.graduadoRepository = graduadoRepository;
         this.identificadorGenerator = identificadorGenerator;
     }
 
+    @Transactional
     public Titulo registrar(Titulo titulo) {
-        if (titulo == null || !TituloValidator.esValido(titulo.getNombreGraduado(), titulo.getNombreTitulo())) {
-            throw new IllegalArgumentException("El nombre del graduado y el nombre del título son obligatorios.");
+        if (titulo == null
+                || !TituloValidator.esValido(
+                titulo.getNombreGraduado(),
+                titulo.getNombreTitulo())) {
+            throw new IllegalArgumentException(
+                    "El nombre del graduado y el nombre del título son obligatorios.");
         }
+
+        Graduado datosGraduado = titulo.getGraduado();
+
+        if (datosGraduado == null) {
+            throw new IllegalArgumentException(
+                    "Debe proporcionar el documento del graduado.");
+        }
+
+        TipoDocumento tipoDocumento = datosGraduado.getTipoDocumento();
+
+        String numeroDocumento = datosGraduado.getNumeroDocumento();
+        String nombreFormulario =
+                GraduadoValidator.normalizarNombre(titulo.getNombreGraduado());
+
+        if (!GraduadoValidator.esDocumentoValido(
+                tipoDocumento, numeroDocumento)) {
+            throw new IllegalArgumentException(
+                    "El tipo o número de documento del graduado no es válido.");
+        }
+
+        if (!GraduadoValidator.esNombreValido(nombreFormulario)) {
+            throw new IllegalArgumentException(
+                    "El nombre del graduado no tiene un formato válido.");
+        }
+
+        if (!GraduadoValidator.esNombreValido(
+                titulo.getNombreTitulo())) {
+            // La validación del nombre del título se limita a los
+            // requisitos actuales de TituloValidator.
+            if (titulo.getNombreTitulo() == null
+                    || titulo.getNombreTitulo().isBlank()) {
+                throw new IllegalArgumentException(
+                        "El nombre del título es obligatorio.");
+            }
+        }
+
+        String documentoNormalizado = numeroDocumento.trim();
+        String nombreTituloNormalizado =
+                titulo.getNombreTitulo().trim().replaceAll("\\s+", " ");
+
+        Graduado graduado = graduadoRepository
+                .findByTipoDocumentoAndNumeroDocumento(
+                        tipoDocumento, documentoNormalizado)
+                .orElse(null);
+
+        boolean graduadoNuevo = graduado == null;
+
+        if (graduadoNuevo) {
+            graduado = new Graduado(
+                    tipoDocumento,
+                    documentoNormalizado,
+                    nombreFormulario);
+        } else {
+            String nombreExistente =
+                    GraduadoValidator.normalizarNombre(
+                            graduado.getNombreCompleto());
+
+            if (!nombreExistente.equalsIgnoreCase(nombreFormulario)) {
+                throw new IllegalArgumentException(
+                        "El documento ya está registrado con otro nombre.");
+            }
+
+            if (tituloRepository
+                    .existsByGraduado_IdAndNombreTituloIgnoreCase(
+                            graduado.getId(),
+                            nombreTituloNormalizado)) {
+                throw new IllegalArgumentException(
+                        "Este graduado ya tiene registrado ese título.");
+            }
+        }
+
+        if (graduadoNuevo) {
+            graduado = graduadoRepository.save(graduado);
+        }
+
+        titulo.setGraduado(graduado);
+        titulo.setNombreGraduado(
+                GraduadoValidator.normalizarNombre(
+                        graduado.getNombreCompleto()));
+        titulo.setNombreTitulo(nombreTituloNormalizado);
 
         if (titulo.getFechaRegistro() == null) {
             titulo.setFechaRegistro(LocalDate.now());
@@ -29,7 +126,6 @@ public class TituloService {
         titulo.setRevisadoPor(null);
         titulo.setFechaRevision(null);
         titulo.setIdentificador(null);
-
 
         return tituloRepository.save(titulo);
     }
@@ -57,19 +153,24 @@ public class TituloService {
 
     private Titulo obtenerPendienteParaRevision(Long id, String usuario) {
         if (usuario == null || usuario.isBlank()) {
-            throw new IllegalArgumentException("El usuario que revisa el título es obligatorio.");
+            throw new IllegalArgumentException(
+                    "El usuario que revisa el título es obligatorio.");
         }
 
         Titulo titulo = tituloRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("No existe el título con id " + id + "."));
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "No existe el título con id " + id + "."));
 
         if (titulo.getEstado() != EstadoTitulo.PENDIENTE) {
-            throw new IllegalStateException("Solo se puede revisar un título en estado PENDIENTE.");
+            throw new IllegalStateException(
+                    "Solo se puede revisar un título en estado PENDIENTE.");
         }
+
         return titulo;
     }
 
-    private void registrarRevision(Titulo titulo, EstadoTitulo nuevoEstado, String usuario) {
+    private void registrarRevision(
+            Titulo titulo, EstadoTitulo nuevoEstado, String usuario) {
         titulo.setEstado(nuevoEstado);
         titulo.setRevisadoPor(usuario);
         titulo.setFechaRevision(LocalDateTime.now());

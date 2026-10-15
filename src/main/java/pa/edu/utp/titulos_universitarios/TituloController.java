@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pa.edu.utp.titulos_universitarios.entity.Graduado;
+import pa.edu.utp.titulos_universitarios.entity.TipoDocumento;
 
 @Controller
 @RequestMapping("/titulos")
@@ -30,8 +32,12 @@ public class TituloController {
     @GetMapping("/nuevo")
     public String mostrarFormularioNuevo(Model model) {
         if (!model.containsAttribute("titulo")) {
-            model.addAttribute("titulo", new Titulo());
+            Titulo titulo = new Titulo();
+            titulo.setGraduado(new Graduado());
+            model.addAttribute("titulo", titulo);
         }
+
+        model.addAttribute("tiposDocumento", TipoDocumento.values());
         return "titulos/nuevo";
     }
 
@@ -44,6 +50,7 @@ public class TituloController {
         } catch (IllegalArgumentException exception) {
             redirectAttributes.addFlashAttribute("error", exception.getMessage());
             redirectAttributes.addFlashAttribute("titulo", titulo);
+            redirectAttributes.addFlashAttribute("tiposDocumento", TipoDocumento.values());
             return "redirect:/titulos/nuevo";
         }
     }
