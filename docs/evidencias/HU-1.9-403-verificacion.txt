@@ -1,0 +1,12 @@
+HU-1.9 / T-1.9.2 - Verificacion de la restriccion de registro al rol REGISTRADOR
+App local: http://localhost:8080   Fecha: 2026-10-14 22:36
+Se prueba, por rol, el acceso a la pagina de registro /titulos/nuevo (GET = ver el
+formulario, POST = enviarlo). Codigos: 200 = permitido, 302 = registro OK (redirige),
+403 = prohibido.
+
+Usuario registrador1  (rol REGISTRADOR) -> GET /titulos/nuevo = 200 | POST /titulos/nuevo = 302
+Usuario aprobador1    (rol APROBADOR  ) -> GET /titulos/nuevo = 403 | POST /titulos/nuevo = 403
+
+Conclusion: solo el REGISTRADOR puede ver y enviar el formulario (/titulos/nuevo).
+El APROBADOR recibe 403 tanto al ver como al enviar, por lo que no puede registrar
+titulos (ni siquiera enviando el POST directamente).

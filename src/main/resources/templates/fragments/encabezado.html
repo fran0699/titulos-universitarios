@@ -15,6 +15,11 @@
         </a>
         <nav class="app-nav" aria-label="Principal">
             <a class="app-nav-link" th:href="@{/titulos}">Títulos</a>
+            <a class="app-nav-link" th:if="${usuarioActual != null and usuarioActual.aprobador}"
+               th:href="@{/titulos/pendientes}">
+                Bandeja de revisión
+                <span class="app-nav-badge" th:text="${pendientesPorRevisar}">0</span>
+            </a>
         </nav>
         <div class="app-user" th:if="${usuarioActual != null}">
             <span class="app-user-name" th:text="${usuarioActual.nombre}">usuario</span>
