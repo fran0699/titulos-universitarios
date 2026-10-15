@@ -22,16 +22,20 @@
         <form class="form-grid" th:action="@{/titulos/nuevo}" th:object="${titulo}" method="post">
             <div class="form-field">
                 <label for="nombreGraduado">Nombre del graduado *</label>
-                <input id="nombreGraduado" type="text" th:field="*{nombreGraduado}" autocomplete="name" required>
+                <input id="nombreGraduado"
+                       type="text"
+                       th:field="*{nombreGraduado}"
+                       minlength="3"
+                       maxlength="120"
+                       autocomplete="name"
+                       required>
+
+                <small class="field-error"
+                       th:if="${errores != null and errores['nombreGraduado'] != null}"
+                       th:text="${errores['nombreGraduado']}"></small>
+
             </div>
-            <div class="form-field">
-                <label for="nombreTitulo">Nombre del título *</label>
-                <input id="nombreTitulo" type="text" th:field="*{nombreTitulo}" required>
-            </div>
-            <div class="form-actions">
-                <a class="button button-secondary" th:href="@{/titulos}">Cancelar</a>
-                <button class="button button-primary" type="submit">Registrar título</button>
-            </div>
+
             <div class="form-field">
                 <label for="tipoDocumento">Tipo de documento *</label>
                 <select id="tipoDocumento" th:field="*{graduado.tipoDocumento}" required>
@@ -41,6 +45,9 @@
                             th:text="${tipo}">
                     </option>
                 </select>
+                <small class="field-error"
+                       th:if="${errores != null and errores['graduado.tipoDocumento'] != null}"
+                       th:text="${errores['graduado.tipoDocumento']}"></small>
             </div>
 
             <div class="form-field">
@@ -48,7 +55,28 @@
                 <input id="numeroDocumento"
                        type="text"
                        th:field="*{graduado.numeroDocumento}"
+                       minlength="5"
+                       maxlength="20"
                        required>
+                <small class="field-error"
+                       th:if="${errores != null and errores['graduado.numeroDocumento'] != null}"
+                       th:text="${errores['graduado.numeroDocumento']}"></small>
+            </div>
+
+            <div class="form-field">
+                <label for="nombreTitulo">Nombre del título *</label>
+                <input id="nombreTitulo"
+                       type="text"
+                       th:field="*{nombreTitulo}"
+                       required>
+                <small class="field-error"
+                       th:if="${errores != null and errores['nombreTitulo'] != null}"
+                       th:text="${errores['nombreTitulo']}"></small>
+            </div>
+
+            <div class="form-actions">
+                <a class="button button-secondary" th:href="@{/titulos}">Cancelar</a>
+                <button class="button button-primary" type="submit">Registrar título</button>
             </div>
         </form>
     </section>

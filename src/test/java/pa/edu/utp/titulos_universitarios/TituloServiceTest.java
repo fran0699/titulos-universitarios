@@ -197,4 +197,108 @@ class TituloServiceTest {
         assertEquals(EstadoTitulo.PENDIENTE, resultado.get(0).getEstado());
         verify(tituloRepository).findByEstado(EstadoTitulo.PENDIENTE);
     }
+
+
+    @Test
+    void debeReutilizarGraduadoExistente() {
+        Graduado graduado = new Graduado(
+                TipoDocumento.CEDULA,
+                "8-123-456",
+                "Ana Pérez"
+        );
+
+        Titulo titulo = new Titulo();
+        titulo.setNombreGraduado("Ana Pérez");
+        titulo.setNombreTitulo("Licenciatura en Desarrollo de Software");
+        titulo.setGraduado(new Graduado(
+                TipoDocumento.CEDULA,
+                "8-123-456",
+                "Ana Pérez"
+        ));
+
+        when(graduadoRepository
+                .findByTipoDocumentoAndNumeroDocumento(
+                        TipoDocumento.CEDULA, "8-123-456"))
+                .thenReturn(Optional.of(graduado));
+
+        when(tituloRepository
+                .existsByGraduado_IdAndNombreTituloIgnoreCase(
+                        graduado.getId(),
+                        "Licenciatura en Desarrollo de Software"))
+                .thenReturn(false);
+
+        when(tituloRepository.save(titulo)).thenReturn(titulo);
+
+        Titulo resultado = tituloService.registrar(titulo);
+
+        assertEquals(graduado, resultado.getGraduado());
+        verify(graduadoRepository, never()).save(any(Graduado.class));
+    }
+
+    @Test
+    void mismoDocumentoConNombreDiferente_debeRechazarse() {
+        Graduado graduadoExistente = new Graduado(
+                TipoDocumento.CEDULA,
+                "8-123-456",
+                "Ana Pérez"
+        );
+
+        Titulo titulo = new Titulo();
+        titulo.setNombreGraduado("María López");
+        titulo.setNombreTitulo("Licenciatura en Desarrollo de Software");
+        titulo.setGraduado(new Graduado(
+                TipoDocumento.CEDULA,
+                "8-123-456",
+                "María López"
+        ));
+
+        when(graduadoRepository
+                .findByTipoDocumentoAndNumeroDocumento(
+                        TipoDocumento.CEDULA, "8-123-456"))
+                .thenReturn(Optional.of(graduadoExistente));
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> tituloService.registrar(titulo)
+        );
+
+        verify(tituloRepository, never()).save(any(Titulo.class));
+    }
+
+    @Test
+    void tituloDuplicadoParaElMismoGraduado_debeRechazarse() {
+        Graduado graduado = new Graduado(
+                TipoDocumento.CEDULA,
+                "8-123-456",
+                "Ana Pérez"
+        );
+
+        Titulo titulo = new Titulo();
+        titulo.setNombreGraduado("Ana Pérez");
+        titulo.setNombreTitulo("Licenciatura en Desarrollo de Software");
+        titulo.setGraduado(new Graduado(
+                TipoDocumento.CEDULA,
+                "8-123-456",
+                "Ana Pérez"
+        ));
+
+        when(graduadoRepository
+                .findByTipoDocumentoAndNumeroDocumento(
+                        TipoDocumento.CEDULA, "8-123-456"))
+                .thenReturn(Optional.of(graduado));
+
+        when(tituloRepository
+                .existsByGraduado_IdAndNombreTituloIgnoreCase(
+                        graduado.getId(),
+                        "Licenciatura en Desarrollo de Software"))
+                .thenReturn(true);
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> tituloService.registrar(titulo)
+        );
+
+        verify(tituloRepository, never()).save(any(Titulo.class));
+    }
+
 }

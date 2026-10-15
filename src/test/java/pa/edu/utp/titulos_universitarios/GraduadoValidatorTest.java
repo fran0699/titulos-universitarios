@@ -4,9 +4,10 @@ package pa.edu.utp.titulos_universitarios;
 import org.junit.jupiter.api.Test;
 
 import pa.edu.utp.titulos_universitarios.entity.TipoDocumento;
-import pa.edu.utp.titulos_universitarios.GraduadoValidator;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GraduadoValidatorTest {
 
@@ -25,31 +26,31 @@ class GraduadoValidatorTest {
     @Test
     void aceptaPasaporteEnLongitudMinima() {
         assertTrue(GraduadoValidator.esDocumentoValido(
-                TipoDocumento.PASAPORTE, "ABC123"));
+                TipoDocumento.PASAPORTE, "A1234"));
     }
 
     @Test
     void aceptaPasaporteEnLongitudMaxima() {
         assertTrue(GraduadoValidator.esDocumentoValido(
-                TipoDocumento.PASAPORTE, "ABC123456789"));
+                TipoDocumento.PASAPORTE, "ABC12345678901234567"));
     }
 
     @Test
     void rechazaPasaportePorDebajoDelMinimo() {
         assertFalse(GraduadoValidator.esDocumentoValido(
-                TipoDocumento.PASAPORTE, "ABC12"));
+                TipoDocumento.PASAPORTE, "A123"));
     }
 
     @Test
     void rechazaPasaportePorEncimaDelMaximo() {
         assertFalse(GraduadoValidator.esDocumentoValido(
-                TipoDocumento.PASAPORTE, "ABC1234567890"));
+                TipoDocumento.PASAPORTE, "ABCDEFGHIJKLMNOPQRSTU"));
     }
 
     @Test
-    void rechazaPasaporteConGuiones() {
-        assertFalse(GraduadoValidator.esDocumentoValido(
-                TipoDocumento.PASAPORTE, "ABC-123"));
+    void aceptaPasaporteConEspaciosYGuiones() {
+        assertTrue(GraduadoValidator.esDocumentoValido(
+                TipoDocumento.PASAPORTE, "c0-234 567"));
     }
 
     @Test
@@ -68,6 +69,27 @@ class GraduadoValidatorTest {
     void aceptaNombreValido() {
         assertTrue(GraduadoValidator.esNombreValido(
                 "María Elena González"));
+    }
+
+    @Test
+    void aceptaNombreConInicialYPunto() {
+        assertTrue(GraduadoValidator.esNombreValido("Ana M. Pérez"));
+    }
+
+    @Test
+    void normalizaPasaporteAMayusculasYEliminaEspaciosYGuiones() {
+        assertEquals(
+                "C0234567",
+                GraduadoValidator.normalizarDocumento(
+                        TipoDocumento.PASAPORTE, "c0-234 567"));
+    }
+
+    @Test
+    void normalizaCedulaEliminandoCerosALaIzquierda() {
+        assertEquals(
+                "8-940-1000",
+                GraduadoValidator.normalizarDocumento(
+                        TipoDocumento.CEDULA, "08-940-1000"));
     }
 
     @Test

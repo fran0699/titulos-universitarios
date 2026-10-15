@@ -1,4 +1,3 @@
-
 package pa.edu.utp.titulos_universitarios;
 
 import java.time.LocalDate;
@@ -46,10 +45,11 @@ public class TituloService {
         }
 
         TipoDocumento tipoDocumento = datosGraduado.getTipoDocumento();
-
         String numeroDocumento = datosGraduado.getNumeroDocumento();
+
         String nombreFormulario =
-                GraduadoValidator.normalizarNombre(titulo.getNombreGraduado());
+                GraduadoValidator.normalizarNombre(
+                        titulo.getNombreGraduado());
 
         if (!GraduadoValidator.esDocumentoValido(
                 tipoDocumento, numeroDocumento)) {
@@ -62,18 +62,15 @@ public class TituloService {
                     "El nombre del graduado no tiene un formato válido.");
         }
 
-        if (!GraduadoValidator.esNombreValido(
-                titulo.getNombreTitulo())) {
-            // La validación del nombre del título se limita a los
-            // requisitos actuales de TituloValidator.
-            if (titulo.getNombreTitulo() == null
-                    || titulo.getNombreTitulo().isBlank()) {
-                throw new IllegalArgumentException(
-                        "El nombre del título es obligatorio.");
-            }
+        String documentoNormalizado =
+                GraduadoValidator.normalizarDocumento(
+                        tipoDocumento, numeroDocumento);
+
+        if (documentoNormalizado == null) {
+            throw new IllegalArgumentException(
+                    "El tipo o número de documento del graduado no es válido.");
         }
 
-        String documentoNormalizado = numeroDocumento.trim();
         String nombreTituloNormalizado =
                 titulo.getNombreTitulo().trim().replaceAll("\\s+", " ");
 
@@ -140,14 +137,19 @@ public class TituloService {
 
     public Titulo aprobar(Long id, String usuario) {
         Titulo titulo = obtenerPendienteParaRevision(id, usuario);
+
         registrarRevision(titulo, EstadoTitulo.APROBADO, usuario);
+
         titulo.setIdentificador(identificadorGenerator.generar());
+
         return tituloRepository.save(titulo);
     }
 
     public Titulo rechazar(Long id, String usuario) {
         Titulo titulo = obtenerPendienteParaRevision(id, usuario);
+
         registrarRevision(titulo, EstadoTitulo.RECHAZADO, usuario);
+
         return tituloRepository.save(titulo);
     }
 
@@ -170,7 +172,9 @@ public class TituloService {
     }
 
     private void registrarRevision(
-            Titulo titulo, EstadoTitulo nuevoEstado, String usuario) {
+            Titulo titulo,
+            EstadoTitulo nuevoEstado,
+            String usuario) {
         titulo.setEstado(nuevoEstado);
         titulo.setRevisadoPor(usuario);
         titulo.setFechaRevision(LocalDateTime.now());
