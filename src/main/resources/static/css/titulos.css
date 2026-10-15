@@ -296,3 +296,42 @@ a.button {
     color: #cbd5e1;
     font-size: 0.75rem;
 }
+
+
+/* T-1.7.2 (HU-1.7): contador de pendientes en el menu */
+.app-nav-badge {
+    display: inline-block;
+    min-width: 22px;
+    margin-left: 6px;
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: #93c5fd;
+    color: var(--color-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* T-1.7.2 (HU-1.7): encabezado en pantallas pequenas (celular) */
+@media (max-width: 600px) {
+    .app-header-inner {
+        gap: 4px 12px;
+        padding: 10px 0 4px;
+    }
+
+    .app-user {
+        order: 2;
+        margin-left: auto;
+        padding: 0;
+    }
+
+    .app-nav {
+        order: 3;
+        flex-basis: 100%;
+        margin: 0 -12px;
+    }
+
+    .app-nav-link {
+        padding: 12px 12px 9px;
+    }
+}

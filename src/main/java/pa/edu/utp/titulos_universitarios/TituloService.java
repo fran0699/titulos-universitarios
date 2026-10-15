@@ -42,6 +42,11 @@ public class TituloService {
         return tituloRepository.findByEstado(EstadoTitulo.PENDIENTE);
     }
 
+    // T-1.7.2 (HU-1.7): cantidad de titulos pendientes para el contador del menu.
+    public long contarPendientes() {
+        return tituloRepository.countByEstado(EstadoTitulo.PENDIENTE);
+    }
+
     public Titulo aprobar(Long id, String usuario) {
         Titulo titulo = obtenerPendienteParaRevision(id, usuario);
         registrarRevision(titulo, EstadoTitulo.APROBADO, usuario);
