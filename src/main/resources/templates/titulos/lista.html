@@ -14,7 +14,9 @@
             <p class="eyebrow">Gestión académica</p>
             <h1>Títulos registrados</h1>
             <p class="subtitle">Consulta todos los títulos registrados.</p>
-            <p><a class="button button-primary" th:href="@{/titulos/nuevo}">Registrar título</a></p>
+            <p th:if="${usuarioActual != null and usuarioActual.registrador}">
+                <a class="button button-primary" th:href="@{/titulos/nuevo}">Registrar título</a>
+            </p>
         </header>
 
         <p class="notice notice-success" th:if="${mensaje}" th:text="${mensaje}" role="status"></p>

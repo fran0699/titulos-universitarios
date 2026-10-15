@@ -26,6 +26,10 @@ public class SecurityConfig {
                 .requestMatchers("/titulos/pendientes",
                         "/titulos/*/aprobar",
                         "/titulos/*/rechazar").hasRole("APROBADOR")
+                // T-1.9.2 (HU-1.9): solo el REGISTRADOR abre y envia el formulario
+                // de registro. /titulos/nuevo cubre tanto el GET como el POST, asi
+                // un aprobador no puede registrar ni enviando el POST directamente.
+                .requestMatchers("/titulos/nuevo").hasRole("REGISTRADOR")
                 .anyRequest().authenticated()
         )
                 .formLogin(form -> form.permitAll())
