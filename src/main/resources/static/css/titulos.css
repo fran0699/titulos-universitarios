@@ -335,3 +335,54 @@ a.button {
         padding: 12px 12px 9px;
     }
 }
+
+
+/* T-1.6.1 (HU-1.6): sesion del usuario y boton Cerrar sesion */
+.app-session {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.app-logout {
+    margin: 0;
+}
+
+.app-logout-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid #93a8c8;
+    border-radius: 7px;
+    background: transparent;
+    color: #fff;
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.app-logout-button:hover {
+    background: rgb(255 255 255 / 10%);
+}
+
+.app-logout-button:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+    .app-session {
+        order: 2;
+        flex-basis: 100%;
+        justify-content: space-between;
+    }
+
+    .app-session .app-user {
+        order: 0;
+        margin-left: 0;
+        text-align: left;
+    }
+}
