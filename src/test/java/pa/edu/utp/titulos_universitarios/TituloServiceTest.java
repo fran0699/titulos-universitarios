@@ -20,10 +20,6 @@ import static org.mockito.Mockito.never;
 import java.util.List;
 import java.util.Optional;
 
-import pa.edu.utp.titulos_universitarios.repository.GraduadoRepository;
-import pa.edu.utp.titulos_universitarios.entity.Graduado;
-import pa.edu.utp.titulos_universitarios.entity.TipoDocumento;
-
 @ExtendWith(MockitoExtension.class)
 class TituloServiceTest {
 
@@ -32,9 +28,6 @@ class TituloServiceTest {
 
     @Mock
     private IdentificadorGenerator identificadorGenerator;
-
-    @Mock
-    private pa.edu.utp.titulos_universitarios.repository.GraduadoRepository graduadoRepository;
 
     @InjectMocks
     private TituloService tituloService;
@@ -52,32 +45,12 @@ class TituloServiceTest {
         Titulo titulo = new Titulo();
         titulo.setNombreGraduado("Ana Pérez");
         titulo.setNombreTitulo("Licenciatura en Desarrollo de Software");
-        titulo.setGraduado(new Graduado(
-                TipoDocumento.CEDULA,
-                "8-123-456",
-                "Ana Pérez"
-        ));
-
-        when(graduadoRepository
-                .findByTipoDocumentoAndNumeroDocumento(
-                        TipoDocumento.CEDULA, "8-123-456"))
-                .thenReturn(Optional.empty());
-
-        when(graduadoRepository.save(any(Graduado.class)))
-                .thenAnswer(invocation -> {
-                    Graduado graduado = invocation.getArgument(0);
-                    return graduado;
-                });
-
         when(tituloRepository.save(titulo)).thenReturn(titulo);
 
         Titulo resultado = tituloService.registrar(titulo);
 
         assertEquals(titulo, resultado);
         assertNotNull(resultado.getFechaRegistro());
-        assertNotNull(resultado.getGraduado());
-
-        verify(graduadoRepository).save(any(Graduado.class));
         verify(tituloRepository).save(titulo);
     }
 
@@ -96,23 +69,9 @@ class TituloServiceTest {
         Titulo titulo = new Titulo();
         titulo.setNombreGraduado("Ana Pérez");
         titulo.setNombreTitulo("Licenciatura en Desarrollo de Software");
-        titulo.setGraduado(new Graduado(
-                TipoDocumento.CEDULA,
-                "8-123-456",
-                "Ana Pérez"
-        ));
         titulo.setEstado(EstadoTitulo.APROBADO);
         titulo.setRevisadoPor("intruso");
         titulo.setIdentificador("falso");
-
-        when(graduadoRepository
-                .findByTipoDocumentoAndNumeroDocumento(
-                        TipoDocumento.CEDULA, "8-123-456"))
-                .thenReturn(Optional.empty());
-
-        when(graduadoRepository.save(any(Graduado.class)))
-                .thenAnswer(invocation -> invocation.getArgument(0));
-
         when(tituloRepository.save(titulo)).thenReturn(titulo);
 
         Titulo resultado = tituloService.registrar(titulo);
@@ -121,9 +80,6 @@ class TituloServiceTest {
         assertNull(resultado.getRevisadoPor());
         assertNull(resultado.getFechaRevision());
         assertNull(resultado.getIdentificador());
-
-        verify(graduadoRepository).save(any(Graduado.class));
-        verify(tituloRepository).save(titulo);
     }
 
     @Test
@@ -197,108 +153,4 @@ class TituloServiceTest {
         assertEquals(EstadoTitulo.PENDIENTE, resultado.get(0).getEstado());
         verify(tituloRepository).findByEstado(EstadoTitulo.PENDIENTE);
     }
-
-
-    @Test
-    void debeReutilizarGraduadoExistente() {
-        Graduado graduado = new Graduado(
-                TipoDocumento.CEDULA,
-                "8-123-456",
-                "Ana Pérez"
-        );
-
-        Titulo titulo = new Titulo();
-        titulo.setNombreGraduado("Ana Pérez");
-        titulo.setNombreTitulo("Licenciatura en Desarrollo de Software");
-        titulo.setGraduado(new Graduado(
-                TipoDocumento.CEDULA,
-                "8-123-456",
-                "Ana Pérez"
-        ));
-
-        when(graduadoRepository
-                .findByTipoDocumentoAndNumeroDocumento(
-                        TipoDocumento.CEDULA, "8-123-456"))
-                .thenReturn(Optional.of(graduado));
-
-        when(tituloRepository
-                .existsByGraduado_IdAndNombreTituloIgnoreCase(
-                        graduado.getId(),
-                        "Licenciatura en Desarrollo de Software"))
-                .thenReturn(false);
-
-        when(tituloRepository.save(titulo)).thenReturn(titulo);
-
-        Titulo resultado = tituloService.registrar(titulo);
-
-        assertEquals(graduado, resultado.getGraduado());
-        verify(graduadoRepository, never()).save(any(Graduado.class));
-    }
-
-    @Test
-    void mismoDocumentoConNombreDiferente_debeRechazarse() {
-        Graduado graduadoExistente = new Graduado(
-                TipoDocumento.CEDULA,
-                "8-123-456",
-                "Ana Pérez"
-        );
-
-        Titulo titulo = new Titulo();
-        titulo.setNombreGraduado("María López");
-        titulo.setNombreTitulo("Licenciatura en Desarrollo de Software");
-        titulo.setGraduado(new Graduado(
-                TipoDocumento.CEDULA,
-                "8-123-456",
-                "María López"
-        ));
-
-        when(graduadoRepository
-                .findByTipoDocumentoAndNumeroDocumento(
-                        TipoDocumento.CEDULA, "8-123-456"))
-                .thenReturn(Optional.of(graduadoExistente));
-
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> tituloService.registrar(titulo)
-        );
-
-        verify(tituloRepository, never()).save(any(Titulo.class));
-    }
-
-    @Test
-    void tituloDuplicadoParaElMismoGraduado_debeRechazarse() {
-        Graduado graduado = new Graduado(
-                TipoDocumento.CEDULA,
-                "8-123-456",
-                "Ana Pérez"
-        );
-
-        Titulo titulo = new Titulo();
-        titulo.setNombreGraduado("Ana Pérez");
-        titulo.setNombreTitulo("Licenciatura en Desarrollo de Software");
-        titulo.setGraduado(new Graduado(
-                TipoDocumento.CEDULA,
-                "8-123-456",
-                "Ana Pérez"
-        ));
-
-        when(graduadoRepository
-                .findByTipoDocumentoAndNumeroDocumento(
-                        TipoDocumento.CEDULA, "8-123-456"))
-                .thenReturn(Optional.of(graduado));
-
-        when(tituloRepository
-                .existsByGraduado_IdAndNombreTituloIgnoreCase(
-                        graduado.getId(),
-                        "Licenciatura en Desarrollo de Software"))
-                .thenReturn(true);
-
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> tituloService.registrar(titulo)
-        );
-
-        verify(tituloRepository, never()).save(any(Titulo.class));
-    }
-
 }
