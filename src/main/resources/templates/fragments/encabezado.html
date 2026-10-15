@@ -21,9 +21,23 @@
                 <span class="app-nav-badge" th:text="${pendientesPorRevisar}">0</span>
             </a>
         </nav>
-        <div class="app-user" th:if="${usuarioActual != null}">
-            <span class="app-user-name" th:text="${usuarioActual.nombre}">usuario</span>
-            <span class="app-user-role" th:text="${usuarioActual.rolTexto}">Rol</span>
+        <div class="app-session" th:if="${usuarioActual != null}">
+            <div class="app-user">
+                <span class="app-user-name" th:text="${usuarioActual.nombre}">usuario</span>
+                <span class="app-user-role" th:text="${usuarioActual.rolTexto}">Rol</span>
+            </div>
+            <!-- T-1.6.1 (HU-1.6): cerrar sesion por POST; Thymeleaf agrega el token CSRF. -->
+            <form class="app-logout" th:action="@{/logout}" method="post">
+                <button class="app-logout-button" type="submit">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <path d="m16 17 5-5-5-5"></path>
+                        <path d="M21 12H9"></path>
+                    </svg>
+                    Cerrar sesión
+                </button>
+            </form>
         </div>
     </div>
 </header>
