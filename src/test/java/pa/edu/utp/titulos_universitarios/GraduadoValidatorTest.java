@@ -109,4 +109,38 @@ class GraduadoValidatorTest {
                 GraduadoValidator.normalizarNombre(
                         "  María   Elena González  "));
     }
+
+
+    @Test
+    void aceptaCedulaConBloquesAlfanumericosPE() {
+        assertTrue(GraduadoValidator.esDocumentoValido(
+                TipoDocumento.CEDULA, "PE-5-614"));
+    }
+
+    @Test
+    void aceptaCedulaConBloquesAlfanumericosN() {
+        assertTrue(GraduadoValidator.esDocumentoValido(
+                TipoDocumento.CEDULA, "N-17-371"));
+    }
+
+    @Test
+    void aceptaNombreEnLongitudMinima() {
+        assertTrue(GraduadoValidator.esNombreValido("Ana"));
+    }
+
+    @Test
+    void aceptaNombreEnLongitudMaxima() {
+        assertTrue(GraduadoValidator.esNombreValido("A".repeat(120)));
+    }
+
+    @Test
+    void rechazaNombrePorDebajoDelMinimo() {
+        assertFalse(GraduadoValidator.esNombreValido("Al"));
+    }
+
+    @Test
+    void rechazaNombrePorEncimaDelMaximo() {
+        assertFalse(GraduadoValidator.esNombreValido("A".repeat(121)));
+    }
+
 }
