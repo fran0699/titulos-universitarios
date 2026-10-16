@@ -55,15 +55,20 @@
                 redirectAttributes.addFlashAttribute("titulo", titulo);
                 redirectAttributes.addFlashAttribute("tiposDocumento", TipoDocumento.values());
 
+
                 Map<String, String> errores = new HashMap<>();
                 String mensaje = exception.getMessage();
 
                 if (mensaje != null) {
-                    String mensajeNormalizado = mensaje.toLowerCase();
+                    String mensajeNormalizado = mensaje.toLowerCase(java.util.Locale.ROOT);
 
-                    if (mensajeNormalizado.contains("documento")) {
+                    if (mensajeNormalizado.contains("tipo de documento")) {
+                        errores.put("graduado.tipoDocumento", mensaje);
+                    } else if (mensajeNormalizado.contains("documento")) {
                         errores.put("graduado.numeroDocumento", mensaje);
-                    } else if (mensajeNormalizado.contains("nombre")) {
+                    } else if (mensajeNormalizado.contains("nombre del graduado")
+                            || mensajeNormalizado.contains("nombre del estudiante")
+                            || mensajeNormalizado.contains("graduado")) {
                         errores.put("nombreGraduado", mensaje);
                     } else if (mensajeNormalizado.contains("título")
                             || mensajeNormalizado.contains("titulo")) {
@@ -72,6 +77,7 @@
                 }
 
                 redirectAttributes.addFlashAttribute("errores", errores);
+
                 return "redirect:/titulos/nuevo";
             }
         }

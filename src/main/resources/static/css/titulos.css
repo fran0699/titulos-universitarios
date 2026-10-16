@@ -296,3 +296,30 @@ a.button {
     color: #cbd5e1;
     font-size: 0.75rem;
 }
+
+
+/* Mensajes de error debajo de los campos */
+.field-error {
+    display: block;
+    color: #b42318;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    margin-top: 0.3rem;
+}
+
+/* Resaltar los campos que presentan errores */
+.form-field:has(.field-error:not(:empty)) input,
+.form-field:has(.field-error:not(:empty)) select,
+.form-field:has(.field-error:not(:empty)) textarea {
+    border-color: #b42318;
+}
+
+/* Aviso general de error */
+.notice-error {
+    color: #b42318;
+    background-color: #fef3f2;
+    border: 1px solid #fecdca;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+}
