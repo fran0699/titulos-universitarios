@@ -9,4 +9,8 @@ public interface TituloRepository extends JpaRepository<Titulo, Long> {
 
     long countByEstado(EstadoTitulo estado);
 
+    boolean existsByGraduado_IdAndNombreTituloIgnoreCase(
+            Long graduadoId,
+            String nombreTitulo
+    );
 }

@@ -82,7 +82,8 @@ h2 {
     font-weight: 600;
 }
 
-.form-field input {
+.form-field input,
+.form-field select {
     width: 100%;
     min-height: 44px;
     padding: 10px 12px;
@@ -93,7 +94,8 @@ h2 {
     font: inherit;
 }
 
-.form-field input:focus {
+.form-field input:focus,
+.form-field select:focus {
     border-color: var(--color-primary);
     outline: 3px solid rgb(29 78 216 / 16%);
 }
@@ -385,4 +387,17 @@ a.button {
         margin-left: 0;
         text-align: left;
     }
+}
+
+/* HU-1.10: mensajes de error debajo de los campos (estilos de Anel recuperados) */
+.field-error {
+    display: block;
+    color: #b42318;
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
+.form-field:has(.field-error) input,
+.form-field:has(.field-error) select {
+    border-color: #b42318;
 }
