@@ -25,7 +25,7 @@
                 <thead>
                 <tr>
                     <th scope="col">Graduado</th>
-                    <th scope="col">Tipo de documento</th>
+                    <th scope="col">Tipo</th>
                     <th scope="col">N.º de documento</th>
                     <th scope="col">Título</th>
                     <th scope="col">Fecha de registro</th>
@@ -35,7 +35,7 @@
                 <tbody>
                 <tr th:each="titulo : ${pendientes}">
                     <td th:text="${titulo.nombreGraduado}"></td>
-                    <td th:text="${titulo.graduado != null ? titulo.graduado.tipoDocumento : '—'}"></td>
+                    <td th:text="${titulo.graduado != null ? titulo.graduado.tipoDocumento.etiqueta : '—'}"></td>
                     <td th:text="${titulo.graduado != null ? titulo.graduado.numeroDocumento : '—'}"></td>
                     <td th:text="${titulo.nombreTitulo}"></td>
                     <td th:text="${titulo.fechaRegistro}"></td>
