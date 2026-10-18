@@ -1,0 +1,20 @@
+services:
+  prometheus:
+    image: prom/prometheus:v3.15.0
+    container_name: titulos-prometheus
+    ports:
+      - "127.0.0.1:9090:9090"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./monitoring/prometheus/.secrets/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./monitoring/prometheus/.secrets/aprobador.password:/etc/prometheus/secrets/aprobador.password:ro
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.enable-lifecycle"
+    restart: unless-stopped
+
+volumes:
+  prometheus_data:

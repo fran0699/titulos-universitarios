@@ -3,6 +3,7 @@ package pa.edu.utp.titulos_universitarios.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -33,6 +34,10 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
         )
                 .formLogin(form -> form.permitAll())
+                // T-4.4.2 (HU-4.4): permite que Prometheus consulte Actuator
+                // usando HTTP Basic con un usuario autenticado por la BD. La
+                // regla de /actuator/** sigue exigiendo el rol APROBADOR.
+                .httpBasic(Customizer.withDefaults())
                 // T-4.3.1 (HU-4.3): cabeceras de seguridad HTTP senaladas por Nikto.
                 .headers(headers -> headers
                         // Content-Security-Policy: solo recursos propios. Se permiten estilos

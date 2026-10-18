@@ -1,5 +1,7 @@
 HELP.md
 target/
+# Credenciales locales usadas por Prometheus para scrape de Actuator.
+monitoring/prometheus/.secrets/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
