@@ -115,10 +115,7 @@ public class TituloService {
                         graduado.getNombreCompleto()));
         titulo.setNombreTitulo(nombreTituloNormalizado);
 
-        if (titulo.getFechaRegistro() == null) {
-            titulo.setFechaRegistro(LocalDate.now());
-        }
-
+        titulo.setFechaRegistro(LocalDate.now());
         titulo.setEstado(EstadoTitulo.PENDIENTE);
         titulo.setRevisadoPor(null);
         titulo.setFechaRevision(null);
