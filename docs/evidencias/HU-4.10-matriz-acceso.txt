@@ -1,0 +1,19 @@
+HU-4.10 / T-4.10.2 - Matriz de acceso: HTTP Basic solo en /actuator/** para el rol MONITOREO
+App local: http://localhost:8080   Fecha: 2026-10-21
+Rama: feature/HU-4.10-usuario-tecnico-prometheus
+Se prueba con curl.exe el codigo de respuesta por usuario y ruta. Codigos: 200 = permitido,
+401 = sin credenciales, 403 = prohibido, 302 = redirige al login (HTTP Basic no aceptado).
+La contrasena del usuario prometheus se escribio en el aviso de curl (no queda en el historial).
+
+#  Peticion                                          Usuario (rol)               Esperado  Obtenido
+1  GET /actuator/prometheus                          sin credenciales            401       401
+2  GET /actuator/prometheus                          prometheus (MONITOREO)      200       200
+3  GET /actuator/prometheus                          aprobador1 (APROBADOR)      403       403
+4  GET /actuator/prometheus                          registrador1 (REGISTRADOR)  403       403
+5  GET /titulos con HTTP Basic                       aprobador1 (APROBADOR)      302       302
+6  GET /titulos con HTTP Basic                       prometheus (MONITOREO)      302       302
+7  GET /titulos tras iniciar sesion con formulario   prometheus (MONITOREO)      403       403 (navegador)
+
+Resultado: 7 de 7 combinaciones responden lo esperado (100 %).
+Conclusion: solo el usuario tecnico lee las metricas; ningun rol del personal accede a
+/actuator/**; HTTP Basic ya no abre las pantallas, y el usuario tecnico recibe 403 en ellas.
