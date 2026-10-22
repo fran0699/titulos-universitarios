@@ -35,6 +35,9 @@ class TituloServiceTest {
     @Mock
     private IdentificadorGenerator identificadorGenerator;
 
+    @Mock
+    private CredencialPdfService credencialPdfService;
+
     @InjectMocks
     private TituloService tituloService;
 

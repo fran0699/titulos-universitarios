@@ -3,9 +3,12 @@ package pa.edu.utp.titulos_universitarios;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.io.IOException;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import pa.edu.utp.titulos_universitarios.entity.Graduado;
 import pa.edu.utp.titulos_universitarios.entity.TipoDocumento;
@@ -17,14 +20,17 @@ public class TituloService {
     private final TituloRepository tituloRepository;
     private final GraduadoRepository graduadoRepository;
     private final IdentificadorGenerator identificadorGenerator;
+    private final CredencialPdfService credencialPdfService;
 
     public TituloService(
             TituloRepository tituloRepository,
             GraduadoRepository graduadoRepository,
-            IdentificadorGenerator identificadorGenerator) {
+            IdentificadorGenerator identificadorGenerator,
+            CredencialPdfService credencialPdfService) {
         this.tituloRepository = tituloRepository;
         this.graduadoRepository = graduadoRepository;
         this.identificadorGenerator = identificadorGenerator;
+        this.credencialPdfService = credencialPdfService;
     }
 
     @Transactional
@@ -129,6 +135,24 @@ public class TituloService {
 
     public List<Titulo> listar() {
         return tituloRepository.findAll();
+    }
+
+    /** T-2.4.3 (HU-2.4): descarga únicamente credenciales de títulos aprobados. */
+    @Transactional(readOnly = true)
+    public byte[] generarCredencialPdf(Long id) {
+        Titulo titulo = tituloRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if (titulo.getEstado() != EstadoTitulo.APROBADO) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        try {
+            return credencialPdfService.generar(titulo);
+        } catch (IOException exception) {
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "No se pudo generar la credencial PDF.",
+                    exception);
+        }
     }
 
     public List<Titulo> listarPendientes() {

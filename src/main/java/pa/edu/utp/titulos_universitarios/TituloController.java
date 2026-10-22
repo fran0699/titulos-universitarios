@@ -4,6 +4,10 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +33,20 @@ public class TituloController {
     public String mostrarLista(Model model) {
         model.addAttribute("titulos", tituloService.listar());
         return "titulos/lista";
+    }
+
+    /** T-2.4.3 (HU-2.4): descarga la credencial PDF de un título aprobado. */
+    @GetMapping("/{id}/credencial")
+    public ResponseEntity<byte[]> descargarCredencial(@PathVariable Long id) {
+        byte[] pdf = tituloService.generarCredencialPdf(id);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        ContentDisposition.attachment()
+                                .filename("credencial-titulo-" + id + ".pdf")
+                                .build()
+                                .toString())
+                .body(pdf);
     }
 
     // T-1.9.1 (HU-1.9): el formulario de registro vive en su propia página;
