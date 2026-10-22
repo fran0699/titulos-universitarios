@@ -18,9 +18,9 @@ $dockerExecutable = if ($docker.Source) { $docker.Source } else { $docker.FullNa
 $dockerDirectory = Split-Path -Parent $dockerExecutable
 $env:Path = "$dockerDirectory;$env:Path"
 
-$username = Read-Host 'Usuario APROBADOR existente en la aplicacion (por defecto aprobador1)'
+$username = Read-Host 'Usuario tecnico de monitoreo (por defecto prometheus)'
 if ([string]::IsNullOrWhiteSpace($username)) {
-    $username = 'aprobador1'
+    $username = 'prometheus'
 }
 if ($username -notmatch '^[a-zA-Z0-9._-]+$') {
     throw 'El nombre de usuario solo puede contener letras, numeros, punto, guion y guion bajo.'
@@ -31,7 +31,7 @@ if ($securePassword.Length -eq 0) {
 }
 $passwordPointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePassword)
 $secretDirectory = Join-Path $PSScriptRoot '.secrets'
-$secretPath = Join-Path $secretDirectory 'aprobador.password'
+$secretPath = Join-Path $secretDirectory 'monitoreo.password'
 
 try {
     $password = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($passwordPointer)
@@ -46,7 +46,7 @@ finally {
 $configPath = Join-Path $PSScriptRoot 'prometheus.yml'
 $runtimeConfigPath = Join-Path $secretDirectory 'prometheus.yml'
 $config = Get-Content -LiteralPath $configPath -Raw
-$config = $config.Replace('username: aprobador1', "username: $username")
+$config = $config.Replace('username: prometheus', "username: $username")
 [IO.File]::WriteAllText($runtimeConfigPath, $config, [Text.UTF8Encoding]::new($false))
 
 $projectRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
