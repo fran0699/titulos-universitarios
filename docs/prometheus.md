@@ -36,12 +36,14 @@ El scrape va a `host.docker.internal:8080/actuator/prometheus` cada 15 segundos,
 
 ## Quién puede leer las métricas (HU-4.10)
 
-| Usuario | `/actuator/**` | Pantallas (`/titulos`) |
+| Usuario | `/actuator/**` | Pantallas y demás rutas |
 |---|---|---|
-| `prometheus` (MONITOREO) | 200 con HTTP Basic | 403 |
+| `prometheus` (MONITOREO) | 200 con HTTP Basic | 403 en todas, incluso tras iniciar sesión con el formulario |
 | `aprobador1`, `registrador1` | 403 | Solo con el formulario de inicio de sesión |
 
 HTTP Basic solo funciona en `/actuator/**`; en las pantallas no se acepta y redirige al inicio de sesión. Evidencia: `docs/evidencias/HU-4.10-matriz-acceso.txt` y `docs/evidencias/HU-4.10-prometheus-target-up.png`.
+
+**Rutas nuevas:** las pantallas deniegan por defecto. Toda ruta sin una regla propia en `SecurityConfig` queda solo para `REGISTRADOR` y `APROBADOR`. Si una ruta nueva debe ser pública (como `/verificar/**`), se declara con `permitAll()`. Si es de un solo rol, se agrega su regla antes de `anyRequest()`.
 
 ## Si ya usabas Prometheus antes de HU-4.10
 
