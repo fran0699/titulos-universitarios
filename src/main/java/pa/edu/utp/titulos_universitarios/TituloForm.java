@@ -36,6 +36,16 @@ public class TituloForm {
         return tipoDocumento;
     }
 
+    private static String limpiar(String valor) {
+        if (valor == null) {
+            return null;
+        }
+
+        String limpio = valor.trim().replaceAll("\\s+", " ");
+        return limpio.isEmpty() ? null : limpio;
+    }
+
+
     public void setTipoDocumento(TipoDocumento tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
     }
@@ -44,23 +54,24 @@ public class TituloForm {
         return numeroDocumento;
     }
 
-    public void setNumeroDocumento(String numeroDocumento) {
-        this.numeroDocumento = numeroDocumento;
-    }
-
     public String getNombreGraduado() {
         return nombreGraduado;
-    }
-
-    public void setNombreGraduado(String nombreGraduado) {
-        this.nombreGraduado = nombreGraduado;
     }
 
     public String getNombreTitulo() {
         return nombreTitulo;
     }
 
+    public void setNumeroDocumento(String numeroDocumento) {
+        this.numeroDocumento = limpiar(numeroDocumento);
+    }
+
+    public void setNombreGraduado(String nombreGraduado) {
+        this.nombreGraduado = limpiar(nombreGraduado);
+    }
+
     public void setNombreTitulo(String nombreTitulo) {
-        this.nombreTitulo = nombreTitulo;
+        this.nombreTitulo = limpiar(nombreTitulo);
     }
 }
+

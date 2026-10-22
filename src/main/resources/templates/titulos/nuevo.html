@@ -59,7 +59,10 @@
                        aria-describedby="ayudaDocumento"
                        required>
                 <small id="ayudaDocumento" class="field-help">
-                    Letras y números, de 5 a 20 caracteres. Se guarda en mayúsculas, sin espacios ni guiones.
+                    Cédula: con guiones, provincia-tomo-asiento
+                    (8-940-1000, PE-5-614, N-17-371).
+                    Pasaporte: Letras y números, de 5 a 20 caracteres.
+                    Se guarda en mayúsculas, sin espacios ni guiones.
                 </small>
                 <small class="field-error"
                        th:if="${#fields.hasErrors('numeroDocumento')}"

@@ -80,28 +80,48 @@ public class TituloController {
 
             String mensaje = exception.getMessage();
 
-            if (mensaje != null) {
+            if (mensaje == null) {
+                model.addAttribute(
+                        "error", "No se pudo registrar el título.");
+            } else {
                 String texto = mensaje.toLowerCase(java.util.Locale.ROOT);
 
-                if (texto.contains("tipo de documento")) {
+                if (texto.contains("documento ya está registrado con otro nombre")) {
+                    // El documento existe, pero pertenece a otro nombre.
                     bindingResult.rejectValue(
-                            "tipoDocumento", "titulo.tipoDocumento", mensaje);
+                            "nombreGraduado",
+                            "titulo.nombreGraduado",
+                            mensaje);
+
+                } else if (texto.contains("tipo de documento")) {
+                    bindingResult.rejectValue(
+                            "tipoDocumento",
+                            "titulo.tipoDocumento",
+                            mensaje);
+
                 } else if (texto.contains("documento")) {
                     bindingResult.rejectValue(
-                            "numeroDocumento", "titulo.numeroDocumento", mensaje);
+                            "numeroDocumento",
+                            "titulo.numeroDocumento",
+                            mensaje);
+
                 } else if (texto.contains("nombre del graduado")
                         || texto.contains("nombre del estudiante")) {
                     bindingResult.rejectValue(
-                            "nombreGraduado", "titulo.nombreGraduado", mensaje);
+                            "nombreGraduado",
+                            "titulo.nombreGraduado",
+                            mensaje);
+
                 } else if (texto.contains("título")
                         || texto.contains("titulo")) {
                     bindingResult.rejectValue(
-                            "nombreTitulo", "titulo.nombreTitulo", mensaje);
+                            "nombreTitulo",
+                            "titulo.nombreTitulo",
+                            mensaje);
+
                 } else {
                     model.addAttribute("error", mensaje);
                 }
-            } else {
-                model.addAttribute("error", "No se pudo registrar el título.");
             }
 
             return "titulos/nuevo";
