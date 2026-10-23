@@ -10,5 +10,6 @@ scrape_configs:
       - targets:
           - host.docker.internal:8080
     basic_auth:
-      username: aprobador1
-      password_file: /etc/prometheus/secrets/aprobador.password
+      # T-4.10.3 (HU-4.10): usuario técnico de solo lectura (rol MONITOREO).
+      username: prometheus
+      password_file: /etc/prometheus/secrets/monitoreo.password
