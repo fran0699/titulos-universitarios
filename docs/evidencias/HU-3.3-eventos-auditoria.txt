@@ -1,0 +1,28 @@
+HU-3.3 (T-3.3.2/T-3.3.3) - Evidencia del registro de auditoria
+Base de datos: PostgreSQL (titulos_db). Generado el 2026-10-24 15:31.
+Acciones realizadas: registrador1 registro 2 titulos; aprobador1 aprobo el #1 y rechazo el #2.
+
+=== Titulos ===
+ id | nombre_graduado |             nombre_titulo              |  estado   | revisado_por 
+----+-----------------+----------------------------------------+-----------+--------------
+  1 | Ana Perez       | Licenciatura en Desarrollo de Software | APROBADO  | aprobador1
+  2 | Carlos Diaz     | Ingenieria de Sistemas Computacionales | RECHAZADO | aprobador1
+(2 filas)
+
+=== eventos_auditoria (SELECT * ) ===
+ id |         fecha_hora         |  accion   |   usuario    | titulo_id |                                       detalle                                        
+----+----------------------------+-----------+--------------+-----------+--------------------------------------------------------------------------------------
+  1 | 2026-10-24 15:30:49.677317 | REGISTRAR | registrador1 |         1 | Registró el título "Licenciatura en Desarrollo de Software" del graduado Ana Perez
+  2 | 2026-10-24 15:31:26.345674 | REGISTRAR | registrador1 |         2 | Registró el título "Ingenieria de Sistemas Computacionales" del graduado Carlos Diaz
+  3 | 2026-10-24 15:31:27.200452 | APROBAR   | aprobador1   |         1 | Aprobó el título "Licenciatura en Desarrollo de Software"
+  4 | 2026-10-24 15:31:27.883371 | RECHAZAR  | aprobador1   |         2 | Rechazó el título "Ingenieria de Sistemas Computacionales"
+(4 filas)
+
+=== Conteo por accion ===
+  accion   | count 
+-----------+-------
+ APROBAR   |     1
+ RECHAZAR  |     1
+ REGISTRAR |     2
+(3 filas)
+
