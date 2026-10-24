@@ -32,6 +32,8 @@
                     <th scope="col">N.º de documento</th>
                     <th scope="col">Título</th>
                     <th scope="col">Fecha de registro</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Credencial</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,6 +43,16 @@
                     <td th:text="${titulo.graduado != null ? titulo.graduado.numeroDocumento : '—'}"></td>
                     <td th:text="${titulo.nombreTitulo}"></td>
                     <td th:text="${titulo.fechaRegistro}"></td>
+                    <td th:text="${titulo.estado}"></td>
+                    <td>
+                        <a class="button button-primary"
+                           th:if="${titulo.estado != null and titulo.estado.name() == 'APROBADO'}"
+                           th:href="@{/titulos/{id}/credencial(id=${titulo.id})}"
+                           th:aria-label="|Descargar credencial PDF de ${titulo.nombreGraduado}|">
+                            Descargar PDF
+                        </a>
+                        <span th:unless="${titulo.estado != null and titulo.estado.name() == 'APROBADO'}">No disponible</span>
+                    </td>
                 </tr>
                 </tbody>
             </table>
