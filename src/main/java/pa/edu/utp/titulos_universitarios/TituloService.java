@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import pa.edu.utp.titulos_universitarios.entity.AccionAuditoria;
 import pa.edu.utp.titulos_universitarios.entity.Graduado;
 import pa.edu.utp.titulos_universitarios.entity.TipoDocumento;
 import pa.edu.utp.titulos_universitarios.repository.GraduadoRepository;
@@ -18,18 +19,21 @@ public class TituloService {
     private final TituloRepository tituloRepository;
     private final GraduadoRepository graduadoRepository;
     private final IdentificadorGenerator identificadorGenerator;
+    private final AuditoriaService auditoriaService;
 
     public TituloService(
             TituloRepository tituloRepository,
             GraduadoRepository graduadoRepository,
-            IdentificadorGenerator identificadorGenerator) {
+            IdentificadorGenerator identificadorGenerator,
+            AuditoriaService auditoriaService) {
         this.tituloRepository = tituloRepository;
         this.graduadoRepository = graduadoRepository;
         this.identificadorGenerator = identificadorGenerator;
+        this.auditoriaService = auditoriaService;
     }
 
     @Transactional
-    public Titulo registrar(Titulo titulo) {
+    public Titulo registrar(Titulo titulo, String usuario) {
         if (titulo == null
                 || !TituloValidator.esValido(
                 titulo.getNombreGraduado(),
@@ -129,7 +133,18 @@ public class TituloService {
         titulo.setFechaRevision(null);
         titulo.setIdentificador(null);
 
-        return tituloRepository.save(titulo);
+        Titulo guardado = tituloRepository.save(titulo);
+
+        // T-3.3.2 (HU-3.3): auditar el registro en la misma transaccion.
+        auditoriaService.registrarEvento(
+                AccionAuditoria.REGISTRAR,
+                usuario,
+                guardado.getId(),
+                "Registró el título \"" + guardado.getNombreTitulo()
+                        + "\" del graduado "
+                        + guardado.getGraduado().getNombreCompleto());
+
+        return guardado;
     }
 
     public List<Titulo> listar() {
@@ -145,6 +160,7 @@ public class TituloService {
         return tituloRepository.countByEstado(EstadoTitulo.PENDIENTE);
     }
 
+    @Transactional
     public Titulo aprobar(Long id, String usuario) {
         Titulo titulo = obtenerPendienteParaRevision(id, usuario);
 
@@ -152,15 +168,34 @@ public class TituloService {
 
         titulo.setIdentificador(identificadorGenerator.generar());
 
-        return tituloRepository.save(titulo);
+        Titulo guardado = tituloRepository.save(titulo);
+
+        // T-3.3.2 (HU-3.3): auditar la aprobacion en la misma transaccion.
+        auditoriaService.registrarEvento(
+                AccionAuditoria.APROBAR,
+                usuario,
+                guardado.getId(),
+                "Aprobó el título \"" + guardado.getNombreTitulo() + "\"");
+
+        return guardado;
     }
 
+    @Transactional
     public Titulo rechazar(Long id, String usuario) {
         Titulo titulo = obtenerPendienteParaRevision(id, usuario);
 
         registrarRevision(titulo, EstadoTitulo.RECHAZADO, usuario);
 
-        return tituloRepository.save(titulo);
+        Titulo guardado = tituloRepository.save(titulo);
+
+        // T-3.3.2 (HU-3.3): auditar el rechazo en la misma transaccion.
+        auditoriaService.registrarEvento(
+                AccionAuditoria.RECHAZAR,
+                usuario,
+                guardado.getId(),
+                "Rechazó el título \"" + guardado.getNombreTitulo() + "\"");
+
+        return guardado;
     }
 
     private Titulo obtenerPendienteParaRevision(Long id, String usuario) {
