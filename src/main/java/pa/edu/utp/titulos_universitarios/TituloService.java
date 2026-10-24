@@ -1,3 +1,4 @@
+
 package pa.edu.utp.titulos_universitarios;
 
 import java.time.LocalDate;
@@ -33,14 +34,16 @@ public class TituloService {
                 || !TituloValidator.esValido(
                 titulo.getNombreGraduado(),
                 titulo.getNombreTitulo())) {
-            throw new IllegalArgumentException(
+            throw new TituloValidationException(
+                    null,
                     "El nombre del graduado y el nombre del título son obligatorios.");
         }
 
         Graduado datosGraduado = titulo.getGraduado();
 
         if (datosGraduado == null) {
-            throw new IllegalArgumentException(
+            throw new TituloValidationException(
+                    "numeroDocumento",
                     "Debe proporcionar el documento del graduado.");
         }
 
@@ -53,12 +56,14 @@ public class TituloService {
 
         if (!GraduadoValidator.esDocumentoValido(
                 tipoDocumento, numeroDocumento)) {
-            throw new IllegalArgumentException(
+            throw new TituloValidationException(
+                    "numeroDocumento",
                     "El tipo o número de documento del graduado no es válido.");
         }
 
         if (!GraduadoValidator.esNombreValido(nombreFormulario)) {
-            throw new IllegalArgumentException(
+            throw new TituloValidationException(
+                    "nombreGraduado",
                     "El nombre del graduado no tiene un formato válido.");
         }
 
@@ -67,7 +72,8 @@ public class TituloService {
                         tipoDocumento, numeroDocumento);
 
         if (documentoNormalizado == null) {
-            throw new IllegalArgumentException(
+            throw new TituloValidationException(
+                    "numeroDocumento",
                     "El tipo o número de documento del graduado no es válido.");
         }
 
@@ -92,7 +98,8 @@ public class TituloService {
                             graduado.getNombreCompleto());
 
             if (!nombreExistente.equalsIgnoreCase(nombreFormulario)) {
-                throw new IllegalArgumentException(
+                throw new TituloValidationException(
+                        "nombreGraduado",
                         "El documento ya está registrado con otro nombre.");
             }
 
@@ -100,7 +107,8 @@ public class TituloService {
                     .existsByGraduado_IdAndNombreTituloIgnoreCase(
                             graduado.getId(),
                             nombreTituloNormalizado)) {
-                throw new IllegalArgumentException(
+                throw new TituloValidationException(
+                        "nombreTitulo",
                         "Este graduado ya tiene registrado ese título.");
             }
         }

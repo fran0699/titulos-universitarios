@@ -13,9 +13,6 @@
     import jakarta.persistence.ManyToOne;
     import pa.edu.utp.titulos_universitarios.entity.Graduado;
     import jakarta.persistence.Column;
-    import jakarta.persistence.Table;
-
-
     @Entity
     public class Titulo {
 
@@ -43,8 +40,6 @@
             this.nombreTitulo = nombreTitulo;
             this.fechaRegistro = fechaRegistro;
         }
-
-
         @ManyToOne(fetch = FetchType.LAZY)
 
         @JoinColumn(name = "graduado_id", nullable = false)
@@ -83,7 +78,6 @@
 
         @Enumerated(EnumType.STRING)
         private EstadoTitulo estado;
-
         private String revisadoPor;
         private LocalDateTime fechaRevision;
 
@@ -114,5 +108,4 @@
         public Graduado getGraduado() { return graduado; }
 
         public void setGraduado(Graduado graduado) { this.graduado = graduado; }
-
     }
