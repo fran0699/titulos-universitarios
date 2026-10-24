@@ -12,6 +12,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -307,5 +308,21 @@ class TituloServiceTest {
         assertEquals(3L, resultado);
         verify(tituloRepository).countByEstado(EstadoTitulo.PENDIENTE);
     }
+
+    @Test
+    void registrar_debeReemplazarFechaEnviadaPorFechaActual() {
+        Titulo titulo = new Titulo();
+        titulo.setNombreGraduado("Ana Pérez");
+        titulo.setNombreTitulo("Licenciatura en Desarrollo de Software");
+        titulo.setFechaRegistro(LocalDate.of(2020, 1, 1));
+
+        prepararRegistro(titulo);
+
+        Titulo resultado = tituloService.registrar(titulo);
+
+        assertEquals(LocalDate.now(), resultado.getFechaRegistro());
+        verify(tituloRepository).save(titulo);
+    }
+
 
 }

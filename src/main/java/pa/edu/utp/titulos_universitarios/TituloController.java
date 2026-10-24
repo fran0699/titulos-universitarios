@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import pa.edu.utp.titulos_universitarios.entity.Graduado;
 import pa.edu.utp.titulos_universitarios.entity.TipoDocumento;
@@ -35,10 +38,8 @@ public class TituloController {
     // /titulos queda solo como lista.
     @GetMapping("/nuevo")
     public String mostrarFormularioNuevo(Model model) {
-        if (!model.containsAttribute("titulo")) {
-            Titulo titulo = new Titulo();
-            titulo.setGraduado(new Graduado());
-            model.addAttribute("titulo", titulo);
+        if (!model.containsAttribute("tituloForm")) {
+            model.addAttribute("tituloForm", new TituloForm());
         }
 
         model.addAttribute("tiposDocumento", TipoDocumento.values());
@@ -46,38 +47,84 @@ public class TituloController {
     }
 
     @PostMapping("/nuevo")
-    public String registrar(Titulo titulo, RedirectAttributes redirectAttributes) {
-        try {
-            tituloService.registrar(titulo);
-            redirectAttributes.addFlashAttribute("mensaje", "Título registrado correctamente.");
-            return "redirect:/titulos";
-        } catch (IllegalArgumentException exception) {
-            redirectAttributes.addFlashAttribute("error", exception.getMessage());
-            redirectAttributes.addFlashAttribute("titulo", titulo);
-            redirectAttributes.addFlashAttribute("tiposDocumento", TipoDocumento.values());
+    public String registrar(
+            @Valid @ModelAttribute("tituloForm") TituloForm formulario,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes,
+            Model model) {
 
-            Map<String, String> errores = new HashMap<>();
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("tiposDocumento", TipoDocumento.values());
+            return "titulos/nuevo";
+        }
+
+        try {
+            Titulo titulo = new Titulo();
+            titulo.setNombreGraduado(formulario.getNombreGraduado());
+            titulo.setNombreTitulo(formulario.getNombreTitulo());
+
+            Graduado graduado = new Graduado();
+            graduado.setTipoDocumento(formulario.getTipoDocumento());
+            graduado.setNumeroDocumento(formulario.getNumeroDocumento());
+            titulo.setGraduado(graduado);
+
+            tituloService.registrar(titulo);
+
+            redirectAttributes.addFlashAttribute(
+                    "mensaje", "Título registrado correctamente.");
+
+            return "redirect:/titulos";
+
+        } catch (IllegalArgumentException exception) {
+            model.addAttribute("tiposDocumento", TipoDocumento.values());
+
             String mensaje = exception.getMessage();
 
-            if (mensaje != null) {
-                String mensajeNormalizado = mensaje.toLowerCase(java.util.Locale.ROOT);
+            if (mensaje == null) {
+                model.addAttribute(
+                        "error", "No se pudo registrar el título.");
+            } else {
+                String texto = mensaje.toLowerCase(java.util.Locale.ROOT);
 
-                if (mensajeNormalizado.contains("tipo de documento")) {
-                    errores.put("graduado.tipoDocumento", mensaje);
-                } else if (mensajeNormalizado.contains("documento")) {
-                    errores.put("graduado.numeroDocumento", mensaje);
-                } else if (mensajeNormalizado.contains("nombre del graduado")
-                        || mensajeNormalizado.contains("nombre del estudiante")
-                        || mensajeNormalizado.contains("graduado")) {
-                    errores.put("nombreGraduado", mensaje);
-                } else if (mensajeNormalizado.contains("título")
-                        || mensajeNormalizado.contains("titulo")) {
-                    errores.put("nombreTitulo", mensaje);
+                if (texto.contains("documento ya está registrado con otro nombre")) {
+                    // El documento existe, pero pertenece a otro nombre.
+                    bindingResult.rejectValue(
+                            "nombreGraduado",
+                            "titulo.nombreGraduado",
+                            mensaje);
+
+                } else if (texto.contains("tipo de documento")) {
+                    bindingResult.rejectValue(
+                            "tipoDocumento",
+                            "titulo.tipoDocumento",
+                            mensaje);
+
+                } else if (texto.contains("documento")) {
+                    bindingResult.rejectValue(
+                            "numeroDocumento",
+                            "titulo.numeroDocumento",
+                            mensaje);
+
+                } else if (texto.contains("nombre del graduado")
+                        || texto.contains("nombre del estudiante")) {
+                    bindingResult.rejectValue(
+                            "nombreGraduado",
+                            "titulo.nombreGraduado",
+                            mensaje);
+
+                } else if (texto.contains("título")
+                        || texto.contains("titulo")) {
+                    bindingResult.rejectValue(
+                            "nombreTitulo",
+                            "titulo.nombreTitulo",
+                            mensaje);
+
+                } else {
+                    model.addAttribute("error", mensaje);
                 }
             }
 
-            redirectAttributes.addFlashAttribute("errores", errores);
-            return "redirect:/titulos/nuevo";
+            return "titulos/nuevo";
         }
     }
 
