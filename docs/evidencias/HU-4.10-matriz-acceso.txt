@@ -1,0 +1,30 @@
+HU-4.10 / T-4.10.2 - Matriz de acceso: HTTP Basic solo en /actuator/** para el rol MONITOREO
+App local: http://localhost:8080   Fecha: 2026-10-22
+Rama: feature/HU-4.10-usuario-tecnico-prometheus
+Filas 1-6 con curl.exe; filas 7-12 en el navegador (una ventana privada por usuario, inicio de
+sesion con formulario). Codigos: 200 = permitido, 401 = sin credenciales, 403 = prohibido,
+302 = redirige al login (HTTP Basic no aceptado).
+La contrasena del usuario prometheus se escribio en el aviso de curl (no queda en el historial).
+
+#   Peticion                                    Usuario (rol)               Esperado  Obtenido
+1   GET /actuator/prometheus                    sin credenciales            401       401
+2   GET /actuator/prometheus                    prometheus (MONITOREO)      200       200
+3   GET /actuator/prometheus                    aprobador1 (APROBADOR)      403       403
+4   GET /actuator/prometheus                    registrador1 (REGISTRADOR)  403       403
+5   GET /titulos con HTTP Basic                 aprobador1 (APROBADOR)      302       302
+6   GET /titulos con HTTP Basic                 prometheus (MONITOREO)      302       302
+7   GET /titulos tras formulario                prometheus (MONITOREO)      403       403
+8   GET / tras formulario                       prometheus (MONITOREO)      403       403
+9   GET /css/titulos.css tras formulario        prometheus (MONITOREO)      403       403
+10  GET /no-existe tras formulario              prometheus (MONITOREO)      403       403
+11  GET / tras formulario (llega a /titulos)    registrador1 (REGISTRADOR)  200       200 (lista con estilos)
+12  GET / tras formulario (llega a /titulos)    aprobador1 (APROBADOR)      200       200 (lista con estilos)
+
+Resultado: 12 de 12 combinaciones responden lo esperado (100 %).
+Filas 8-12 agregadas en la revision del PR #24 (observacion de Edinson Ramirez): la ultima regla
+de las pantallas pasa de "cualquier usuario autenticado" a "solo REGISTRADOR o APROBADOR"
+(denegar por defecto). Asi el usuario tecnico recibe 403 tambien fuera de /titulos y en las
+rutas que se agreguen en el futuro.
+Conclusion: solo el usuario tecnico lee las metricas; ningun rol del personal accede a
+/actuator/**; HTTP Basic no abre las pantallas; el usuario tecnico recibe 403 en cualquier
+ruta de las pantallas, y el personal sigue entrando con normalidad.

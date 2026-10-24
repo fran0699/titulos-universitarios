@@ -12,7 +12,10 @@ import pa.edu.utp.titulos_universitarios.repository.UsuarioRepository;
 public class DataInitializer {
 
     @Bean
-    public CommandLineRunner initUsurios(UsuarioRepository repo, PasswordEncoder encoder) {
+    public CommandLineRunner initUsurios(
+            UsuarioRepository repo,
+            PasswordEncoder encoder,
+            UsuarioMonitoreoInitializer usuarioMonitoreo) {
         return args -> {
             if(repo.count() == 0) {
                 Usuario aprobador = new Usuario();
@@ -28,6 +31,11 @@ public class DataInitializer {
                 repo.save(registrador);
 
             }
+
+            // T-4.10.1 (HU-4.10): el usuario técnico se crea después de los
+            // usuarios de prueba (ese bloque solo corre con la tabla vacía) y
+            // se crea aunque la tabla ya tenga usuarios.
+            usuarioMonitoreo.crearSiNoExiste();
         };
     }
 

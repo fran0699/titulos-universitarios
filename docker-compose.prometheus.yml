@@ -8,7 +8,7 @@ services:
       - "host.docker.internal:host-gateway"
     volumes:
       - ./monitoring/prometheus/.secrets/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - ./monitoring/prometheus/.secrets/aprobador.password:/etc/prometheus/secrets/aprobador.password:ro
+      - ./monitoring/prometheus/.secrets/monitoreo.password:/etc/prometheus/secrets/monitoreo.password:ro
       - prometheus_data:/prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
