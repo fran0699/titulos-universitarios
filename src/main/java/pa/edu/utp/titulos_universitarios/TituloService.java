@@ -1,3 +1,4 @@
+
 package pa.edu.utp.titulos_universitarios;
 
 import java.io.IOException;
@@ -200,6 +201,7 @@ public class TituloService {
 
         Titulo guardado = tituloRepository.save(titulo);
 
+        // T-3.3.2 (HU-3.3): auditar la aprobacion en la misma transaccion.
         auditoriaService.registrarEvento(
                 AccionAuditoria.APROBAR,
                 usuario,
@@ -217,6 +219,7 @@ public class TituloService {
 
         Titulo guardado = tituloRepository.save(titulo);
 
+        // T-3.3.2 (HU-3.3): auditar el rechazo en la misma transaccion.
         auditoriaService.registrarEvento(
                 AccionAuditoria.RECHAZAR,
                 usuario,

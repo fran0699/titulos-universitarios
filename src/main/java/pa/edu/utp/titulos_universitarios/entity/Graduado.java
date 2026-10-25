@@ -31,7 +31,7 @@ public class Graduado {
     @Column(name = "tipo_documento", nullable = false, length = 20)
     private TipoDocumento tipoDocumento;
 
-    @Column(name = "numero_documento", nullable = false, length = 50)
+    @Column(name = "numero_documento", nullable = false, length = 20)
     private String numeroDocumento;
 
     @Column(name = "nombre_completo", nullable = false, length = 150)

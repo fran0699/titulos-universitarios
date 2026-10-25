@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -12,10 +13,14 @@
 <main class="page-shell">
     <section class="card">
         <header class="page-header">
-            <p class="eyebrow"><a th:href="@{/titulos}">Títulos</a> › Registrar</p>
+            <p class="eyebrow">
+                <a th:href="@{/titulos}">Títulos</a> › Registrar
+            </p>
             <h1>Registrar título</h1>
             <p class="subtitle">Los campos marcados con * son obligatorios.</p>
-            <p class="subtitle">El título quedará PENDIENTE hasta que un aprobador lo revise.</p>
+            <p class="subtitle">
+                El título quedará PENDIENTE hasta que un aprobador lo revise.
+            </p>
         </header>
 
         <p class="notice notice-error"
@@ -25,14 +30,13 @@
 
         <form class="form-grid"
               th:action="@{/titulos/nuevo}"
-              th:object="${titulo}"
-              method="post">
+              th:object="${tituloForm}"
+              method="post"
+              novalidate>
 
             <div class="form-field">
                 <label for="tipoDocumento">Tipo de documento *</label>
-                <select id="tipoDocumento"
-                        th:field="*{graduado.tipoDocumento}"
-                        required>
+                <select id="tipoDocumento" th:field="*{tipoDocumento}" required>
                     <option value="">Seleccione...</option>
                     <option th:each="tipo : ${tiposDocumento}"
                             th:value="${tipo}"
@@ -40,27 +44,29 @@
                     </option>
                 </select>
                 <small class="field-error"
-                       th:if="${errores != null and errores['graduado.tipoDocumento'] != null}"
-                       th:text="${errores['graduado.tipoDocumento']}"></small>
+                       th:if="${#fields.hasErrors('tipoDocumento')}"
+                       th:errors="*{tipoDocumento}"></small>
             </div>
 
             <div class="form-field">
                 <label for="numeroDocumento">Número de documento *</label>
                 <input id="numeroDocumento"
                        type="text"
-                       th:field="*{graduado.numeroDocumento}"
+                       th:field="*{numeroDocumento}"
                        minlength="5"
                        maxlength="20"
                        autocomplete="off"
                        aria-describedby="ayudaDocumento"
                        required>
                 <small id="ayudaDocumento" class="field-help">
-                    Cédula: con guiones, provincia-tomo-asiento (por ejemplo, 8-123-456).
-                    Pasaporte: ingrese el número del documento.
+                    Cédula: con guiones, provincia-tomo-asiento
+                    (8-940-1000, PE-5-614, N-17-371).
+                    Pasaporte: Letras y números, de 5 a 20 caracteres.
+                    Se guarda en mayúsculas, sin espacios ni guiones.
                 </small>
                 <small class="field-error"
-                       th:if="${errores != null and errores['graduado.numeroDocumento'] != null}"
-                       th:text="${errores['graduado.numeroDocumento']}"></small>
+                       th:if="${#fields.hasErrors('numeroDocumento')}"
+                       th:errors="*{numeroDocumento}"></small>
             </div>
 
             <div class="form-field">
@@ -73,8 +79,8 @@
                        autocomplete="name"
                        required>
                 <small class="field-error"
-                       th:if="${errores != null and errores['nombreGraduado'] != null}"
-                       th:text="${errores['nombreGraduado']}"></small>
+                       th:if="${#fields.hasErrors('nombreGraduado')}"
+                       th:errors="*{nombreGraduado}"></small>
             </div>
 
             <div class="form-field">
@@ -82,15 +88,21 @@
                 <input id="nombreTitulo"
                        type="text"
                        th:field="*{nombreTitulo}"
+                       minlength="5"
+                       maxlength="150"
                        required>
                 <small class="field-error"
-                       th:if="${errores != null and errores['nombreTitulo'] != null}"
-                       th:text="${errores['nombreTitulo']}"></small>
+                       th:if="${#fields.hasErrors('nombreTitulo')}"
+                       th:errors="*{nombreTitulo}"></small>
             </div>
 
             <div class="form-actions">
-                <a class="button button-secondary" th:href="@{/titulos}">Cancelar</a>
-                <button class="button button-primary" type="submit">Registrar título</button>
+                <a class="button button-secondary" th:href="@{/titulos}">
+                    Cancelar
+                </a>
+                <button class="button button-primary" type="submit">
+                    Registrar título
+                </button>
             </div>
         </form>
     </section>

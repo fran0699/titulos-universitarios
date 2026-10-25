@@ -333,6 +333,9 @@ class TituloServiceTest {
         verify(tituloRepository).save(titulo);
     }
 
+    // T-3.3.2 (HU-3.3): cada accion deja su evento de auditoria con el usuario
+    // de la sesion; una accion que falla no deja ninguno.
+
     @Test
     void registrarExitoso_debeAuditarConAccionRegistrarYUsuarioDeLaSesion() {
         Titulo titulo = new Titulo();
