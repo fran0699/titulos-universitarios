@@ -1,15 +1,16 @@
 package pa.edu.utp.titulos_universitarios;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.io.IOException;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import pa.edu.utp.titulos_universitarios.entity.AccionAuditoria;
 import pa.edu.utp.titulos_universitarios.entity.Graduado;
 import pa.edu.utp.titulos_universitarios.entity.TipoDocumento;
 import pa.edu.utp.titulos_universitarios.repository.GraduadoRepository;
@@ -20,33 +21,46 @@ public class TituloService {
     private final TituloRepository tituloRepository;
     private final GraduadoRepository graduadoRepository;
     private final IdentificadorGenerator identificadorGenerator;
+    private final AuditoriaService auditoriaService;
     private final CredencialPdfService credencialPdfService;
 
     public TituloService(
             TituloRepository tituloRepository,
             GraduadoRepository graduadoRepository,
             IdentificadorGenerator identificadorGenerator,
+            AuditoriaService auditoriaService,
             CredencialPdfService credencialPdfService) {
         this.tituloRepository = tituloRepository;
         this.graduadoRepository = graduadoRepository;
         this.identificadorGenerator = identificadorGenerator;
+        this.auditoriaService = auditoriaService;
         this.credencialPdfService = credencialPdfService;
     }
 
-    @Transactional
     public Titulo registrar(Titulo titulo) {
+        return registrar(titulo, "sistema");
+    }
+
+    @Transactional
+    public Titulo registrar(Titulo titulo, String usuario) {
         if (titulo == null
                 || !TituloValidator.esValido(
                 titulo.getNombreGraduado(),
                 titulo.getNombreTitulo())) {
-            throw new IllegalArgumentException(
+            throw new TituloValidationException(
+                    null,
                     "El nombre del graduado y el nombre del título son obligatorios.");
         }
+
+        String usuarioAuditoria = (usuario == null || usuario.isBlank())
+                ? "sistema"
+                : usuario;
 
         Graduado datosGraduado = titulo.getGraduado();
 
         if (datosGraduado == null) {
-            throw new IllegalArgumentException(
+            throw new TituloValidationException(
+                    "numeroDocumento",
                     "Debe proporcionar el documento del graduado.");
         }
 
@@ -59,12 +73,14 @@ public class TituloService {
 
         if (!GraduadoValidator.esDocumentoValido(
                 tipoDocumento, numeroDocumento)) {
-            throw new IllegalArgumentException(
+            throw new TituloValidationException(
+                    "numeroDocumento",
                     "El tipo o número de documento del graduado no es válido.");
         }
 
         if (!GraduadoValidator.esNombreValido(nombreFormulario)) {
-            throw new IllegalArgumentException(
+            throw new TituloValidationException(
+                    "nombreGraduado",
                     "El nombre del graduado no tiene un formato válido.");
         }
 
@@ -73,7 +89,8 @@ public class TituloService {
                         tipoDocumento, numeroDocumento);
 
         if (documentoNormalizado == null) {
-            throw new IllegalArgumentException(
+            throw new TituloValidationException(
+                    "numeroDocumento",
                     "El tipo o número de documento del graduado no es válido.");
         }
 
@@ -98,7 +115,8 @@ public class TituloService {
                             graduado.getNombreCompleto());
 
             if (!nombreExistente.equalsIgnoreCase(nombreFormulario)) {
-                throw new IllegalArgumentException(
+                throw new TituloValidationException(
+                        "nombreGraduado",
                         "El documento ya está registrado con otro nombre.");
             }
 
@@ -106,7 +124,8 @@ public class TituloService {
                     .existsByGraduado_IdAndNombreTituloIgnoreCase(
                             graduado.getId(),
                             nombreTituloNormalizado)) {
-                throw new IllegalArgumentException(
+                throw new TituloValidationException(
+                        "nombreTitulo",
                         "Este graduado ya tiene registrado ese título.");
             }
         }
@@ -121,30 +140,38 @@ public class TituloService {
                         graduado.getNombreCompleto()));
         titulo.setNombreTitulo(nombreTituloNormalizado);
 
-        if (titulo.getFechaRegistro() == null) {
-            titulo.setFechaRegistro(LocalDate.now());
-        }
-
+        titulo.setFechaRegistro(LocalDate.now());
         titulo.setEstado(EstadoTitulo.PENDIENTE);
         titulo.setRevisadoPor(null);
         titulo.setFechaRevision(null);
         titulo.setIdentificador(null);
 
-        return tituloRepository.save(titulo);
+        Titulo guardado = tituloRepository.save(titulo);
+
+        auditoriaService.registrarEvento(
+                AccionAuditoria.REGISTRAR,
+                usuarioAuditoria,
+                guardado.getId(),
+                "Registró el título \"" + guardado.getNombreTitulo()
+                        + "\" del graduado "
+                        + guardado.getGraduado().getNombreCompleto());
+
+        return guardado;
     }
 
     public List<Titulo> listar() {
         return tituloRepository.findAll();
     }
 
-    /** T-2.4.3 (HU-2.4): descarga únicamente credenciales de títulos aprobados. */
     @Transactional(readOnly = true)
     public byte[] generarCredencialPdf(Long id) {
         Titulo titulo = tituloRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
         if (titulo.getEstado() != EstadoTitulo.APROBADO) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+
         try {
             return credencialPdfService.generar(titulo);
         } catch (IOException exception) {
@@ -159,11 +186,11 @@ public class TituloService {
         return tituloRepository.findByEstado(EstadoTitulo.PENDIENTE);
     }
 
-    // T-1.7.2 (HU-1.7): cantidad de titulos pendientes para el contador del menu.
     public long contarPendientes() {
         return tituloRepository.countByEstado(EstadoTitulo.PENDIENTE);
     }
 
+    @Transactional
     public Titulo aprobar(Long id, String usuario) {
         Titulo titulo = obtenerPendienteParaRevision(id, usuario);
 
@@ -171,15 +198,32 @@ public class TituloService {
 
         titulo.setIdentificador(identificadorGenerator.generar());
 
-        return tituloRepository.save(titulo);
+        Titulo guardado = tituloRepository.save(titulo);
+
+        auditoriaService.registrarEvento(
+                AccionAuditoria.APROBAR,
+                usuario,
+                guardado.getId(),
+                "Aprobó el título \"" + guardado.getNombreTitulo() + "\"");
+
+        return guardado;
     }
 
+    @Transactional
     public Titulo rechazar(Long id, String usuario) {
         Titulo titulo = obtenerPendienteParaRevision(id, usuario);
 
         registrarRevision(titulo, EstadoTitulo.RECHAZADO, usuario);
 
-        return tituloRepository.save(titulo);
+        Titulo guardado = tituloRepository.save(titulo);
+
+        auditoriaService.registrarEvento(
+                AccionAuditoria.RECHAZAR,
+                usuario,
+                guardado.getId(),
+                "Rechazó el título \"" + guardado.getNombreTitulo() + "\"");
+
+        return guardado;
     }
 
     private Titulo obtenerPendienteParaRevision(Long id, String usuario) {
