@@ -16,6 +16,7 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
 
 import pa.edu.utp.titulos_universitarios.entity.TipoDocumento;
 
@@ -33,6 +34,13 @@ public class CredencialPdfService {
     private static final PDFont SERIF_ITALIC = new PDType1Font(Standard14Fonts.FontName.TIMES_ITALIC);
     private static final PDFont SANS = new PDType1Font(Standard14Fonts.FontName.HELVETICA);
     private static final PDFont SANS_BOLD = new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD);
+
+    private final String urlVerificacion;
+
+    public CredencialPdfService(
+            @Value("${titulos.verificacion.url:http://localhost:8080/verificar}") String urlVerificacion) {
+        this.urlVerificacion = urlVerificacion;
+    }
 
     public byte[] generar(Titulo titulo) throws IOException {
         validarTitulo(titulo);
@@ -199,6 +207,8 @@ public class CredencialPdfService {
     }
 
     private void dibujarPie(PDPageContentStream contenido) throws IOException {
+        centrar(contenido, "Verifique este título en " + urlVerificacion,
+                SANS, 8, 140, 29, 61, 111);
         contenido.setStrokingColor(new Color(190, 202, 220));
         contenido.setLineWidth(0.6f);
         contenido.moveTo(88, 126);

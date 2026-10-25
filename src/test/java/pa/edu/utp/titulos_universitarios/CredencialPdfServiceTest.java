@@ -16,7 +16,8 @@ import pa.edu.utp.titulos_universitarios.entity.TipoDocumento;
 
 class CredencialPdfServiceTest {
 
-    private final CredencialPdfService servicio = new CredencialPdfService();
+    private final CredencialPdfService servicio =
+            new CredencialPdfService("http://localhost:8080/verificar");
 
     @Test
     void generaPdfConDatosDelGraduadoYConservaTildes() throws Exception {
@@ -35,7 +36,7 @@ class CredencialPdfServiceTest {
             assertTrue(texto.contains("No constituye una firma electrónica certificada."));
             assertFalse(texto.contains("SHA-256"));
             assertFalse(texto.toLowerCase().contains("código qr"));
-            assertFalse(texto.contains("Verifique este título"));
+            assertTrue(texto.contains("Verifique este título en http://localhost:8080/verificar"));
         }
     }
 
