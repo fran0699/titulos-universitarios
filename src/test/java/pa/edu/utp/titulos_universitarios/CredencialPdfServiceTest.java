@@ -28,7 +28,8 @@ class CredencialPdfServiceTest {
 
             assertTrue(texto.contains("UNIVERSIDAD TECNOLÓGICA DE PANAMÁ"));
             assertTrue(texto.contains("Secretaría General"));
-            assertTrue(texto.contains("José Martínez"));
+            assertTrue(texto.contains("José Núñez Agüero"));
+            assertTrue(texto.contains("CREDENCIAL DE TÍTULO UNIVERSITARIO"));
             assertTrue(texto.contains("cédula de identidad personal N.º 8-123-456"));
             assertTrue(texto.contains("Licenciatura en Ingeniería de Software"));
             assertTrue(texto.contains("Fecha de emisión: 21 de octubre de 2026"));
@@ -63,12 +64,12 @@ class CredencialPdfServiceTest {
 
     private Titulo tituloAprobado() {
         Titulo titulo = new Titulo();
-        titulo.setNombreGraduado("José Martínez");
+        titulo.setNombreGraduado("José Núñez Agüero");
         titulo.setNombreTitulo("Licenciatura en Ingeniería de Software");
         titulo.setEstado(EstadoTitulo.APROBADO);
         titulo.setFechaRevision(LocalDateTime.of(2026, 10, 21, 10, 30));
         titulo.setIdentificador("ID-CREDENCIAL-123");
-        titulo.setGraduado(new Graduado(TipoDocumento.CEDULA, "8-123-456", "José Martínez"));
+        titulo.setGraduado(new Graduado(TipoDocumento.CEDULA, "8-123-456", "José Núñez Agüero"));
         return titulo;
     }
 }

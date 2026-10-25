@@ -56,8 +56,8 @@ public class CredencialPdfService {
                 dibujarBirrete(contenido);
                 centrar(contenido, "UNIVERSIDAD TECNOLÓGICA DE PANAMÁ", SANS_BOLD, 11, 645, 29, 61, 111);
                 centrar(contenido, "Secretaría General · Registro de títulos", SANS, 8, 630, 77, 96, 125);
-                centrar(contenido, "C R E D E N C I A L   D E   T Í T U L O   U N I V E R S I T A R I O",
-                        SANS, 7, 582, 20, 68, 255);
+                centrar(contenido, "CREDENCIAL DE TÍTULO UNIVERSITARIO",
+                        SANS_BOLD, 8, 582, 20, 68, 255);
                 centrar(contenido, "Se certifica que", SERIF_ITALIC, 11, 542, 80, 87, 111);
 
                 dibujarNombre(contenido, titulo.getNombreGraduado(), 506);
