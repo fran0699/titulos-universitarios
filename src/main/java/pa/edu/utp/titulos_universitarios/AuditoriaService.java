@@ -73,6 +73,7 @@ public class AuditoriaService {
                 usuarioNormalizado,
                 tituloId,
                 detalleNormalizado);
+
         return eventoAuditoriaRepository.save(evento);
     }
 }

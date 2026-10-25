@@ -38,10 +38,6 @@ public class TituloService {
         this.credencialPdfService = credencialPdfService;
     }
 
-    public Titulo registrar(Titulo titulo) {
-        return registrar(titulo, "sistema");
-    }
-
     @Transactional
     public Titulo registrar(Titulo titulo, String usuario) {
         if (titulo == null
@@ -52,10 +48,6 @@ public class TituloService {
                     null,
                     "El nombre del graduado y el nombre del título son obligatorios.");
         }
-
-        String usuarioAuditoria = (usuario == null || usuario.isBlank())
-                ? "sistema"
-                : usuario;
 
         Graduado datosGraduado = titulo.getGraduado();
 
@@ -149,9 +141,10 @@ public class TituloService {
 
         Titulo guardado = tituloRepository.save(titulo);
 
+        // T-3.3.2 (HU-3.3): auditar el registro en la misma transaccion.
         auditoriaService.registrarEvento(
                 AccionAuditoria.REGISTRAR,
-                usuarioAuditoria,
+                usuario,
                 guardado.getId(),
                 "Registró el título \"" + guardado.getNombreTitulo()
                         + "\" del graduado "
@@ -187,6 +180,7 @@ public class TituloService {
         return tituloRepository.findByEstado(EstadoTitulo.PENDIENTE);
     }
 
+    // T-1.7.2 (HU-1.7): cantidad de titulos pendientes para el contador del menu.
     public long contarPendientes() {
         return tituloRepository.countByEstado(EstadoTitulo.PENDIENTE);
     }

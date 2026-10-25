@@ -1,3 +1,4 @@
+
 package pa.edu.utp.titulos_universitarios;
 
 public class TituloValidationException extends IllegalArgumentException {
