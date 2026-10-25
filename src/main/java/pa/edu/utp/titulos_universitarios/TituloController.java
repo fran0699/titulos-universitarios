@@ -76,55 +76,28 @@ public class TituloController {
 
             return "redirect:/titulos";
 
-        } catch (IllegalArgumentException exception) {
+        } catch (TituloValidationException exception) {
+            // HU-4.7: el servicio indica el campo; no se busca en el texto del mensaje.
             model.addAttribute("tiposDocumento", TipoDocumento.values());
 
-            String mensaje = exception.getMessage();
-
-            if (mensaje == null) {
-                model.addAttribute(
-                        "error", "No se pudo registrar el título.");
+            if (exception.getCampo() != null) {
+                bindingResult.rejectValue(
+                        exception.getCampo(),
+                        "titulo." + exception.getCampo(),
+                        exception.getMessage());
             } else {
-                String texto = mensaje.toLowerCase(java.util.Locale.ROOT);
-
-                if (texto.contains("documento ya está registrado con otro nombre")) {
-                    // El documento existe, pero pertenece a otro nombre.
-                    bindingResult.rejectValue(
-                            "nombreGraduado",
-                            "titulo.nombreGraduado",
-                            mensaje);
-
-                } else if (texto.contains("tipo de documento")) {
-                    bindingResult.rejectValue(
-                            "tipoDocumento",
-                            "titulo.tipoDocumento",
-                            mensaje);
-
-                } else if (texto.contains("documento")) {
-                    bindingResult.rejectValue(
-                            "numeroDocumento",
-                            "titulo.numeroDocumento",
-                            mensaje);
-
-                } else if (texto.contains("nombre del graduado")
-                        || texto.contains("nombre del estudiante")) {
-                    bindingResult.rejectValue(
-                            "nombreGraduado",
-                            "titulo.nombreGraduado",
-                            mensaje);
-
-                } else if (texto.contains("título")
-                        || texto.contains("titulo")) {
-                    bindingResult.rejectValue(
-                            "nombreTitulo",
-                            "titulo.nombreTitulo",
-                            mensaje);
-
-                } else {
-                    model.addAttribute("error", mensaje);
-                }
+                model.addAttribute("error", exception.getMessage());
             }
 
+            return "titulos/nuevo";
+
+        } catch (IllegalArgumentException exception) {
+            model.addAttribute("tiposDocumento", TipoDocumento.values());
+            model.addAttribute(
+                    "error",
+                    exception.getMessage() != null
+                            ? exception.getMessage()
+                            : "No se pudo registrar el título.");
             return "titulos/nuevo";
         }
     }
