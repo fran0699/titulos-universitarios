@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -100,6 +101,13 @@ class CredencialDownloadIntegrationTest {
         mockMvc.perform(get("/titulos/{id}/credencial", aprobadoId)
                         .with(user("prometheus").roles("MONITOREO")))
                 .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void sinSesionRedirigeAlInicioDeSesion() throws Exception {
+        mockMvc.perform(get("/titulos/{id}/credencial", aprobadoId))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/login"));
     }
 
     @Test
