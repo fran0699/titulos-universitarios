@@ -1,17 +1,26 @@
-HU-2.4 / T-2.4.3 - Evidencia de descarga de credencial
-Fecha de ejecucion: 2026-10-22
-Rama: feature/HU-2.4.3-descarga-credencial
-Commit base: aeb4ca6 (PR #24 integrado en main; incluye d9be34b)
+HU-2.4 (T-2.4.1 a T-2.4.3) - Evidencia de la credencial PDF y su descarga
+Fecha de ejecucion: 2026-10-25
+Rama: feature/HU-2.4.3-descarga-credencial (PR #26), con main integrado (1a9b58b)
 
 Ejecucion automatizada: .\mvnw.cmd clean test con Java 21.0.12.1
-Resultado global: 64 pruebas, 0 fallos, 0 errores, 0 omitidas.
-CredencialDownloadIntegrationTest: 5 pruebas, 0 fallos.
+Resultado global: 95 pruebas, 0 fallos, 0 errores, 0 omitidas.
+CredencialDownloadIntegrationTest: 6 pruebas, 0 fallos.
+CredencialPdfServiceTest: 4 pruebas, 0 fallos.
 
 Matriz probada con MockMvc y base H2 en memoria:
 - APROBADOR -> GET /titulos/{id}/credencial: 200, application/pdf y Content-Disposition attachment.
 - REGISTRADOR -> GET /titulos/{id}/credencial: 200, application/pdf.
 - MONITOREO -> GET /titulos/{id}/credencial: 403.
+- Sin sesion -> GET /titulos/{id}/credencial: 302 a /login.
 - Titulo PENDIENTE -> GET /titulos/{id}/credencial: 404.
-- La lista presenta Descargar PDF para el titulo APROBADO y no disponible para el PENDIENTE.
+- La lista muestra "Descargar PDF" en el titulo APROBADO y "No disponible" en el PENDIENTE.
 
-El PDF y la imagen adjuntos se generaron desde el cuerpo de respuesta de la ruta en la prueba de integracion. Los datos son de demostracion y la base usada fue H2 temporal; no se accedio a la base PostgreSQL local.
+Contenido del PDF comprobado con PDFTextStripper (CredencialPdfServiceTest), diseno D1 sin QR ni hash:
+institucion, "CREDENCIAL DE TITULO UNIVERSITARIO", nombre con tildes, ñ y ü (Jose Nuñez Agüero),
+tipo y numero de documento completos, titulo, fecha de emision (fecha de aprobacion), identificador
+y "Verifique este titulo en http://localhost:8080/verificar".
+Adecuacion funcional (elementos de D1 presentes / requeridos, sin QR ni hash): 8 de 8 (100 %).
+
+El PDF y la imagen (HU-2.4.3-credencial-descargada.pdf y .png) los genera la prueba
+aprobadorPuedeDescargarPdfYSeGuardaEvidenciaVisual en target/evidencias-hu-2.4.3/ y se copiaron aqui.
+Datos de demostracion en H2 temporal; no se uso la base PostgreSQL local.
