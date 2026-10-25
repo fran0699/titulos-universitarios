@@ -50,6 +50,7 @@ public class TituloController {
     public String registrar(
             @Valid @ModelAttribute("tituloForm") TituloForm formulario,
             BindingResult bindingResult,
+            Principal principal,
             RedirectAttributes redirectAttributes,
             Model model) {
 
@@ -68,7 +69,7 @@ public class TituloController {
             graduado.setNumeroDocumento(formulario.getNumeroDocumento());
             titulo.setGraduado(graduado);
 
-            tituloService.registrar(titulo);
+            tituloService.registrar(titulo, principal.getName());
 
             redirectAttributes.addFlashAttribute(
                     "mensaje", "Título registrado correctamente.");

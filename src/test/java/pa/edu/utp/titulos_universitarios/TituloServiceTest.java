@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
@@ -20,6 +21,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import pa.edu.utp.titulos_universitarios.entity.AccionAuditoria;
 import pa.edu.utp.titulos_universitarios.entity.Graduado;
 import pa.edu.utp.titulos_universitarios.entity.TipoDocumento;
 import pa.edu.utp.titulos_universitarios.repository.GraduadoRepository;
@@ -35,6 +37,9 @@ class TituloServiceTest {
 
     @Mock
     private IdentificadorGenerator identificadorGenerator;
+
+    @Mock
+    private AuditoriaService auditoriaService;
 
     @InjectMocks
     private TituloService tituloService;
@@ -77,7 +82,7 @@ class TituloServiceTest {
 
         prepararRegistro(titulo);
 
-        Titulo resultado = tituloService.registrar(titulo);
+        Titulo resultado = tituloService.registrar(titulo, "registrador1");
 
         assertEquals(titulo, resultado);
         assertNotNull(resultado.getFechaRegistro());
@@ -93,7 +98,7 @@ class TituloServiceTest {
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> tituloService.registrar(titulo)
+                () -> tituloService.registrar(titulo, "registrador1")
         );
 
         verifyNoInteractions(tituloRepository, graduadoRepository);
@@ -110,7 +115,7 @@ class TituloServiceTest {
 
         prepararRegistro(titulo);
 
-        Titulo resultado = tituloService.registrar(titulo);
+        Titulo resultado = tituloService.registrar(titulo, "registrador1");
 
         assertEquals(EstadoTitulo.PENDIENTE, resultado.getEstado());
         assertNull(resultado.getRevisadoPor());
@@ -230,7 +235,7 @@ class TituloServiceTest {
 
         when(tituloRepository.save(titulo)).thenReturn(titulo);
 
-        Titulo resultado = tituloService.registrar(titulo);
+        Titulo resultado = tituloService.registrar(titulo, "registrador1");
 
         assertEquals(graduadoExistente, resultado.getGraduado());
 
@@ -258,7 +263,7 @@ class TituloServiceTest {
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> tituloService.registrar(titulo)
+                () -> tituloService.registrar(titulo, "registrador1")
         );
 
         verify(graduadoRepository, never()).save(any(Graduado.class));
@@ -291,7 +296,7 @@ class TituloServiceTest {
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> tituloService.registrar(titulo)
+                () -> tituloService.registrar(titulo, "registrador1")
         );
 
         verify(graduadoRepository, never()).save(any(Graduado.class));
@@ -318,11 +323,68 @@ class TituloServiceTest {
 
         prepararRegistro(titulo);
 
-        Titulo resultado = tituloService.registrar(titulo);
+        Titulo resultado = tituloService.registrar(titulo, "registrador1");
 
         assertEquals(LocalDate.now(), resultado.getFechaRegistro());
         verify(tituloRepository).save(titulo);
     }
 
+    // T-3.3.2 (HU-3.3): cada accion deja su evento de auditoria con el usuario
+    // de la sesion; una accion que falla no deja ninguno.
 
+    @Test
+    void registrarExitoso_debeAuditarConAccionRegistrarYUsuarioDeLaSesion() {
+        Titulo titulo = new Titulo();
+        titulo.setNombreGraduado("Ana Pérez");
+        titulo.setNombreTitulo("Licenciatura en Desarrollo de Software");
+
+        prepararRegistro(titulo);
+
+        tituloService.registrar(titulo, "registrador1");
+
+        verify(auditoriaService).registrarEvento(
+                eq(AccionAuditoria.REGISTRAR), eq("registrador1"), any(), any());
+    }
+
+    @Test
+    void aprobar_debeAuditarConAccionAprobarYUsuarioDeLaSesion() {
+        Titulo titulo = tituloPendiente();
+
+        when(tituloRepository.findById(1L)).thenReturn(Optional.of(titulo));
+        when(identificadorGenerator.generar()).thenReturn("ID-123");
+        when(tituloRepository.save(titulo)).thenReturn(titulo);
+
+        tituloService.aprobar(1L, "aprobador1");
+
+        verify(auditoriaService).registrarEvento(
+                eq(AccionAuditoria.APROBAR), eq("aprobador1"), any(), any());
+    }
+
+    @Test
+    void rechazar_debeAuditarConAccionRechazarYUsuarioDeLaSesion() {
+        Titulo titulo = tituloPendiente();
+
+        when(tituloRepository.findById(1L)).thenReturn(Optional.of(titulo));
+        when(tituloRepository.save(titulo)).thenReturn(titulo);
+
+        tituloService.rechazar(1L, "aprobador1");
+
+        verify(auditoriaService).registrarEvento(
+                eq(AccionAuditoria.RECHAZAR), eq("aprobador1"), any(), any());
+    }
+
+    @Test
+    void accionQueFalla_noDebeDejarEvento() {
+        Titulo titulo = tituloPendiente();
+        titulo.setEstado(EstadoTitulo.APROBADO);
+
+        when(tituloRepository.findById(1L)).thenReturn(Optional.of(titulo));
+
+        assertThrows(
+                IllegalStateException.class,
+                () -> tituloService.aprobar(1L, "aprobador1")
+        );
+
+        verifyNoInteractions(auditoriaService);
+    }
 }
