@@ -11,9 +11,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,6 +40,9 @@ class TituloServiceTest {
 
     @Mock
     private AuditoriaService auditoriaService;
+
+    @Mock
+    private CredencialPdfService credencialPdfService;
 
     @InjectMocks
     private TituloService tituloService;
@@ -209,6 +212,7 @@ class TituloServiceTest {
         assertEquals(EstadoTitulo.PENDIENTE, resultado.get(0).getEstado());
         verify(tituloRepository).findByEstado(EstadoTitulo.PENDIENTE);
     }
+
     @Test
     void registrar_debeReutilizarGraduadoExistente() {
         Titulo titulo = new Titulo();
