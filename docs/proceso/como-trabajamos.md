@@ -18,8 +18,8 @@ Los roles de Scrum son formales: en la práctica, los cuatro deciden y desarroll
 ```
 Planificación ──► Desarrollo y revisión ──► Cierre ──────────► Retrospectiva
 (historias        (una rama por tarea,       (verificación      (qué funcionó,
- corregidas,       PR revisado por el         sobre main,        qué no y qué
- cuadro)           siguiente del relevo)      Nikto, métricas)   se ajusta)
+ corregidas,       nadie espera a otro;       sobre main,        qué no y qué
+ cuadro)           PR revisado por otro)      Nikto, métricas)   se ajusta)
 ```
 
 ### 1. Planificación (orden fijo)
@@ -45,24 +45,29 @@ Una historia entra a la planificación solo si cumple todo:
 - [ ] Estimación revisada con los criterios a la vista.
 - [ ] Riesgos y métrica QA asociada.
 
-### 2. Sprint Backlog: formato y orden de relevo
+### 2. Sprint Backlog: formato y regla de independencia
 
 Un solo cuadro, con una fila por tarea:
 
 | Responsable | Historia (pts) | Tarea | Qué se hace | Depende de | Revisa el PR |
 |---|---|---|---|---|---|
-| 1 | HU-4.7 (3) | T-4.7.1 (base) | … | — | 2 |
-| 2 | HU-3.3 (3) | T-3.3.2 | … | T-3.3.1 y T-4.7.1 (Resp. 1) ya fusionada | 3 |
+| 1 | HU-4.7 (3) | T-4.7.1 | … | — | 2 |
+| 1 | HU-4.7 (3) | T-4.7.2 | … | T-4.7.1 | 2 |
 
-**Regla de numeración (relevo).** Con solo ver su número, cada quien sabe de quién depende:
+«Depende de» solo nombra tareas del mismo responsable.
 
-- El **1** tiene la tarea base, que se fusiona primero. El **4** es quien más depende de los demás y fusiona al final.
-- Nadie depende de un número mayor que el suyo.
-- El relevo ordena las **fusiones**, no el inicio: los cuatro empiezan el primer día, cada uno con una tarea sin dependencias.
-- Una historia independiente puede ocupar un número intermedio y fusionar cuando termine.
-- Cuenta como dependencia tanto la funcional como la de un archivo compartido (mismo método o mismo controlador).
+**Regla de independencia.** Nadie se queda esperando a que otro termine para poder trabajar:
 
-**Revisión:** cada PR lo revisa el siguiente del relevo: el 2 revisa al 1, el 3 al 2, el 4 al 3 y el 1 al 4. El Product Owner puede aprobar cualquier PR. Si un revisor no responde, se avisa en el grupo y la revisión pasa al Product Owner.
+- Cada responsable es dueño de historias completas: de la base de datos a la pantalla, con sus pruebas y su evidencia.
+- **Primera opción, independencia:** ninguna tarea depende del código de otro responsable en el mismo sprint. Si dos historias se necesitan, las toma la misma persona o una pasa al sprint siguiente. También se puede dividir una historia para separar la parte que depende de otra.
+- **Segunda opción, solo si la primera no es posible, un contrato:** en la planificación se acuerda lo que las dos partes comparten (una dirección, el nombre de un método o el formato de un dato) y se escribe en las dos historias. Cada una se construye y se prueba contra ese acuerdo, sin esperar a la otra.
+- Lo que ya fijan la [guía de pantallas](../producto/guia-de-pantallas.md) o el código en main (por ejemplo, la ruta `/verificar/{código}`) no es una dependencia: las dos historias lo toman de main.
+- **Compartir un archivo no es una dependencia** (por ejemplo, `SecurityConfig`, `pom.xml` o el encabezado): cada quien fusiona cuando termina y quien fusiona después trae main a su rama. En lo posible, dos personas no cambian el mismo método.
+- Los números no ordenan las fusiones: cada quien fusiona cuando su PR está aprobado y en verde. Si alguien termina antes, no pasa nada.
+
+Debajo del cuadro se anotan los valores o contratos acordados y los archivos que comparten dos o más historias.
+
+**Revisión:** el 2 revisa al 1, el 3 al 2, el 4 al 3 y el 1 al 4. Si dos historias comparten un archivo o un contrato, conviene que una revise a la otra. El Product Owner puede aprobar cualquier PR. Si un revisor no responde, se avisa en el grupo y la revisión pasa al Product Owner.
 
 **Notas de fusión:** la tarea de mayor riesgo técnico se sube temprano, en un PR propio. Quien fusiona después de otro que cambió un archivo compartido (por ejemplo, `pom.xml`) trae main a su rama antes.
 

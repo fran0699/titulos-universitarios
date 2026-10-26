@@ -1,6 +1,6 @@
 # Product Backlog
 
-**Actualizado:** cierre del Sprint 5 (25/10/2026). **Total:** 98 pts, 57 completados (58 %).
+**Actualizado:** planificación del Sprint 6 (26/10/2026). **Total:** 98 pts, 57 completados (58 %).
 
 Estructura: Product Backlog → épicas (EP-0X) → historias de usuario (HU-X.Y) → tareas (T-X.Y.Z). Cada historia es la unidad asignable, tiene un dueño y cabe en un sprint; los puntos y la prioridad se asignan a la historia, y el peso de una épica es la suma de sus historias. Tipos: Funcional, Técnica, Investigación y Entorno. Cada historia se asocia a al menos uno de los tres requisitos del cliente ([visión y MVP](vision-y-mvp.md)): Precisión, Seguridad o Verificabilidad internacional.
 
@@ -31,18 +31,19 @@ Las historias que ya tienen criterios de aceptación detallados enlazan a su arc
 | HU-2.2 | Técnica | Como sistema, necesito asignar un identificador único a cada título aprobado para poder consultarlo después. | Verificabilidad internacional | Media | 3 | Completo (S3) |
 | HU-2.3 | Investigación | Como equipo, queremos una prueba de concepto con Apache PDFBox y ZXing para conocer su uso antes de desarrollar la credencial. | Verificabilidad internacional | Alta | 2 | Completo (S3) |
 | [HU-2.4](historias/HU-2.4.md) | Funcional | Como personal autorizado, quiero descargar en PDF la credencial de un título aprobado, con el nombre y el documento del graduado, para entregarla al graduado y que este la presente ante terceros. | Verificabilidad internacional | Alta | 5 | Completo (S5) |
-| HU-2.5 | Funcional | Como verificador, quiero que la credencial incluya un código QR y un hash de integridad para detectar alteraciones. | Precisión / Verificabilidad internacional | Alta | 5 | Pendiente |
+| [HU-2.5](historias/HU-2.5.md) | Funcional | Como verificador (un empleador u otra institución), quiero que la credencial tenga un código QR que abra su verificación pública, para comprobar desde el celular que el título es auténtico sin pedirle nada a la universidad. | Verificabilidad internacional | Alta | 3 | Pendiente (Sprint 6) |
 | HU-2.6 | Funcional | Como personal autorizado, quiero ver el detalle de un título (estado, revisión, identificador e historial) para revisarlo antes de actuar sobre él. | Precisión | Alta | 3 | Pendiente |
 | HU-2.7 | Funcional | Como aprobador, quiero confirmar antes de rechazar, revocar o sustituir un título para evitar errores que no se pueden deshacer. | Precisión | Media | 1 | Pendiente |
+| HU-2.8 | Funcional | Como verificador, quiero comparar el hash de integridad impreso en la credencial con el que muestra la verificación pública, para detectar si el documento fue alterado. | Precisión / Verificabilidad internacional | Alta | 2 | Pendiente (nueva) |
 
 ## EP-03 · Verificación pública y ciclo de vida del título — 14 pts (3 completados)
 
 | ID | Tipo | Historia de usuario | Pilar | Prioridad | Pts | Estado |
 |---|---|---|---|---|---|---|
-| HU-3.1 | Funcional | Como graduado, empleador o institución, quiero consultar un título por QR o código, sin iniciar sesión, para conocer su estado; el documento del graduado se muestra enmascarado. | Verificabilidad internacional | Alta | 5 | Pendiente |
+| [HU-3.1](historias/HU-3.1.md) | Funcional | Como empleador, institución o el propio graduado, quiero consultar un título con su código de verificación, escribiéndolo o desde el QR de la credencial, sin iniciar sesión, para comprobar que es auténtico y válido. | Verificabilidad internacional | Alta | 5 | Pendiente (Sprint 6) |
 | HU-3.2 | Funcional | Como aprobador, quiero revocar o sustituir un título emitido para que la verificación muestre su estado real. | Verificabilidad internacional | Media | 3 | Pendiente |
 | [HU-3.3](historias/HU-3.3.md) | Técnica | Como institución, necesito que cada registro, aprobación y rechazo de un título quede en un registro de auditoría que no se pueda modificar, con quién lo hizo y cuándo, para rastrear cualquier cambio en un título. | Seguridad | Alta (antes Media) | 3 | Completo (S5) |
-| HU-3.4 | Funcional | Como aprobador, quiero consultar el registro de auditoría con filtros por fecha, acción y usuario para rastrear cualquier cambio. | Seguridad | Media | 3 | Pendiente |
+| [HU-3.4](historias/HU-3.4.md) | Funcional | Como aprobador, quiero consultar el registro de auditoría filtrando por fechas, acción y usuario, para rastrear quién registró, aprobó o rechazó cada título y cuándo. | Seguridad | Alta (antes Media) | 3 | Pendiente (Sprint 6) |
 
 ## EP-04 · Calidad, seguridad y operación — 23 pts (13 completados)
 
@@ -58,7 +59,7 @@ Las historias que ya tienen criterios de aceptación detallados enlazan a su arc
 | HU-4.8 | Técnica | Como equipo, queremos pruebas de integración con MockMvc de las reglas por rol y de las cabeceras de seguridad, para detectar automáticamente si un cambio abre un acceso indebido. | Seguridad | Media | 3 | Pendiente |
 | HU-4.9 | Técnica | Como institución, necesito una política de seguridad de contenido (CSP) que no permita estilos en línea, para reducir el riesgo de inyección de código. | Seguridad | Baja | 2 | Pendiente |
 | [HU-4.10](historias/HU-4.10.md) | Técnica | Como institución, necesito que las métricas solo las lea un usuario técnico de Prometheus, sin acceso a las pantallas, y que HTTP Basic solo funcione en `/actuator/**`, para que una contraseña filtrada de Prometheus no permita registrar ni aprobar títulos. | Seguridad | Alta | 2 | Completo (S5) |
-| [HU-4.11](historias/HU-4.11.md) | Técnica | Como usuario del sistema, quiero que al iniciar sesión la aplicación me lleve a una pantalla válida aunque el navegador haya pedido archivos automáticos, para no ver un error 404 después de entrar. | Seguridad | Alta | 1 | Pendiente (nueva) |
+| [HU-4.11](historias/HU-4.11.md) | Técnica | Como usuario del sistema, quiero que al iniciar sesión la aplicación me lleve a una pantalla válida aunque el navegador haya pedido archivos automáticos, para no ver un error 404 después de entrar. | Seguridad | Alta | 1 | Pendiente (Sprint 6) |
 
 **Total del Product Backlog: 98 pts (97 del Sprint 4 + 1 de HU-4.11, nueva) — completados 57 pts (58 %).**
 
@@ -74,14 +75,15 @@ Las historias que ya tienen criterios de aceptación detallados enlazan a su arc
 
 ## Cobertura de los tres requisitos del cliente
 
-- **Precisión:** HU-1.1, HU-1.3, HU-1.4, HU-1.8, HU-1.9, HU-1.10, HU-1.11, HU-2.1, HU-2.5, HU-2.6, HU-2.7, HU-4.1 y HU-4.7.
+- **Precisión:** HU-1.1, HU-1.3, HU-1.4, HU-1.8, HU-1.9, HU-1.10, HU-1.11, HU-2.1, HU-2.6, HU-2.7, HU-2.8, HU-4.1 y HU-4.7.
 - **Seguridad:** HU-1.2, HU-1.5, HU-1.6, HU-1.7, HU-1.9, HU-2.1, HU-3.3, HU-3.4 y HU-4.3 a HU-4.11.
-- **Verificabilidad internacional:** HU-2.2, HU-2.3, HU-2.4, HU-2.5, HU-3.1 y HU-3.2.
+- **Verificabilidad internacional:** HU-2.2, HU-2.3, HU-2.4, HU-2.5, HU-2.8, HU-3.1 y HU-3.2.
 
 Ningún pilar queda sin al menos una historia asociada.
 
 ## Cambios recientes
 
+- **Sprint 6 (planificación):** se corrigieron HU-2.5, HU-3.1, HU-3.4 y HU-4.11 con la Definición de Listo. HU-2.5 se dividió: se queda con el QR (3 pts) y el hash pasa a la nueva HU-2.8 (2 pts, Sprint 7), porque solo se puede comparar en la página de verificación que llega con HU-3.1; así ninguna historia del sprint espera a otra. El total sigue en 98 pts. HU-3.4 sube a prioridad Alta por ser parte del MVP.
 - **Sprint 5:** se corrigieron HU-2.4, HU-3.3, HU-4.7 y HU-4.10 con la Definición de Listo (HU-3.3 sube de Media a Alta por ser parte del MVP); se agregó HU-4.11 (1 pt) a partir de la verificación de cierre.
 - **Sprint 4:** se retiró HU-4.2, porque Nikto pasó a ser una actividad fija del cierre de cada sprint, y se agregó HU-4.10.
 

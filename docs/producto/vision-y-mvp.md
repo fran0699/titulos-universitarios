@@ -14,7 +14,7 @@ El cliente necesita garantizar tres cosas, y cada historia del [Product Backlog]
 |---|---|---|
 | **Precisión** | Los datos del título son correctos, están normalizados y no se duplican. | Graduado identificado por documento (HU-1.10), validación en el servidor (HU-4.7) |
 | **Seguridad** | Solo el personal autorizado actúa, cada acción queda registrada y la aplicación resiste ataques comunes. | Roles separados (HU-1.2, HU-1.9), registro de auditoría (HU-3.3), usuario técnico de Prometheus (HU-4.10) |
-| **Verificabilidad internacional** | Un tercero puede comprobar el título sin pedirle nada a la universidad, también en inglés. | Identificador único (HU-2.2), credencial PDF (HU-2.4), QR y hash (HU-2.5), verificación pública bilingüe (HU-3.1) |
+| **Verificabilidad internacional** | Un tercero puede comprobar el título sin pedirle nada a la universidad, también en inglés. | Identificador único (HU-2.2), credencial PDF (HU-2.4), QR (HU-2.5), verificación pública bilingüe (HU-3.1), hash de integridad (HU-2.8) |
 
 ## Usuarios y roles
 
@@ -37,7 +37,7 @@ Se definió en la planificación del Sprint 5 (20/10/2026) como la cadena mínim
 |---|---|---|
 | Registrar | HU-1.1, HU-1.2, HU-1.3, HU-1.9, HU-1.10 y HU-4.7 | Completo |
 | Aprobar | HU-2.1 y HU-2.2 | Completo |
-| Emitir la credencial | HU-2.4 (PDF) y HU-2.5 (QR y hash) | PDF completo; QR y hash en el Sprint 6 |
+| Emitir la credencial | HU-2.4 (PDF) y HU-2.5 (QR) | PDF completo; QR en el Sprint 6 |
 | Verificar públicamente | HU-3.1 | Sprint 6 |
 | Saber quién hizo qué | HU-3.3 (registro) y HU-3.4 (consulta) | Registro completo; consulta en el Sprint 6 |
 | Seguridad transversal | HU-4.3 y HU-4.10 | Completo |
@@ -47,7 +47,8 @@ El MVP completo se demuestra al cierre del **Sprint 6**, con sus métricas de ca
 ## Decisiones de alcance
 
 - **Se priorizó en el Sprint 5** lo que protege y completa la cadena: el usuario técnico de Prometheus (HU-4.10), la validación en el servidor (HU-4.7), la credencial PDF (HU-2.4) y el registro de auditoría (HU-3.3).
-- **Se postergó para después del MVP:** HU-1.11 (catálogo de programas), HU-2.6 (detalle del título; mientras tanto, el PDF se descarga desde la lista), HU-1.5, HU-4.6, HU-1.8, HU-2.7, HU-3.2, HU-4.5, HU-4.8 y HU-4.9.
+- **Se postergó el hash de integridad en la planificación del Sprint 6:** HU-2.5 se dividió y el hash pasó a HU-2.8 (Sprint 7). Un hash impreso solo sirve si se puede comparar en la página de verificación (P8), que llega en el mismo sprint con HU-3.1; hacerlo después evita que una historia espere a otra. La cadena del MVP sigue completa: el QR lleva a la verificación pública, que muestra los datos oficiales para compararlos con la credencial.
+- **Se postergó para después del MVP:** HU-2.8, HU-1.11 (catálogo de programas), HU-2.6 (detalle del título; mientras tanto, el PDF se descarga desde la lista), HU-1.5, HU-4.6, HU-1.8, HU-2.7, HU-3.2, HU-4.5, HU-4.8 y HU-4.9.
 - **HU-2.4 cambió de actor:** la descarga la hace el personal autorizado, porque el graduado no tiene cuenta; el acceso público llega con HU-3.1.
 - **HU-3.3 subió a prioridad Alta,** porque la trazabilidad es parte del MVP.
 - **El APROBADOR dejó de ver las métricas** (mínimo privilegio, 20/10/2026). Las métricas se consultan en Prometheus.
