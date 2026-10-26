@@ -8,7 +8,7 @@ Los criterios de aceptación son el acuerdo de qué significa «terminado» para
 
 ## Cómo se usan
 
-1. **Antes de planificar:** quien corrige una historia la escribe aquí con la plantilla de abajo y abre un Pull Request. El equipo la revisa contra la Definición de Listo ([cómo trabajamos](../../proceso/como-trabajamos.md)).
+1. **Antes de planificar:** quien corrige una historia la escribe aquí con la plantilla de abajo. El Product Owner la aprueba contra la Definición de Listo y se sube en un Pull Request de documentación, que no necesita aprobación ([cómo trabajamos](../../proceso/como-trabajamos.md#pull-requests-de-documentación)). El equipo la recibe en la planificación.
 2. **Al desarrollar:** cada Pull Request de la historia dice qué criterios cumple (CA1, CA2…).
 3. **Al revisar:** el revisor comprueba cada criterio con sí o no.
 4. **Al cerrar:** se actualizan la sección «Estado», las evidencias y el estado en el Product Backlog.
