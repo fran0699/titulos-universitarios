@@ -1,14 +1,67 @@
 # Títulos Universitarios Digitales
 
-Proyecto del curso Ingeniería de Software Aplicada III — Grupo 1GS231.
+Aplicación web para que una universidad **registre, apruebe y emita títulos universitarios digitales**, y para que cualquier persona (un empleador u otra institución) pueda **comprobar que un título es auténtico**.
+
+**La necesidad:** un título en papel es difícil de comprobar, sobre todo desde otro país, y un documento alterado puede pasar por bueno. La solución cubre tres requisitos del cliente:
+
+- **Precisión:** datos validados y normalizados en el servidor, sin graduados ni títulos duplicados.
+- **Seguridad:** acceso por rol, separación de funciones y un registro de auditoría que no se puede modificar.
+- **Verificabilidad internacional:** credencial con identificador único, QR y hash, y una página pública bilingüe para comprobarla.
+
+Más detalle en [visión y MVP](docs/producto/vision-y-mvp.md).
+
+## Estado
+
+**Cierre del Sprint 5 (25/10/2026):** 57 de 98 pts del backlog (58 %), 95 pruebas en verde y 2 hallazgos de Nikto, los mismos del sprint anterior.
+
+| Funciona hoy | Llega en el Sprint 6 (completa el MVP) |
+|---|---|
+| Inicio de sesión por rol y cierre de sesión | Código QR y hash de integridad en la credencial (HU-2.5) |
+| Registro del graduado (por cédula o pasaporte) y de su título, validado en el servidor | Página pública de verificación, sin iniciar sesión (HU-3.1) |
+| Bandeja de revisión: aprobar o rechazar, con identificador único al aprobar | Consulta del registro de auditoría (HU-3.4) |
+| Credencial PDF de un título aprobado | Inicio de sesión sin 404 con F12 abierto (HU-4.11) |
+| Registro de auditoría de cada acción, que no se puede modificar | |
+| Métricas para Prometheus con un usuario técnico | |
+
+## Stack
+
+Java 21 · Spring Boot 4.1.1 (MVC, Security, Data JPA, Validation, Actuator) · Thymeleaf · PostgreSQL · Apache PDFBox · JUnit 5 · CircleCI · Prometheus (Docker) · Nikto 2.6.1.
+
+Versiones, qué instalar y cómo comprobarlo: [stack y versiones](docs/tecnico/stack-y-versiones.md).
+
+## Equipo
+
+Francisco Lata (Product Owner) · Henry Birminghan · Anel Gonzalez · Edinson Ramirez.
+
+## Documentación
+
+| Documento | Para qué |
+|---|---|
+| [Visión y MVP](docs/producto/vision-y-mvp.md) | Qué es el producto, sus usuarios y qué entra en el MVP |
+| [Product Backlog](docs/producto/product-backlog.md) | Todas las historias, con pilar, prioridad, puntos y estado |
+| [Historias detalladas](docs/producto/historias/README.md) | Criterios de aceptación, reglas y riesgos de cada historia |
+| [Guía de pantallas](docs/producto/guia-de-pantallas.md) | Qué debe tener cada pantalla y cómo se valida cada campo |
+| [Stack y versiones](docs/tecnico/stack-y-versiones.md) | Herramientas, versiones e instalación |
+| [Arquitectura y seguridad](docs/tecnico/arquitectura-y-seguridad.md) | Capas, tablas, rutas por rol y controles de seguridad |
+| [Cómo trabajamos](docs/proceso/como-trabajamos.md) | Planificación, flujo de Git, revisión de PR y cierre del sprint |
+| [Historial de sprints](docs/sprints/historial.md) | Resultados, mediciones y lecciones de cada sprint |
+| [Prometheus](docs/prometheus.md) | Cómo levantar el monitoreo |
+| [Investigación de PDF y QR](docs/investigacion-pdf-qr.md) | Prueba de concepto de PDFBox y ZXing (HU-2.3) |
+
+**Regla del equipo:** si un Pull Request cambia el stack, la configuración, el backlog o una historia, actualiza también el documento que corresponde.
+
+---
 
 ## Requisitos
 
 - JDK 21
 - Git
-- PostgreSQL (para correr la app localmente)
+- PostgreSQL 17 (referencia del equipo) y pgAdmin 4, para correr la app localmente
 - IntelliJ IDEA (recomendado) o VS Code
 - Docker Desktop con el motor WSL 2 (solo para el monitoreo con Prometheus)
+- Ubuntu en WSL con Nikto 2.6.1 (solo para el escaneo de seguridad del cierre)
+
+Detalle y comandos de comprobación: [stack y versiones](docs/tecnico/stack-y-versiones.md).
 
 ## Configuración de base de datos (PostgreSQL)
 
@@ -98,6 +151,8 @@ ALTER TABLE usuarios ADD CONSTRAINT usuarios_rol_check
 ```
 .\mvnw.cmd spring-boot:run
 ```
+
+Abre http://localhost:8080 e inicia sesión con `registrador1` o `aprobador1` (contraseña `clave1234`). Son usuarios de prueba que se crean solo si la tabla `usuarios` está vacía; sirven únicamente para desarrollo.
 
 ## Correr las pruebas
 
