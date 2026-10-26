@@ -41,11 +41,11 @@ Describe cómo deben verse y comportarse las pantallas de la aplicación: las re
 | Nombre del título | 5–150 (acordado el 21/10/2026). Cuando exista el catálogo (HU-1.11): un programa activo del catálogo, con nombre de 5–150 y único. |
 | Motivo de revocación o sustitución | 10–500. |
 | Búsqueda | Vacía o 2–100. |
-| Usuario (filtro de auditoría) | Vacío o 3–50. |
+| Usuario (filtro de auditoría) | Vacío o 3–50. Busca el texto contenido en el usuario, sin distinguir mayúsculas (acordado el 26/10/2026). |
 | Filtros de estado, acción e idioma | Solo valores de su lista. |
-| Fechas de auditoría | Válidas; «desde» no puede ser posterior a «hasta». |
-| Paginación | Página desde 1; tamaño 10, 20 o 50. |
-| Código de verificación | UUID de 36 caracteres; si no cumple, «No encontrado» sin consultar la base de datos. |
+| Fechas de auditoría | Válidas; «desde» no puede ser posterior a «hasta». «Hasta» incluye todo ese día (acordado el 26/10/2026). |
+| Paginación | Página desde 1; tamaño 10, 20 o 50. La auditoría (P6) usa 20 por página (acordado el 26/10/2026). |
+| Código de verificación | Sin espacios al inicio o al final y en minúsculas antes de buscar. UUID de 36 caracteres; si no cumple, «No encontrado» sin consultar la base de datos. |
 | Estado, revisor, fechas e identificador | Los pone el servidor, nunca el formulario. |
 
 ## Identidad visual
@@ -153,9 +153,9 @@ Ruta `/auditoria` · Solo APROBADOR · HU-3.4 (consulta del registro de HU-3.3)
 
 - Encabezado común.
 - Filtros: rango de fechas, acción y usuario.
-- Tabla: Fecha y hora, Usuario, Acción, Título afectado y Detalle.
+- Tabla: Fecha y hora, Usuario, Acción, Título afectado (graduado · título) y Detalle, de lo más reciente a lo más antiguo.
 - Solo lectura: no se edita ni se borra.
-- Estado vacío y paginación.
+- Estado vacío («No hay eventos con esos filtros») y paginación de 20 por página, con «Anterior», «Siguiente» y «Mostrando X–Y de N».
 
 ### P7 · Verificar título (celular)
 Ruta `/verificar` · Público · HU-3.1
@@ -163,7 +163,7 @@ Ruta `/verificar` · Público · HU-3.1
 ![P7 · Verificar título (celular)](pantallas/P7-verificar-titulo.png)
 
 - Nombre de la institución.
-- Selector de idioma ES / EN (verificabilidad internacional).
+- Textos en español e inglés a la vez, sin selector de idioma (verificabilidad internacional; acordado el 26/10/2026, igual que P8).
 - Campo para el código y botón «Verificar».
 - Indicación de que el QR lleva directo al resultado.
 - Sin menú interno ni datos del personal.
@@ -177,6 +177,7 @@ Ruta `/verificar/{código}` · Público · HU-3.1, HU-3.2
 - Solo datos mínimos: graduado, documento enmascarado (últimos 4 caracteres que no sean guion), título, institución, fecha de emisión y código.
 - Fecha y hora de la consulta.
 - Texto bilingüe ES / EN.
+- Fechas como en la credencial, en los dos idiomas («10 de octubre de 2026 · October 10, 2026»); la consulta con la hora y la zona («hora de Panamá, UTC−5») (acordado el 26/10/2026).
 - Nunca datos personales adicionales.
 
 ### P9 · Página de error
@@ -191,7 +192,7 @@ Rutas: 403, 404 y 500 · Todos · HU-4.5
 - Reemplaza la «Whitelabel Error Page» de Spring.
 
 ### D1 · Credencial PDF
-Generada con PDFBox y ZXing · HU-2.4, HU-2.5
+Generada con PDFBox y ZXing · HU-2.4, HU-2.5, HU-2.8
 
 ![D1 · Credencial PDF](pantallas/D1-credencial-pdf.png)
 
@@ -199,9 +200,9 @@ Generada con PDFBox y ZXing · HU-2.4, HU-2.5
 - Nombre del graduado (con tildes) y título otorgado.
 - Documento de identidad completo (cédula o pasaporte) debajo del nombre.
 - Fecha de emisión e identificador.
-- QR con la URL de verificación, sin datos personales (HU-2.5).
-- Hash de integridad en letra pequeña (HU-2.5).
-- Texto: «Verifique este título en …/verificar».
+- QR con la URL de verificación, sin datos personales, de al menos 2,5 cm con su margen blanco y la leyenda «Escanee para verificar» (HU-2.5).
+- Hash de integridad en letra pequeña (HU-2.8).
+- Texto: «Verifique este título en …/verificar o escaneando el código QR».
 - Fuentes estándar del PDF (Times y Helvetica), para no incrustar fuentes.
 
 ## Estado de implementación (cierre del Sprint 5)
@@ -213,10 +214,10 @@ Generada con PDFBox y ZXing · HU-2.4, HU-2.5
 | P3 · Registrar título | Implementada | El título es texto libre de 5–150 caracteres hasta el catálogo (HU-1.11). El duplicado se rechaza con el error bajo «Nombre del título», todavía sin el enlace al registro existente (HU-2.6). |
 | P4 · Bandeja de revisión | Parcial | Sin «Ver» (HU-2.6). «Rechazar» todavía no pide confirmación ni usa el estilo de peligro (HU-2.7). |
 | P5 · Detalle | Pendiente | HU-2.6. |
-| P6 · Auditoría | Pendiente | HU-3.4 (Sprint 6). Los eventos ya se registran desde HU-3.3. |
+| P6 · Auditoría | Pendiente | HU-3.4 (Sprint 6). Los eventos ya se registran desde HU-3.3. «Título afectado» no llevará enlace hasta que exista el detalle (HU-2.6). |
 | P7 y P8 · Verificación pública | Pendiente | HU-3.1 (Sprint 6). La credencial ya muestra la URL de verificación (propiedad `titulos.verificacion.url`). |
 | P9 · Página de error | Pendiente | HU-4.5. Hoy se ve la «Whitelabel Error Page». |
-| D1 · Credencial PDF | Parcial | Sin QR ni hash (HU-2.5, Sprint 6). Defecto conocido: un nombre de tres líneas se monta sobre la línea separadora. |
+| D1 · Credencial PDF | Parcial | Sin QR (HU-2.5, Sprint 6) ni hash (HU-2.8, Sprint 7). Defecto conocido, que corrige HU-2.5: un nombre de tres líneas se monta sobre la línea separadora. |
 
 ## Imágenes de las pantallas
 

@@ -16,7 +16,7 @@ Más detalle en [visión y MVP](docs/producto/vision-y-mvp.md).
 
 | Funciona hoy | Llega en el Sprint 6 (completa el MVP) |
 |---|---|
-| Inicio de sesión por rol y cierre de sesión | Código QR y hash de integridad en la credencial (HU-2.5) |
+| Inicio de sesión por rol y cierre de sesión | Código QR en la credencial (HU-2.5); el hash de integridad llega en el Sprint 7 (HU-2.8) |
 | Registro del graduado (por cédula o pasaporte) y de su título, validado en el servidor | Página pública de verificación, sin iniciar sesión (HU-3.1) |
 | Bandeja de revisión: aprobar o rechazar, con identificador único al aprobar | Consulta del registro de auditoría (HU-3.4) |
 | Credencial PDF de un título aprobado | Inicio de sesión sin 404 con F12 abierto (HU-4.11) |

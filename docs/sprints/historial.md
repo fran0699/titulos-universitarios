@@ -58,10 +58,10 @@ Un resumen por sprint: qué se completó, cómo se midió y qué se aprendió. S
 
 ## Próximos sprints (plan tentativo)
 
-Se reajusta en cada planificación. Quedan 41 pts.
+Se reajusta en cada planificación. Quedan 41 pts. Desde el Sprint 6, el reparto sigue la regla de independencia ([cómo trabajamos](../proceso/como-trabajamos.md)): nadie espera a que otro termine.
 
 | Sprint | Propuesta | Notas |
 |---|---|---|
-| 6 · **MVP** | HU-2.5 (QR y hash, 5), HU-3.1 (verificación pública, 5), HU-3.4 (consulta de auditoría, 3) y HU-4.11 (1) | 14 pts frente a una velocidad de 13; la planificación decide. Completa la cadena del MVP |
-| 7 y 8 | Lo postergado: HU-1.11, HU-2.6, HU-1.5, HU-4.6, HU-1.8, HU-2.7, HU-3.2, HU-4.5, HU-4.8 y HU-4.9 | HU-4.6 (modo demostración) depende de HU-1.5 y debe estar antes de la entrega |
+| 6 · **MVP** | HU-2.5 (QR, 3), HU-3.1 (verificación pública, 5), HU-3.4 (consulta de auditoría, 3) y HU-4.11 (1) | 12 pts frente a una velocidad de 13; el margen se usa para preparar la demostración del MVP. El hash pasó a HU-2.8 (Sprint 7) |
+| 7 y 8 | Lo postergado: HU-2.8 (hash de integridad, 2), HU-1.11, HU-2.6, HU-1.5, HU-4.6, HU-1.8, HU-2.7, HU-3.2, HU-4.5, HU-4.8 y HU-4.9 | HU-4.6 (modo demostración) depende de HU-1.5 y debe estar antes de la entrega |
 | 9 y 10 | Margen, ajustes pedidos en las revisiones y preparación de la entrega | Entrega del producto: primera semana de diciembre de 2026 |
