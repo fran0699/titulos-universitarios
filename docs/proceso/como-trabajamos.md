@@ -1,6 +1,6 @@
 # Cómo trabajamos
 
-Los acuerdos del equipo para planificar, desarrollar, revisar y cerrar cada sprint. Si un acuerdo cambia, se actualiza aquí en un Pull Request, para que todos trabajen con la misma versión.
+Los acuerdos del equipo para planificar, desarrollar, revisar y cerrar cada sprint. Si un acuerdo cambia, se actualiza aquí en un Pull Request de documentación y se avisa en el grupo, para que todos trabajen con la misma versión.
 
 ## Equipo
 
@@ -27,7 +27,7 @@ Planificación ──► Desarrollo y revisión ──► Cierre ─────
 Primero se corrigen las historias y después se decide el alcance. Así el equipo recibe el cuadro con historias que ya no van a cambiar.
 
 1. **Reunir insumos:** el resultado y las lecciones del sprint anterior ([historial](../sprints/historial.md)) y las prioridades del Product Owner.
-2. **Refinar:** corregir las historias candidatas hasta que cumplan la Definición de Listo. Cada historia corregida se escribe en [`docs/producto/historias/`](../producto/historias/README.md) y se sube en un Pull Request para que el equipo la revise.
+2. **Refinar:** corregir las historias candidatas hasta que cumplan la Definición de Listo. Cada historia corregida se escribe en [`docs/producto/historias/`](../producto/historias/README.md); el Product Owner la aprueba y se sube en un [Pull Request de documentación](#pull-requests-de-documentación). El equipo la recibe en el paso 5.
 3. **Planificar:** decidir el alcance según la velocidad reciente ([historial](../sprints/historial.md)) y armar el cuadro del Sprint Backlog.
 4. Si al dividir en tareas cambia una historia, se corrige la historia antes de enviar el cuadro.
 5. **Enviar al equipo** las historias corregidas y el cuadro. Cada integrante elige su número de responsable.
@@ -66,6 +66,8 @@ Un solo cuadro, con una fila por tarea:
 
 **Notas de fusión:** la tarea de mayor riesgo técnico se sube temprano, en un PR propio. Quien fusiona después de otro que cambió un archivo compartido (por ejemplo, `pom.xml`) trae main a su rama antes.
 
+**Cierre:** debajo del cuadro se indica quién ejecuta Nikto y quién hace la verificación de principio a fin sobre main.
+
 ### 3. Desarrollo: flujo de Git
 
 | Qué | Convención | Ejemplo |
@@ -74,6 +76,9 @@ Un solo cuadro, con una fila por tarea:
 | Commit | `T-X.Y.Z: descripción` | `T-4.10.2: denegar por defecto en las pantallas` |
 | Título del PR | `HU-X.Y / T-X.Y.Z: descripción` | `HU-2.4 / T-2.4.1–T-2.4.3: credencial PDF y descarga para el personal` |
 | Evidencia | `docs/evidencias/HU-X.Y-descripcion.ext` | `docs/evidencias/HU-4.10-matriz-acceso.txt` |
+| Rama (solo documentación) | `feature/docs-descripcion` | `feature/docs-documentacion-del-proyecto` |
+| Commit (solo documentación) | `docs: descripción` | `docs: documentacion del proyecto en el repositorio` |
+| Título del PR (solo documentación) | `Docs: descripción` | `Docs: documentación del proyecto en el repositorio` |
 
 **Antes de cada commit**
 
@@ -82,6 +87,8 @@ Un solo cuadro, con una fila por tarea:
 git status                 # solo lo que esperas
 git add ruta\del\archivo   # por nombre, no "git add ."
 ```
+
+Si el commit solo cambia documentación (`README.md` o `docs/`), no hace falta `clean test`: CircleCI corre las pruebas igual.
 
 **Antes de pedir revisión:** traer main y volver a probar.
 
@@ -116,6 +123,12 @@ git pull
 git branch -d feature/HU-X.Y-descripcion
 ```
 
+#### Pull Requests de documentación
+
+Un PR que solo cambia documentación (`README.md` o `docs/`) **no necesita aprobación**: lo fusiona quien lo abre, con CircleCI en verde. Si cambia un acuerdo del equipo, se avisa en el grupo.
+
+La aprobación de un compañero es para los PR de las historias y tareas del sprint. Si una historia cambia documentación (por ejemplo, el stack o la guía de pantallas), ese cambio va en el PR de la historia y se revisa con ella.
+
 ### 4. Revisión de un Pull Request
 
 - [ ] El PR dice qué historia y qué criterios de aceptación cubre, y cada criterio se cumple (sí o no).
@@ -149,7 +162,7 @@ Sobre la versión final de main, después de la última fusión:
 
 1. **Verificación de principio a fin**, con una base de datos creada desde cero, comprobando cada criterio de aceptación del sprint.
 2. **Consola del navegador** (F12) sin errores de CSP.
-3. **Nikto 2.6.1**, comparado con el sprint anterior. Se anota el commit escaneado. Instalación y comando: [stack y versiones](../tecnico/stack-y-versiones.md).
+3. **Nikto 2.6.1**, comparado con el sprint anterior. Lo ejecuta quien se asignó en la planificación y se anota el commit escaneado. Instalación y comando: [stack y versiones](../tecnico/stack-y-versiones.md).
 4. **Métricas:** puntos comprometidos y completados, velocidad, pruebas (heredadas y nuevas), PR fusionados, hallazgos de Nikto, avance del backlog por épica y las métricas QA de cada historia.
 5. Actualizar el [historial de sprints](../sprints/historial.md), el [Product Backlog](../producto/product-backlog.md), el estado de cada historia y el estado de implementación de la [guía de pantallas](../producto/guia-de-pantallas.md).
 
