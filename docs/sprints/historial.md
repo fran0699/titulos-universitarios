@@ -35,9 +35,9 @@ Un resumen por sprint: qué se completó, cómo se midió y qué se aprendió. S
 
 **Lecciones**
 
-- Subir temprano, en un PR propio, la tarea de mayor riesgo. La historia del PDF llegó completa y tarde, y acumuló conflictos con tres fusiones.
-- Resolver los conflictos solo con `git merge origin/main`. Copiar archivos de main a mano dejó una versión vacía de la auditoría.
-- Pedir como «necesario» todo lo que la tarea prometía. Una observación de HU-4.7 quedó como recomendación y hubo que completarla en otro PR.
+- Subir temprano, en un PR propio, la tarea de mayor riesgo técnico. Si llega completa al final del sprint, acumula conflictos con las demás fusiones.
+- Resolver los conflictos solo con `git merge origin/main`. Copiar archivos de main a mano puede borrar cambios que ya estaban fusionados.
+- Pedir como «necesario» todo lo que la tarea prometía. Una observación que formaba parte de la tarea quedó como recomendación y hubo que completarla en otro PR.
 - Si un revisor no responde, avisar en el grupo y pasar la revisión al Product Owner.
 - Corregir las historias antes de planificar. Los criterios de aceptación con sí o no sirvieron para revisar cada PR.
 

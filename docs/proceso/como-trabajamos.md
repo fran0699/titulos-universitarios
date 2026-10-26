@@ -92,7 +92,7 @@ git merge origin/main      # si hay conflictos, en los archivos de otra historia
 git push
 ```
 
-Los conflictos se resuelven solo con `git merge origin/main`. **No se copian archivos de main a mano:** en el Sprint 5 eso dejó una versión vacía de la auditoría.
+Los conflictos se resuelven solo con `git merge origin/main`. **No se copian archivos de main a mano:** se pueden borrar cambios que ya estaban fusionados.
 
 **Descripción del Pull Request**
 
@@ -130,7 +130,7 @@ git branch -d feature/HU-X.Y-descripcion
 
 **Cómo clasificar lo que se encuentra:**
 
-- **Necesario:** todo lo que forma parte del «Qué se hace» de la tarea o de sus criterios de aceptación, además de cualquier fallo de seguridad. Se pide con «Request changes». Si se deja como recomendación, la historia se fusiona incompleta (pasó en el Sprint 5 con HU-4.7).
+- **Necesario:** todo lo que forma parte del «Qué se hace» de la tarea o de sus criterios de aceptación, además de cualquier fallo de seguridad. Se pide con «Request changes». Si se deja como recomendación, la historia se fusiona incompleta.
 - **Recomendado:** mejoras que no forman parte de la tarea. Se pueden dejar para otra historia.
 
 ### Definición de Terminado
