@@ -1,6 +1,6 @@
 # HU-3.1 · Verificación pública
 
-**Responsable por definir · Funcional · Verificabilidad internacional · Prioridad Alta · 5 pts · Sprint 6**
+**Henry Birminghan · Funcional · Verificabilidad internacional · Prioridad Alta · 5 pts · Sprint 6**
 
 ## Redacción
 
@@ -61,12 +61,12 @@
 
 | Tarea | Qué se hace | Responsable | PR |
 |---|---|---|---|
-| T-3.1.1 | P7 y la ruta `/verificar/{código}`: validación y normalización del código, búsqueda por identificador, solo títulos APROBADOS. | Por definir | — |
-| T-3.1.2 | P8: datos mínimos, enmascarado, textos en dos idiomas, fecha de la consulta y «No encontrado». | Por definir | — |
-| T-3.1.3 | Pruebas con MockMvc (casos de CA5, acceso sin sesión y ausencia del documento completo) y evidencia con capturas en el celular. | Por definir | — |
+| T-3.1.1 | P7 y la ruta `/verificar/{código}`: validación y normalización del código, búsqueda por identificador, solo títulos APROBADOS. | Henry Birminghan | #32 |
+| T-3.1.2 | P8: datos mínimos, enmascarado, textos en dos idiomas, fecha de la consulta y «No encontrado». | Henry Birminghan | #32 |
+| T-3.1.3 | Pruebas con MockMvc (casos de CA5, acceso sin sesión y ausencia del documento completo) y evidencia con capturas en el celular. | Henry Birminghan | #32 |
 
 ## Estado
 
-Pendiente (Sprint 6).
+En revisión (Sprint 6, PR #32). Evidencias: `docs/evidencias/HU-3.1-pruebas.txt` y las capturas `HU-3.1-*` en la misma carpeta.
 
 _Criterios aprobados por el Product Owner en la planificación del Sprint 6 (26/10/2026)._
