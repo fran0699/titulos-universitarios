@@ -31,7 +31,17 @@ CAPTURAS
   HU-3.1-P8-valido-pasaporte-360px.jpg
   HU-3.1-P8-no-encontrado-360px.jpg
 
+CAPTURAS CON BARRA DE DIRECCIONES (27/10/2026)
+  HU-3.1-celular-P7-formulario.png
+  HU-3.1-celular-P8-valido-cedula.png
+  HU-3.1-celular-P8-valido-pasaporte.png
+  HU-3.1-celular-P8-no-encontrado.png
+  Navegador Brave con perfil limpio; la pagina se muestra como un telefono Android
+  de 360 x 830 px (emulacion de dispositivo: ancho, pantalla tactil y agente de
+  usuario movil). Medido en esas mismas paginas: ancho 360, sin desplazamiento
+  horizontal, campo y boton de 44 px, 0 atributos style, 0 scripts.
+
 LIMITE DE ESTA EVIDENCIA
-  Las capturas son de una ventana emulada de 360 px, no de un telefono fisico.
-  La captura en el celular (hotspot + TITULOS_VERIFICACION_URL) queda por hacer
-  con el telefono real.
+  Es emulacion de dispositivo en la computadora, no un telefono fisico. Para CA7
+  (diseno a 360 px, botones de 44 px, sin desplazamiento) es suficiente. La lectura
+  del QR con la camara de un telefono es de HU-2.5 y se prueba con esa historia.
