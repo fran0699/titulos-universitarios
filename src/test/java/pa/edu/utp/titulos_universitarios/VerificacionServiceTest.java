@@ -141,4 +141,17 @@ class VerificacionServiceTest {
         assertEquals("26 de octubre de 2026, 14:35", r.fechaConsultaEs());
         assertEquals("October 26, 2026, 14:35", r.fechaConsultaEn());
     }
+
+    @Test
+    void consultar_tituloAprobadoSinGraduadoOSinFecha_noRompeYDaVacio() {
+        Titulo sinGraduado = titulo(EstadoTitulo.APROBADO);
+        sinGraduado.setFechaRevision(LocalDateTime.of(2026, 10, 10, 9, 0));
+        when(tituloRepository.findByIdentificador(CODIGO)).thenReturn(Optional.of(sinGraduado));
+        assertTrue(servicio.consultar(CODIGO).isEmpty());
+
+        Titulo sinFecha = titulo(EstadoTitulo.APROBADO);
+        sinFecha.setGraduado(new Graduado(TipoDocumento.CEDULA, "8-123-4567", "Ana Perez"));
+        when(tituloRepository.findByIdentificador(CODIGO)).thenReturn(Optional.of(sinFecha));
+        assertTrue(servicio.consultar(CODIGO).isEmpty());
+    }
 }

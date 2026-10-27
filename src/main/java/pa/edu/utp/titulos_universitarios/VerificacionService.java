@@ -119,7 +119,20 @@ public class VerificacionService {
      */
     @Transactional(readOnly = true)
     public Optional<ResultadoVerificacion> consultar(String codigo) {
-        return buscarAprobado(codigo).map(this::aResultado);
+        return buscarAprobado(codigo)
+                .filter(VerificacionService::tieneDatosParaVerificar)
+                .map(this::aResultado);
+    }
+
+    /**
+     * Un titulo sin graduado o sin fecha de aprobacion (filas anteriores a que
+     * esos datos fueran obligatorios) no se puede mostrar completo: se responde
+     * "No encontrado" en lugar de romper la pagina publica.
+     */
+    private static boolean tieneDatosParaVerificar(Titulo titulo) {
+        return titulo.getGraduado() != null
+                && titulo.getGraduado().getTipoDocumento() != null
+                && titulo.getFechaRevision() != null;
     }
 
     private ResultadoVerificacion aResultado(Titulo titulo) {

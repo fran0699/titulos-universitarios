@@ -35,6 +35,10 @@ class VerificacionPublicaIntegracionTest {
     private static final String CODIGO_RECHAZADO = "33333333-3333-4333-8333-333333333333";
     private static final String CODIGO_INEXISTENTE = "44444444-4444-4444-8444-444444444444";
 
+    private static final String REVISOR = "aprobador.secreto";
+
+    private Long aprobadoId;
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -56,9 +60,9 @@ class VerificacionPublicaIntegracionTest {
 
     private void guardar(String documento, EstadoTitulo estado, String identificador) {
         Graduado graduado = graduadoRepository.save(
-                new Graduado(TipoDocumento.CEDULA, documento, "Graduado " + documento));
+                new Graduado(TipoDocumento.CEDULA, documento, "Graduado " + estado));
         Titulo titulo = new Titulo();
-        titulo.setNombreGraduado(graduado.getNombreCompleto());
+        titulo.setNombreGraduado("Graduado " + estado);
         titulo.setNombreTitulo("Licenciatura en Ingenieria de Software");
         titulo.setFechaRegistro(LocalDate.of(2026, 10, 1));
         titulo.setEstado(estado);
@@ -66,8 +70,12 @@ class VerificacionPublicaIntegracionTest {
         titulo.setGraduado(graduado);
         if (estado == EstadoTitulo.APROBADO) {
             titulo.setFechaRevision(LocalDateTime.of(2026, 10, 10, 9, 0));
+            titulo.setRevisadoPor(REVISOR);
         }
-        tituloRepository.save(titulo);
+        Long id = tituloRepository.save(titulo).getId();
+        if (estado == EstadoTitulo.APROBADO) {
+            aprobadoId = id;
+        }
     }
 
     private String cuerpo(String ruta) throws Exception {
@@ -115,7 +123,7 @@ class VerificacionPublicaIntegracionTest {
     void tituloAprobado_muestraDatosMinimosConDocumentoEnmascarado() throws Exception {
         String html = cuerpo("/verificar/" + CODIGO_APROBADO);
 
-        assertTrue(html.contains("Graduado 8-111-111"));
+        assertTrue(html.contains("Graduado APROBADO"));
         assertTrue(html.contains("•-••1-111"));
         assertFalse(html.contains("8-111-111\""), "el documento completo no debe aparecer");
         assertFalse(html.contains(">8-111-111<"), "el documento completo no debe aparecer");
@@ -126,6 +134,93 @@ class VerificacionPublicaIntegracionTest {
         assertTrue(html.contains("Panama time, UTC−5"));
         assertFalse(html.contains("style="), "sin estilos en línea");
         assertFalse(html.contains("<script"), "sin scripts");
+    }
+
+    @Test
+    void laInstitucionSeMuestraConSusAcentosEnP7YP8() throws Exception {
+        String nombre = "Universidad Tecnológica de Panamá";
+        assertTrue(cuerpo("/verificar").contains(nombre));
+        assertTrue(cuerpo("/verificar/" + CODIGO_APROBADO).contains(nombre));
+        assertTrue(cuerpo("/verificar/" + CODIGO_INEXISTENTE).contains(nombre));
+    }
+
+    @Test
+    void ca4_laRespuestaNoTraeDocumentoCompletoNiRevisorNiIdInterno() throws Exception {
+        String html = cuerpo("/verificar/" + CODIGO_APROBADO);
+
+        assertFalse(html.contains("8-111-111"), "documento completo");
+        assertFalse(html.contains("8111111"), "documento completo sin guiones");
+        assertFalse(html.contains(REVISOR), "quien aprobo");
+        assertFalse(html.toLowerCase().contains("revisad"), "dato de revision");
+        assertFalse(html.contains("/titulos/" + aprobadoId), "enlace con el id interno");
+        assertFalse(html.contains("value=\"" + aprobadoId + "\""), "id interno en un campo");
+        assertFalse(html.contains("data-id"), "id interno en un atributo");
+    }
+
+    @Test
+    void ca4_elNoEncontradoNoRevelaDatosDelTitulo() throws Exception {
+        for (String codigo : new String[] {CODIGO_PENDIENTE, CODIGO_RECHAZADO}) {
+            String html = cuerpo("/verificar/" + codigo);
+            assertFalse(html.contains("Graduado "), "nombre del graduado");
+            assertFalse(html.contains("Licenciatura"), "nombre del titulo");
+            assertFalse(html.contains(codigo), "el codigo consultado no se repite");
+        }
+    }
+
+    @Test
+    void ca6_formularioYResultadoMuestranEspanolEIngles() throws Exception {
+        String formulario = cuerpo("/verificar");
+        assertTrue(formulario.contains("Código de verificación"));
+        assertTrue(formulario.contains("Verification code"));
+        assertTrue(formulario.contains("Verificar"));
+        assertTrue(formulario.contains("Verify"));
+
+        String resultado = cuerpo("/verificar/" + CODIGO_APROBADO);
+        assertTrue(resultado.contains("Título válido"));
+        assertTrue(resultado.contains("Valid degree"));
+        assertFalse(resultado.contains("<select"), "sin selector de idioma");
+    }
+
+    @Test
+    void ca8_paginasPublicasSinEstilosNiScriptsEnLinea() throws Exception {
+        for (String ruta : new String[] {
+                "/verificar", "/verificar/" + CODIGO_APROBADO, "/verificar/" + CODIGO_INEXISTENTE}) {
+            String html = cuerpo(ruta);
+            assertFalse(html.contains("style="), ruta + " sin style=");
+            assertFalse(html.contains("<style"), ruta + " sin <style>");
+            assertFalse(html.contains("<script"), ruta + " sin scripts");
+            assertFalse(html.contains("onclick="), ruta + " sin manejadores en linea");
+        }
+    }
+
+    @Test
+    void sinSesion_lasPaginasPublicasNoRedirigenAlLogin() throws Exception {
+        for (String ruta : new String[] {"/verificar", "/verificar/" + CODIGO_APROBADO}) {
+            mockMvc.perform(get(ruta)).andExpect(status().isOk());
+        }
+        mockMvc.perform(get("/verificar/" + CODIGO_INEXISTENTE))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void pasaporte_seEnmascaraSinGuiones() throws Exception {
+        Graduado graduado = graduadoRepository.save(
+                new Graduado(TipoDocumento.PASAPORTE, "PA1234567", "Pasaporte Prueba"));
+        Titulo titulo = new Titulo();
+        titulo.setNombreGraduado("Pasaporte Prueba");
+        titulo.setNombreTitulo("Maestria en Seguridad Informatica");
+        titulo.setFechaRegistro(LocalDate.of(2026, 10, 1));
+        titulo.setEstado(EstadoTitulo.APROBADO);
+        titulo.setIdentificador("55555555-5555-4555-8555-555555555555");
+        titulo.setGraduado(graduado);
+        titulo.setFechaRevision(LocalDateTime.of(2026, 10, 12, 9, 0));
+        titulo.setRevisadoPor(REVISOR);
+        tituloRepository.save(titulo);
+
+        String html = cuerpo("/verificar/55555555-5555-4555-8555-555555555555");
+        assertTrue(html.contains("Pasaporte"));
+        assertTrue(html.contains("•••••4567"));
+        assertFalse(html.contains("PA1234567"));
     }
 
     @Test
