@@ -46,7 +46,12 @@ public class SecurityConfig {
     @Order(2)
     public SecurityFilterChain webFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/verificar/**").permitAll()
+                        // T-3.1.1 (HU-3.1): P7 y P8 son publicas. /verificar cubre el
+                        // formulario y /verificar/** el resultado; la hoja de estilos
+                        // propia tambien debe ser publica, o sin sesion la pantalla
+                        // redirigiria al login para cargar el CSS (CA8).
+                        .requestMatchers("/verificar", "/verificar/**",
+                                "/css/verificacion.css").permitAll()
                         // T-4.10.2 (HU-4.10): /error queda accesible para que el código
                         // original (401 o 403) llegue tal cual al cliente. Spring Boot no
                         // muestra detalles técnicos en esa página por defecto.

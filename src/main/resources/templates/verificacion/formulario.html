@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Verificar título · Verify degree</title>
+    <link rel="stylesheet" th:href="@{/css/verificacion.css}">
+</head>
+<body>
+<main class="verif-shell">
+    <section class="verif-card">
+        <p class="verif-institucion">Universidad Tecnológica de Panamá</p>
+        <h1>Verificar título<span class="verif-en">Verify degree</span></h1>
+        <p class="verif-ayuda">
+            Escriba el código de verificación de la credencial, o escanee su código QR.
+            <span class="verif-en">Enter the verification code from the credential, or scan its QR code.</span>
+        </p>
+
+        <form class="verif-form" th:action="@{/verificar}" method="get" novalidate>
+            <label for="codigo">
+                Código de verificación
+                <span class="verif-en">Verification code</span>
+            </label>
+            <input id="codigo"
+                   name="codigo"
+                   type="text"
+                   maxlength="100"
+                   autocomplete="off"
+                   autocapitalize="off"
+                   spellcheck="false"
+                   th:attr="aria-invalid=${errorCodigo} ? 'true' : null,
+                            aria-describedby=${errorCodigo} ? 'errorCodigo' : null">
+            <p id="errorCodigo" class="verif-error" role="alert" th:if="${errorCodigo}">
+                Escriba el código de verificación
+                <span class="verif-en">Enter the verification code</span>
+            </p>
+            <button class="verif-boton" type="submit">
+                Verificar <span class="verif-en-inline">· Verify</span>
+            </button>
+        </form>
+    </section>
+</main>
+</body>
+</html>

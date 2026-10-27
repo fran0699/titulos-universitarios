@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Resultado de verificación · Verification result</title>
+    <link rel="stylesheet" th:href="@{/css/verificacion.css}">
+</head>
+<body>
+<main class="verif-shell">
+    <section class="verif-card">
+        <p class="verif-institucion">Universidad Tecnológica de Panamá</p>
+
+        <div class="verif-estado verif-estado-ok" th:if="${valido}">
+            <h1>Título válido<span class="verif-en">Valid degree</span></h1>
+        </div>
+
+        <div class="verif-estado verif-estado-no" th:unless="${valido}">
+            <h1>No encontrado<span class="verif-en">Not found</span></h1>
+        </div>
+
+        <a class="verif-boton verif-boton-secundario" th:href="@{/verificar}">
+            Verificar otro código <span class="verif-en-inline">· Verify another code</span>
+        </a>
+    </section>
+</main>
+</body>
+</html>

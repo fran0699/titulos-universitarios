@@ -1,0 +1,161 @@
+/* HU-3.1: estilos de las pantallas publicas P7 y P8, pensadas para celular. */
+
+:root {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #1e293b;
+    background: #f1f5f9;
+    --color-primary: #1d4ed8;
+    --color-primary-hover: #1e40af;
+    --color-heading: #17345c;
+    --color-muted: #475569;
+    --color-border: #dbe3ef;
+    --color-ok: #166534;
+    --color-ok-bg: #dcfce7;
+    --color-no: #991b1b;
+    --color-no-bg: #fee2e2;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+}
+
+.verif-shell {
+    width: min(100% - 32px, 480px);
+    margin: 24px auto;
+}
+
+.verif-card {
+    padding: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgb(23 52 92 / 7%);
+    overflow-wrap: anywhere;
+}
+
+.verif-institucion {
+    margin: 0 0 12px;
+    color: var(--color-primary);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+h1 {
+    margin: 0 0 16px;
+    color: var(--color-heading);
+    font-size: 1.6rem;
+    line-height: 1.2;
+}
+
+/* Texto en ingles: debajo del espanol, mas discreto. */
+.verif-en {
+    display: block;
+    margin-top: 2px;
+    color: var(--color-muted);
+    font-size: 0.85em;
+    font-weight: 400;
+}
+
+.verif-en-inline {
+    font-weight: 400;
+}
+
+.verif-ayuda {
+    margin: 0 0 20px;
+    color: var(--color-muted);
+    line-height: 1.4;
+}
+
+.verif-form {
+    display: grid;
+    gap: 8px;
+}
+
+.verif-form label {
+    font-weight: 600;
+}
+
+.verif-form input {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid #94a3b8;
+    border-radius: 8px;
+    font: inherit;
+}
+
+.verif-form input[aria-invalid="true"] {
+    border-color: var(--color-no);
+}
+
+.verif-error {
+    margin: 0;
+    color: var(--color-no);
+    font-weight: 600;
+}
+
+.verif-boton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    min-height: 44px;
+    margin-top: 8px;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--color-primary);
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.verif-boton:hover {
+    background: var(--color-primary-hover);
+}
+
+.verif-boton-secundario {
+    background: #fff;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+}
+
+.verif-boton-secundario:hover {
+    background: #eff6ff;
+}
+
+.verif-estado {
+    margin-bottom: 20px;
+    padding: 16px;
+    border-radius: 10px;
+}
+
+.verif-estado h1 {
+    margin: 0;
+}
+
+.verif-estado-ok {
+    background: var(--color-ok-bg);
+}
+
+.verif-estado-ok h1 {
+    color: var(--color-ok);
+}
+
+.verif-estado-no {
+    background: var(--color-no-bg);
+}
+
+.verif-estado-no h1 {
+    color: var(--color-no);
+}
