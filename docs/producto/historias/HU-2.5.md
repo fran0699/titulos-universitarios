@@ -1,6 +1,6 @@
 # HU-2.5 · QR en la credencial
 
-**Responsable por definir · Funcional · Verificabilidad internacional · Prioridad Alta · 3 pts (antes 5) · Sprint 6**
+**Responsable 1 · Funcional · Verificabilidad internacional · Prioridad Alta · 3 pts (antes 5) · Sprint 6**
 
 ## Redacción
 
@@ -59,12 +59,12 @@
 
 | Tarea | Qué se hace | Responsable | PR |
 |---|---|---|---|
-| T-2.5.1 | ZXing en el `pom.xml` y el QR en la credencial con su dirección, tamaño, margen y leyenda; línea del pie nueva. | Por definir | — |
-| T-2.5.2 | El diseño se acomoda al largo del nombre y del título (corrige el defecto de tres líneas). | Por definir | — |
-| T-2.5.3 | Pruebas JUnit (decodificar el QR; nombre y título máximos en una página), variable `TITULOS_VERIFICACION_URL` en el README y evidencia (PDF y captura del teléfono). | Por definir | — |
+| T-2.5.1 | ZXing en el `pom.xml` y el QR en la credencial con su dirección, tamaño, margen y leyenda; línea del pie nueva. | Responsable 1 | — |
+| T-2.5.2 | El diseño se acomoda al largo del nombre y del título (corrige el defecto de tres líneas). | Responsable 1 | — |
+| T-2.5.3 | Pruebas JUnit (decodificar el QR; nombre y título máximos en una página), variable `TITULOS_VERIFICACION_URL` en el README y evidencia (PDF y captura del teléfono). | Responsable 1 | — |
 
 ## Estado
 
-Pendiente (Sprint 6).
+En curso (Sprint 6). Evidencias: `docs/evidencias/HU-2.5-qr-prueba-telefono.pdf`, `HU-2.5-credencial-qr-vista-previa.png` y `HU-2.5-pruebas.txt`. El responsable confirmó que la cámara lee y muestra la URL; falta adjuntar su captura (CA6), y revisar/aprobar y fusionar el PR.
 
 _Criterios aprobados por el Product Owner en la planificación del Sprint 6 (26/10/2026)._

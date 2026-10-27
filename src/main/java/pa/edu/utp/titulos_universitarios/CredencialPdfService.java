@@ -1,13 +1,18 @@
 package pa.edu.utp.titulos_universitarios;
 
+import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.awt.Color;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -15,8 +20,9 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
-import org.springframework.stereotype.Service;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import pa.edu.utp.titulos_universitarios.entity.TipoDocumento;
 
@@ -27,6 +33,9 @@ public class CredencialPdfService {
     private static final float PAGE_WIDTH = PDRectangle.LETTER.getWidth();
     private static final float PAGE_HEIGHT = PDRectangle.LETTER.getHeight();
     private static final float CENTER = PAGE_WIDTH / 2;
+    private static final float QR_SIDE_POINTS = 80;
+    private static final float QR_BOTTOM = 138;
+    private static final int QR_IMAGE_PIXELS = 300;
     private static final DateTimeFormatter FECHA_EMISION =
             DateTimeFormatter.ofPattern("d 'de' MMMM 'de' yyyy", new Locale("es", "PA"));
     private static final PDFont SERIF = new PDType1Font(Standard14Fonts.FontName.TIMES_ROMAN);
@@ -39,7 +48,13 @@ public class CredencialPdfService {
 
     public CredencialPdfService(
             @Value("${titulos.verificacion.url:http://localhost:8080/verificar}") String urlVerificacion) {
-        this.urlVerificacion = urlVerificacion;
+        if (urlVerificacion == null || urlVerificacion.isBlank()) {
+            throw new IllegalArgumentException("La URL de verificación es obligatoria.");
+        }
+        this.urlVerificacion = urlVerificacion.trim().replaceAll("/+$", "");
+        if (this.urlVerificacion.isEmpty()) {
+            throw new IllegalArgumentException("La URL de verificación es obligatoria.");
+        }
     }
 
     public byte[] generar(Titulo titulo) throws IOException {
@@ -60,16 +75,24 @@ public class CredencialPdfService {
                         SANS_BOLD, 8, 582, 20, 68, 255);
                 centrar(contenido, "Se certifica que", SERIF_ITALIC, 11, 542, 80, 87, 111);
 
-                dibujarNombre(contenido, titulo.getNombreGraduado(), 506);
-                dibujarSeparador(contenido, 461);
-                centrar(contenido, textoDocumento(titulo), SERIF, 9, 444, 80, 87, 111);
-                centrar(contenido, "obtuvo el título de", SERIF_ITALIC, 11, 408, 80, 87, 111);
-                float y = dibujarTitulo(contenido, titulo.getNombreTitulo(), 378);
+                TextoEnvuelto nombre = ajustarTexto(titulo.getNombreGraduado(), SERIF, 22, 430, 3);
+                float nombreFinalY = dibujarNombre(contenido, nombre, 506);
+                float separadorY = nombreFinalY - 21;
+                dibujarSeparador(contenido, separadorY);
+                float documentoY = separadorY - 17;
+                centrar(contenido, textoDocumento(titulo), SERIF, 9, documentoY, 80, 87, 111);
+                float introduccionY = documentoY - 35;
+                centrar(contenido, "obtuvo el título de",
+                        SERIF_ITALIC, 11, introduccionY, 80, 87, 111);
+                TextoEnvuelto nombreTitulo = ajustarTexto(titulo.getNombreTitulo(), SERIF, 16, 440, 4);
+                float tituloY = introduccionY - 30;
+                float y = dibujarTitulo(contenido, nombreTitulo, tituloY);
                 centrar(contenido,
                         "Fecha de emisión: " + titulo.getFechaRevision().toLocalDate().format(FECHA_EMISION),
-                        SANS, 9, y - 10, 77, 96, 125);
+                        SANS, 9, y - 7, 77, 96, 125);
 
                 dibujarIdentificador(contenido, titulo.getIdentificador());
+                dibujarCodigoQr(documento, contenido, urlCompleta(titulo.getIdentificador()));
                 dibujarPie(contenido);
             }
 
@@ -144,23 +167,36 @@ public class CredencialPdfService {
         contenido.stroke();
     }
 
-    private void dibujarNombre(PDPageContentStream contenido, String nombre, float y) throws IOException {
-        List<String> lineas = envolver(nombre, SERIF, 22, 430);
+    private float dibujarNombre(PDPageContentStream contenido, TextoEnvuelto texto, float y)
+            throws IOException {
         float lineaY = y;
-        for (String linea : lineas) {
-            centrar(contenido, linea, SERIF, 22, lineaY, 29, 61, 111);
-            lineaY -= 27;
+        for (String linea : texto.lineas()) {
+            centrar(contenido, linea, SERIF, texto.tamano(), lineaY, 29, 61, 111);
+            lineaY -= texto.saltoLinea();
         }
+        return lineaY + texto.saltoLinea();
     }
 
-    private float dibujarTitulo(PDPageContentStream contenido, String titulo, float y) throws IOException {
-        List<String> lineas = envolver(titulo, SERIF, 16, 440);
+    private float dibujarTitulo(PDPageContentStream contenido, TextoEnvuelto titulo, float y)
+            throws IOException {
         float lineaY = y;
-        for (String linea : lineas) {
-            centrar(contenido, linea, SERIF, 16, lineaY, 29, 40, 57);
-            lineaY -= 21;
+        for (String linea : titulo.lineas()) {
+            centrar(contenido, linea, SERIF, titulo.tamano(), lineaY, 29, 40, 57);
+            lineaY -= titulo.saltoLinea();
         }
         return lineaY;
+    }
+
+    private TextoEnvuelto ajustarTexto(
+            String texto, PDFont fuente, float tamanoInicial, float anchoMaximo, int maxLineas)
+            throws IOException {
+        for (float tamano = tamanoInicial; tamano >= 10; tamano -= 0.5f) {
+            List<String> lineas = envolver(texto, fuente, tamano, anchoMaximo);
+            if (lineas.size() <= maxLineas) {
+                return new TextoEnvuelto(tamano, tamano * 1.25f, lineas);
+            }
+        }
+        throw new IllegalArgumentException("El texto excede el espacio disponible en la credencial.");
     }
 
     private List<String> envolver(String texto, PDFont fuente, float tamano, float anchoMaximo)
@@ -168,16 +204,29 @@ public class CredencialPdfService {
         List<String> lineas = new ArrayList<>();
         StringBuilder linea = new StringBuilder();
         for (String palabra : texto.trim().split("\\s+")) {
-            String candidata = linea.isEmpty() ? palabra : linea + " " + palabra;
-            if (!linea.isEmpty() && ancho(candidata, fuente, tamano) > anchoMaximo) {
-                lineas.add(linea.toString());
-                linea.setLength(0);
-                linea.append(palabra);
-            } else {
-                if (!linea.isEmpty()) {
+            boolean primerCaracter = true;
+            for (int codigo : palabra.codePoints().toArray()) {
+                String caracter = new String(Character.toChars(codigo));
+                boolean agregarEspacio = primerCaracter && !linea.isEmpty();
+                String candidata = linea + (agregarEspacio ? " " : "") + caracter;
+                if (ancho(candidata, fuente, tamano) > anchoMaximo) {
+                    if (linea.isEmpty()) {
+                        throw new IllegalArgumentException(
+                                "Un carácter excede el espacio disponible en la credencial.");
+                    }
+                    lineas.add(linea.toString());
+                    linea.setLength(0);
+                    agregarEspacio = false;
+                }
+                if (agregarEspacio) {
                     linea.append(' ');
                 }
-                linea.append(palabra);
+                if (ancho(linea + caracter, fuente, tamano) > anchoMaximo) {
+                    throw new IllegalArgumentException(
+                            "Un carácter excede el espacio disponible en la credencial.");
+                }
+                linea.append(caracter);
+                primerCaracter = false;
             }
         }
         if (!linea.isEmpty()) {
@@ -196,26 +245,57 @@ public class CredencialPdfService {
 
     private void dibujarIdentificador(PDPageContentStream contenido, String identificador)
             throws IOException {
-        float x = 88;
-        texto(contenido, "Identificador", SANS_BOLD, 7, x, 178, 29, 40, 57);
-        List<String> lineas = envolver(identificador, SANS, 7, 420);
-        float y = 166;
+        float x = 64;
+        texto(contenido, "Identificador", SANS_BOLD, 7, x, 206, 29, 40, 57);
+        List<String> lineas = envolver(identificador, SANS, 7, 330);
+        float y = 194;
         for (String linea : lineas) {
             texto(contenido, linea, SANS, 7, x, y, 29, 40, 57);
             y -= 10;
         }
     }
 
+    private String urlCompleta(String identificador) {
+        return urlVerificacion + "/" + identificador;
+    }
+
+    private void dibujarCodigoQr(
+            PDDocument documento, PDPageContentStream contenido, String direccion) throws IOException {
+        try {
+            BitMatrix matriz = new QRCodeWriter().encode(
+                    direccion, BarcodeFormat.QR_CODE, QR_IMAGE_PIXELS, QR_IMAGE_PIXELS);
+            ByteArrayOutputStream png = new ByteArrayOutputStream();
+            MatrixToImageWriter.writeToStream(matriz, "PNG", png);
+            PDImageXObject codigoQr =
+                    PDImageXObject.createFromByteArray(documento, png.toByteArray(), "codigo-qr");
+            float x = PAGE_WIDTH - 64 - QR_SIDE_POINTS;
+            contenido.drawImage(codigoQr, x, QR_BOTTOM, QR_SIDE_POINTS, QR_SIDE_POINTS);
+            centrar(contenido, "Escanee para verificar",
+                    SANS, 7, QR_BOTTOM - 12, 29, 40, 57);
+        } catch (WriterException exception) {
+            throw new IOException("No se pudo generar el código QR de la credencial.", exception);
+        }
+    }
+
     private void dibujarPie(PDPageContentStream contenido) throws IOException {
-        centrar(contenido, "Verifique este título en " + urlVerificacion,
-                SANS, 8, 140, 29, 61, 111);
+        String pie = "Verifique este título en " + urlVerificacion
+                + " o escaneando el código QR";
+        List<String> lineas = envolver(pie, SANS, 8, PAGE_WIDTH - 120);
         contenido.setStrokingColor(new Color(190, 202, 220));
         contenido.setLineWidth(0.6f);
-        contenido.moveTo(88, 126);
-        contenido.lineTo(PAGE_WIDTH - 88, 126);
+        contenido.moveTo(64, 114);
+        contenido.lineTo(PAGE_WIDTH - 64, 114);
         contenido.stroke();
+        float y = 101;
+        for (String linea : lineas) {
+            centrar(contenido, linea, SANS, 8, y, 29, 61, 111);
+            y -= 10;
+        }
         centrar(contenido, "Documento académico. No constituye una firma electrónica certificada.",
-                SANS, 7, 106, 77, 96, 125);
+                SANS, 7, y - 8, 77, 96, 125);
+    }
+
+    private record TextoEnvuelto(float tamano, float saltoLinea, List<String> lineas) {
     }
 
     private void centrar(PDPageContentStream contenido, String valor, PDFont fuente, float tamano,
