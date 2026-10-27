@@ -159,3 +159,47 @@ h1 {
 .verif-estado-no h1 {
     color: var(--color-no);
 }
+
+.verif-estado {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.verif-icono {
+    flex: none;
+}
+
+.verif-datos {
+    margin: 0 0 20px;
+}
+
+.verif-dato {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.verif-dato:last-child {
+    border-bottom: 0;
+}
+
+.verif-dato dt {
+    color: var(--color-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.verif-dato dt .verif-en {
+    display: inline;
+    margin-left: 4px;
+}
+
+.verif-dato dd {
+    margin: 2px 0 0;
+    font-size: 1.05rem;
+}
+
+.verif-codigo {
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 0.9rem;
+}

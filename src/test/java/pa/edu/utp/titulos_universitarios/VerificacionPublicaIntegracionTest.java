@@ -112,6 +112,23 @@ class VerificacionPublicaIntegracionTest {
     }
 
     @Test
+    void tituloAprobado_muestraDatosMinimosConDocumentoEnmascarado() throws Exception {
+        String html = cuerpo("/verificar/" + CODIGO_APROBADO);
+
+        assertTrue(html.contains("Graduado 8-111-111"));
+        assertTrue(html.contains("•-••1-111"));
+        assertFalse(html.contains("8-111-111\""), "el documento completo no debe aparecer");
+        assertFalse(html.contains(">8-111-111<"), "el documento completo no debe aparecer");
+        assertTrue(html.contains("10 de octubre de 2026"));
+        assertTrue(html.contains("October 10, 2026"));
+        assertTrue(html.contains(CODIGO_APROBADO));
+        assertTrue(html.contains("hora de Panamá, UTC−5"));
+        assertTrue(html.contains("Panama time, UTC−5"));
+        assertFalse(html.contains("style="), "sin estilos en línea");
+        assertFalse(html.contains("<script"), "sin scripts");
+    }
+
+    @Test
     void codigoEnMayusculasYConEspacios_seNormaliza() throws Exception {
         mockMvc.perform(get("/verificar/{c}", CODIGO_APROBADO.toUpperCase()))
                 .andExpect(status().isOk());

@@ -35,6 +35,8 @@ public class VerificacionController {
             @RequestParam(name = "codigo", required = false) String codigo,
             Model model) {
 
+        model.addAttribute("institucion", verificacionService.getInstitucion());
+
         if (codigo == null) {
             return "verificacion/formulario";
         }
@@ -59,15 +61,17 @@ public class VerificacionController {
             Model model,
             HttpServletResponse response) {
 
-        Optional<Titulo> titulo = verificacionService.buscarAprobado(codigo);
+        model.addAttribute("institucion", verificacionService.getInstitucion());
+        Optional<ResultadoVerificacion> resultado = verificacionService.consultar(codigo);
 
-        if (titulo.isEmpty()) {
+        if (resultado.isEmpty()) {
             response.setStatus(HttpStatus.NOT_FOUND.value());
             model.addAttribute("valido", false);
             return "verificacion/resultado";
         }
 
         model.addAttribute("valido", true);
+        model.addAttribute("resultado", resultado.get());
         return "verificacion/resultado";
     }
 }
