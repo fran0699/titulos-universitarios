@@ -60,8 +60,8 @@ No tiene datos de entrada nuevos.
 
 | Tarea | Qué se hace | Responsable | PR |
 |---|---|---|---|
-| T-4.11.1 | En `SecurityConfig`, la regla que decide qué página se recuerda al iniciar sesión; `favicon.ico` público (CA6). | Francisco Lata | — |
-| T-4.11.2 | Pruebas con MockMvc (`InicioSesionSin404IntegracionTest`, CA1 a CA4 y CA6) y evidencia con F12 abierto. | Francisco Lata | — |
+| T-4.11.1 | En `SecurityConfig`, la regla que decide qué página se recuerda al iniciar sesión; `favicon.ico` público (CA6). | Francisco Lata | #34 |
+| T-4.11.2 | Pruebas con MockMvc (`InicioSesionSin404IntegracionTest`, CA1 a CA4 y CA6) y evidencia con F12 abierto. | Francisco Lata | #34 |
 
 ## Estado
 
