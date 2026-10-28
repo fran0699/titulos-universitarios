@@ -1,6 +1,6 @@
 # Product Backlog
 
-**Actualizado:** planificación del Sprint 6 (26/10/2026). **Total:** 98 pts, 57 completados (58 %).
+**Actualizado:** planificación del Sprint 6 (26/10/2026). **Total:** 98 pts, 57 completados (58 %) al cierre del Sprint 5. Durante el sprint, cada historia cambia su estado en su propio Pull Request; los totales (encabezado, épicas y resumen) se actualizan una sola vez al cierre, para que los Pull Requests del sprint no choquen entre sí.
 
 Estructura: Product Backlog → épicas (EP-0X) → historias de usuario (HU-X.Y) → tareas (T-X.Y.Z). Cada historia es la unidad asignable, tiene un dueño y cabe en un sprint; los puntos y la prioridad se asignan a la historia, y el peso de una épica es la suma de sus historias. Tipos: Funcional, Técnica, Investigación y Entorno. Cada historia se asocia a al menos uno de los tres requisitos del cliente ([visión y MVP](vision-y-mvp.md)): Precisión, Seguridad o Verificabilidad internacional.
 
