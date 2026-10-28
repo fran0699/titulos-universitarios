@@ -67,6 +67,6 @@
 
 ## Estado
 
-En revisión (Sprint 6, PR #32). Evidencias: `docs/evidencias/HU-3.1-pruebas.txt` y las capturas `HU-3.1-*` en la misma carpeta.
+ECompleto (Sprint 6, PR #32). Evidencias: `docs/evidencias/HU-3.1-pruebas.txt` y las capturas `HU-3.1-*` en la misma carpeta.
 
 _Criterios aprobados por el Product Owner en la planificación del Sprint 6 (26/10/2026)._
