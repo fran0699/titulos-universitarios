@@ -1,0 +1,39 @@
+HU-4.11 (T-4.11.1 y T-4.11.2) - Pruebas del inicio de sesion sin error 404
+Fecha de ejecucion: 2026-10-27
+Rama: feature/HU-4.11-inicio-sesion-sin-404 (sobre main 881e26f)
+Clase: src/test/java/pa/edu/utp/titulos_universitarios/security/InicioSesionSin404IntegracionTest.java
+MockMvc con base H2 en memoria. Cada prueba usa una sola sesion (MockHttpSession), como el navegador.
+
+1) ANTES de la correccion (pruebas escritas primero, SecurityConfig sin cambios)
+   .\mvnw.cmd test "-Dtest=InicioSesionSin404IntegracionTest"
+   Resultado: 10 pruebas, 5 fallos, 0 errores (BUILD FAILURE esperado: las pruebas detectan el defecto).
+   - elArchivoDeChromeNoQuedaComoPaginaAVolver: esperaba "/" y recibio
+     http://localhost/.well-known/appspecific/com.chrome.devtools.json?continue
+   - elArchivoDeChromeNoReemplazaLaPaginaQueSeAbrio: esperaba /titulos/pendientes y recibio
+     http://localhost/.well-known/appspecific/com.chrome.devtools.json?continue
+   - nuncaSeVuelveAUnaDireccionDeWellKnown: esperaba "/" y recibio
+     http://localhost/.well-known/security.txt?continue
+   - unaPeticionQueNoEsUnaPaginaNoQuedaComoPaginaAVolver [image/png]: esperaba "/" y recibio
+     http://localhost/titulos?continue
+   - unaPeticionQueNoEsUnaPaginaNoQuedaComoPaginaAVolver [*/*]: esperaba "/" y recibio
+     http://localhost/titulos?continue
+   Pasaban desde antes: el caso application/json (Spring ya lo excluia), CA3 y CA4.
+
+2) DESPUES de la correccion (T-4.11.1 y CA6)
+   .\mvnw.cmd clean test
+   Resultado global: 106 pruebas (95 heredadas + 11 nuevas), 0 fallos, 0 errores, 0 omitidas.
+
+Pruebas de la clase (11) y criterio que cubren:
+   CA1  elArchivoDeChromeNoQuedaComoPaginaAVolver: tras el archivo de Chrome, al iniciar
+        sesion se llega a "/" y de ahi a /titulos.
+   CA1  elArchivoDeChromeNoReemplazaLaPaginaQueSeAbrio: el archivo de Chrome no reemplaza
+        /titulos/pendientes, abierta antes.
+   Regla nuncaSeVuelveAUnaDireccionDeWellKnown: /.well-known/ no se recuerda aunque se pida como HTML.
+   CA2  unaPeticionQueNoEsUnaPaginaNoQuedaComoPaginaAVolver: image/png, application/json y */*
+        no se recuerdan (3 casos).
+   CA3  unaPaginaValidaSiQuedaComoPaginaAVolver: /titulos/pendientes pedida como HTML se recuerda.
+   CA4  elUsuarioTecnicoSigueRecibiendo403EnLasPantallas: /titulos, / y /no-existe dan 403 (3 casos).
+   CA6  elIconoDeLaPestanaSeEntregaConYSinSesion: /favicon.ico responde 200 sin sesion y con sesion.
+
+Exactitud (casos con el resultado esperado / casos): 11 de 11 (100 %).
+Defecto del 404 al iniciar sesion: abierto el 2026-10-25, corregido el 2026-10-27 (2 dias).

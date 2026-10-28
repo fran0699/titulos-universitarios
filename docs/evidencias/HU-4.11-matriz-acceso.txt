@@ -1,0 +1,31 @@
+HU-4.11 / CA4 - Matriz de acceso de HU-4.10 repetida despues de la correccion
+App local: http://localhost:8080   Fecha: 2026-10-27
+Rama: feature/HU-4.11-inicio-sesion-sin-404 (sobre main 881e26f)
+Objetivo: comprobar que la nueva regla de la pagina guardada (T-4.11.1) no cambio quien puede
+entrar a que. Mismas 12 filas que docs/evidencias/HU-4.10-matriz-acceso.txt.
+Filas 1-6 con curl.exe; filas 7-12 en el navegador (una ventana privada por usuario, inicio de
+sesion con formulario). Codigos: 200 = permitido, 401 = sin credenciales, 403 = prohibido,
+302 = redirige al login (HTTP Basic no aceptado).
+La contrasena del usuario prometheus se escribio en el aviso de curl (no queda en el historial).
+
+#   Peticion                                    Usuario (rol)               Esperado  Obtenido
+1   GET /actuator/prometheus                    sin credenciales            401       401
+2   GET /actuator/prometheus                    prometheus (MONITOREO)      200       200
+3   GET /actuator/prometheus                    aprobador1 (APROBADOR)      403       403
+4   GET /actuator/prometheus                    registrador1 (REGISTRADOR)  403       403
+5   GET /titulos con HTTP Basic                 aprobador1 (APROBADOR)      302       302
+6   GET /titulos con HTTP Basic                 prometheus (MONITOREO)      302       302
+7   GET /titulos tras formulario                prometheus (MONITOREO)      403       403
+8   GET / tras formulario                       prometheus (MONITOREO)      403       403
+9   GET /css/titulos.css tras formulario        prometheus (MONITOREO)      403       403
+10  GET /no-existe tras formulario              prometheus (MONITOREO)      403       403
+11  GET / tras formulario (llega a /titulos)    registrador1 (REGISTRADOR)  200       200 (lista con estilos)
+12  GET / tras formulario (llega a /titulos)    aprobador1 (APROBADOR)      200       200 (lista con estilos)
+
+Resultado: 12 de 12 combinaciones responden lo esperado (100 %), igual que en HU-4.10.
+Fila 8: el navegador mostro localhost:8080/?continue con status=403. El "?continue" indica que
+"/" se habia pedido como pagina antes de iniciar sesion; recordarla es lo esperado (CA3), y el
+usuario tecnico sigue recibiendo 403.
+Conclusion: la regla de la pagina guardada solo cambia a que pagina se vuelve despues de iniciar
+sesion; no cambia los permisos. El favicon (/favicon.ico) es publico desde CA6 y no forma parte
+de esta matriz.
