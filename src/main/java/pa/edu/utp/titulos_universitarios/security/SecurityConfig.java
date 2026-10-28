@@ -65,6 +65,8 @@ public class SecurityConfig {
                         // que se agreguen en el futuro) es solo para el personal; el
                         // usuario técnico (MONITOREO) recibe 403. Una ruta pública
                         // nueva debe declararse arriba con permitAll().
+                        // HU-3.4: solo el APROBADOR puede consultar la auditoría.
+                        .requestMatchers("/auditoria").hasRole("APROBADOR")
                         .anyRequest().hasAnyRole("REGISTRADOR", "APROBADOR")
                 )
                 .formLogin(form -> form.permitAll());
