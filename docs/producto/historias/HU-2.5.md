@@ -65,6 +65,6 @@
 
 ## Estado
 
-En curso (Sprint 6). Evidencias: `docs/evidencias/HU-2.5-qr-prueba-telefono.pdf`, `HU-2.5-credencial-qr-vista-previa.png` y `HU-2.5-pruebas.txt`. El responsable confirmó que la cámara lee y muestra la URL; falta adjuntar su captura (CA6), y revisar/aprobar y fusionar el PR.
+En curso (Sprint 6). Evidencias: `docs/evidencias/HU-2.5-qr-prueba-telefono.pdf`, `HU-2.5-credencial-qr-vista-previa.png`, `HU-2.5-telefono-redireccion-localhost.png` y `HU-2.5-pruebas.txt`. La captura muestra que al escanear el QR el navegador del teléfono intenta abrir la URL `localhost`; la conexión rechazada es esperable porque `localhost` apunta al teléfono, no a la computadora. La revisión/aprobación y fusión del PR siguen pendientes.
 
 _Criterios aprobados por el Product Owner en la planificación del Sprint 6 (26/10/2026)._

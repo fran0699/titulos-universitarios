@@ -84,6 +84,27 @@ class CredencialPdfServiceTest {
     }
 
     @Test
+    void centraLaLeyendaDebajoDelQr() throws Exception {
+        byte[] pdf = servicio.generar(tituloAprobado());
+
+        try (PDDocument documento = Loader.loadPDF(pdf)) {
+            CajasStripper stripper = new CajasStripper();
+            stripper.getText(documento);
+            CajaTexto leyenda = stripper.cajas.stream()
+                    .filter(caja -> caja.texto().contains("Escanee para verificar"))
+                    .findFirst()
+                    .orElseThrow(() -> new AssertionError("No se encontró la leyenda del QR."));
+            float centroQr = PDRectangle.LETTER.getWidth() - 64 - 80 + 40;
+            float centroLeyenda = (leyenda.left() + leyenda.right()) / 2;
+
+            assertEquals(centroQr, centroLeyenda, 0.5f,
+                    "La leyenda debe quedar centrada respecto al QR.");
+            assertTrue(leyenda.top() > PDRectangle.LETTER.getHeight() - 138,
+                    "La leyenda debe quedar debajo del QR.");
+        }
+    }
+
+    @Test
     void admiteNombreYTituloMaximosEnUnaPaginaSinSolaparTextoNiQr() throws Exception {
         Titulo titulo = tituloAprobado();
         String nombreMaximo = "María ".repeat(19) + "Maríaa";

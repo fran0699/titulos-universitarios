@@ -270,8 +270,9 @@ public class CredencialPdfService {
                     PDImageXObject.createFromByteArray(documento, png.toByteArray(), "codigo-qr");
             float x = PAGE_WIDTH - 64 - QR_SIDE_POINTS;
             contenido.drawImage(codigoQr, x, QR_BOTTOM, QR_SIDE_POINTS, QR_SIDE_POINTS);
-            centrar(contenido, "Escanee para verificar",
-                    SANS, 7, QR_BOTTOM - 12, 29, 40, 57);
+            String leyenda = "Escanee para verificar";
+            float xLeyenda = x + (QR_SIDE_POINTS - ancho(leyenda, SANS, 7)) / 2;
+            texto(contenido, leyenda, SANS, 7, xLeyenda, QR_BOTTOM - 12, 29, 40, 57);
         } catch (WriterException exception) {
             throw new IOException("No se pudo generar el código QR de la credencial.", exception);
         }
