@@ -45,3 +45,10 @@ LIMITE DE ESTA EVIDENCIA
   Es emulacion de dispositivo en la computadora, no un telefono fisico. Para CA7
   (diseno a 360 px, botones de 44 px, sin desplazamiento) es suficiente. La lectura
   del QR con la camara de un telefono es de HU-2.5 y se prueba con esa historia.
+
+PRUEBA EN UN TELEFONO FISICO (29/10/2026)
+  HU-3.1-movil-fisico-hotspot.png: la pagina P8 de un titulo aprobado, abierta en
+  Brave en un telefono Android real conectado por hotspot a la computadora que corre
+  la aplicacion (http://10.87.237.125:8080/verificar/{identificador}). Muestra
+  «Titulo valido · Valid degree», el documento enmascarado y los textos en espanol
+  e ingles. Confirma ademas que el telefono llega a la aplicacion por la red local.
