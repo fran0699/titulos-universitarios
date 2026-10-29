@@ -215,7 +215,7 @@ Generada con PDFBox y ZXing · HU-2.4, HU-2.5, HU-2.8
 | P4 · Bandeja de revisión | Parcial | Sin «Ver» (HU-2.6). «Rechazar» todavía no pide confirmación ni usa el estilo de peligro (HU-2.7). |
 | P5 · Detalle | Pendiente | HU-2.6. |
 | P6 · Auditoría | Pendiente | HU-3.4 (Sprint 6). Los eventos ya se registran desde HU-3.3. «Título afectado» no llevará enlace hasta que exista el detalle (HU-2.6). |
-| P7 y P8 · Verificación pública | Pendiente | HU-3.1 (Sprint 6). La credencial ya muestra la URL de verificación (propiedad `titulos.verificacion.url`). |
+| P7 y P8 · Verificación pública | Implementada | HU-3.1 (Sprint 6, PR #32). Los estados revocado y sustituido llegan con HU-3.2. |
 | P9 · Página de error | Pendiente | HU-4.5. Hoy se ve la «Whitelabel Error Page». |
 | D1 · Credencial PDF | Parcial | QR implementado y lectura con cámara confirmada por el responsable (HU-2.5); falta agregar la captura. Sin hash (HU-2.8, Sprint 7). |
 

@@ -1,6 +1,6 @@
 # Product Backlog
 
-**Actualizado:** planificación del Sprint 6 (26/10/2026). **Total:** 98 pts, 57 completados (58 %).
+**Actualizado:** planificación del Sprint 6 (26/10/2026). **Total:** 98 pts, 57 completados (58 %) al cierre del Sprint 5. Durante el sprint, cada historia cambia su estado en su propio Pull Request; los totales (encabezado, épicas y resumen) se actualizan una sola vez al cierre, para que los Pull Requests del sprint no choquen entre sí.
 
 Estructura: Product Backlog → épicas (EP-0X) → historias de usuario (HU-X.Y) → tareas (T-X.Y.Z). Cada historia es la unidad asignable, tiene un dueño y cabe en un sprint; los puntos y la prioridad se asignan a la historia, y el peso de una épica es la suma de sus historias. Tipos: Funcional, Técnica, Investigación y Entorno. Cada historia se asocia a al menos uno de los tres requisitos del cliente ([visión y MVP](vision-y-mvp.md)): Precisión, Seguridad o Verificabilidad internacional.
 
@@ -40,7 +40,7 @@ Las historias que ya tienen criterios de aceptación detallados enlazan a su arc
 
 | ID | Tipo | Historia de usuario | Pilar | Prioridad | Pts | Estado |
 |---|---|---|---|---|---|---|
-| [HU-3.1](historias/HU-3.1.md) | Funcional | Como empleador, institución o el propio graduado, quiero consultar un título con su código de verificación, escribiéndolo o desde el QR de la credencial, sin iniciar sesión, para comprobar que es auténtico y válido. | Verificabilidad internacional | Alta | 5 | Pendiente (Sprint 6) |
+| [HU-3.1](historias/HU-3.1.md) | Funcional | Como empleador, institución o el propio graduado, quiero consultar un título con su código de verificación, escribiéndolo o desde el QR de la credencial, sin iniciar sesión, para comprobar que es auténtico y válido. | Verificabilidad internacional | Alta | 5 | Completo (S6) |
 | HU-3.2 | Funcional | Como aprobador, quiero revocar o sustituir un título emitido para que la verificación muestre su estado real. | Verificabilidad internacional | Media | 3 | Pendiente |
 | [HU-3.3](historias/HU-3.3.md) | Técnica | Como institución, necesito que cada registro, aprobación y rechazo de un título quede en un registro de auditoría que no se pueda modificar, con quién lo hizo y cuándo, para rastrear cualquier cambio en un título. | Seguridad | Alta (antes Media) | 3 | Completo (S5) |
 | [HU-3.4](historias/HU-3.4.md) | Funcional | Como aprobador, quiero consultar el registro de auditoría filtrando por fechas, acción y usuario, para rastrear quién registró, aprobó o rechazó cada título y cuándo. | Seguridad | Alta (antes Media) | 3 | Pendiente (Sprint 6) |
@@ -59,7 +59,7 @@ Las historias que ya tienen criterios de aceptación detallados enlazan a su arc
 | HU-4.8 | Técnica | Como equipo, queremos pruebas de integración con MockMvc de las reglas por rol y de las cabeceras de seguridad, para detectar automáticamente si un cambio abre un acceso indebido. | Seguridad | Media | 3 | Pendiente |
 | HU-4.9 | Técnica | Como institución, necesito una política de seguridad de contenido (CSP) que no permita estilos en línea, para reducir el riesgo de inyección de código. | Seguridad | Baja | 2 | Pendiente |
 | [HU-4.10](historias/HU-4.10.md) | Técnica | Como institución, necesito que las métricas solo las lea un usuario técnico de Prometheus, sin acceso a las pantallas, y que HTTP Basic solo funcione en `/actuator/**`, para que una contraseña filtrada de Prometheus no permita registrar ni aprobar títulos. | Seguridad | Alta | 2 | Completo (S5) |
-| [HU-4.11](historias/HU-4.11.md) | Técnica | Como usuario del sistema, quiero que al iniciar sesión la aplicación me lleve a una pantalla válida aunque el navegador haya pedido archivos automáticos, para no ver un error 404 después de entrar. | Seguridad | Alta | 1 | Pendiente (Sprint 6) |
+| [HU-4.11](historias/HU-4.11.md) | Técnica | Como usuario del sistema, quiero que al iniciar sesión la aplicación me lleve a una pantalla válida aunque el navegador haya pedido archivos automáticos, para no ver un error 404 después de entrar. | Seguridad | Alta | 1 | Completo (S6) |
 
 **Total del Product Backlog: 98 pts (97 del Sprint 4 + 1 de HU-4.11, nueva) — completados 57 pts (58 %).**
 
