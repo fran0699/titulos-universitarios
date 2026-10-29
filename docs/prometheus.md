@@ -22,7 +22,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\monitoring\prometheus\
 
 El script pide el usuario técnico (Enter para usar `prometheus`) y su contraseña de forma oculta (la misma de `PROMETHEUS_PASSWORD`). Guarda la contraseña en `monitoring/prometheus/.secrets/monitoreo.password`, que Git ignora, y levanta el contenedor.
 
-Prometheus queda en `http://localhost:9090`, accesible solo desde el propio equipo. Abre **Status > Targets**: el job `titulos-universitarios` debe aparecer `UP`. Luego consulta en **Graph**:
+Prometheus queda en `http://localhost:9090`, accesible solo desde el propio equipo. Abre **Status > Target health** (en versiones anteriores, **Status > Targets**): el job `titulos-universitarios` debe aparecer `UP`. Luego consulta en **Query**:
 
 ```promql
 jvm_memory_used_bytes{area="heap"}
@@ -33,6 +33,35 @@ rate(http_server_requests_seconds_count{uri="/actuator/prometheus"}[1m])
 ```
 
 El scrape va a `host.docker.internal:8080/actuator/prometheus` cada 15 segundos, con HTTP Basic. La contraseña no se guarda en el YAML versionado. Para detener el servicio: `docker compose -f docker-compose.prometheus.yml down`; los datos quedan en el volumen `prometheus_data`.
+
+## Tiempo de respuesta por ruta
+
+Sirve para las metas de rendimiento de las historias (por ejemplo, la verificación pública en menos de 1 s y la credencial en menos de 2 s). Pega cada consulta en **Query** y abre la pestaña **Table**.
+
+Cantidad de peticiones por ruta y estado:
+
+```promql
+sum by (uri, status) (http_server_requests_seconds_count{uri=~"/verificar.*|/auditoria|/titulos/.*credencial"})
+```
+
+Promedio en milisegundos:
+
+```promql
+1000 * sum by (uri, status) (http_server_requests_seconds_sum{uri=~"/verificar.*|/auditoria|/titulos/.*credencial"}) / sum by (uri, status) (http_server_requests_seconds_count{uri=~"/verificar.*|/auditoria|/titulos/.*credencial"})
+```
+
+Máximo en milisegundos en las últimas 2 horas:
+
+```promql
+1000 * max by (uri, status) (max_over_time(http_server_requests_seconds_max{uri=~"/verificar.*|/auditoria|/titulos/.*credencial"}[2h]))
+```
+
+- La etiqueta `uri` es el patrón de la ruta del controlador (`/verificar/{codigo}`, `/titulos/{id}/credencial`). La página de inicio de sesión de Spring Security aparece como `UNKNOWN` y las redirecciones como `REDIRECTION`.
+- La cantidad y la suma se acumulan en la aplicación desde que arranca: **se pierden al reiniciarla**. Por eso se miden antes de reiniciar.
+- El máximo solo cubre los últimos 2 minutos en la aplicación; `max_over_time` lo busca en lo que Prometheus guardó. Si Prometheus estaba apagado durante las peticiones, el máximo de esas peticiones no se recupera.
+- Para medir la primera petición después de arrancar (en frío), deja Prometheus encendido, reinicia la aplicación y usa `[5m]` en lugar de `[2h]`.
+
+Resultados del cierre del Sprint 6: [`docs/evidencias/sprint-6-rendimiento.txt`](evidencias/sprint-6-rendimiento.txt).
 
 ## Quién puede leer las métricas (HU-4.10)
 

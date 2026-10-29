@@ -16,7 +16,7 @@ Qué usa el proyecto, en qué versión, dónde se define esa versión y qué tie
 | Dependencias y compilación | Maven, con el wrapper `mvnw` | Maven 3.9.16 (wrapper 3.3.4) | `.mvn/wrapper/maven-wrapper.properties` |
 | Pruebas | JUnit 5, Mockito, MockMvc, `spring-security-test` y H2 en memoria | Las de Spring Boot | `pom.xml` |
 | PDF | Apache PDFBox | 3.0.8 | `pom.xml` |
-| QR | ZXing | 3.5.4 (planificado para HU-2.5; aún no está en el `pom.xml`) | `docs/investigacion-pdf-qr.md` |
+| QR | ZXing (`core` y `javase`) | 3.5.4 | `pom.xml` (desde HU-2.5); prueba de concepto en `docs/investigacion-pdf-qr.md` |
 | Métricas | Spring Boot Actuator + Micrometer (`micrometer-registry-prometheus`) | Las de Spring Boot | `pom.xml` |
 | Monitoreo | Prometheus, en Docker | 3.15.0 (imagen `prom/prometheus:v3.15.0`) | `docker-compose.prometheus.yml` |
 | Contenedores | Docker Desktop con motor WSL 2 | Probado con 4.96.1 y Docker Compose v5.6.0 | Instalación local |

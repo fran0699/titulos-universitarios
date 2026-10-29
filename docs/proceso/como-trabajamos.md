@@ -128,6 +128,14 @@ git pull
 git branch -d feature/HU-X.Y-descripcion
 ```
 
+#### Qué documentación actualiza cada Pull Request
+
+Un PR de historia actualiza **solo lo de su historia**: su archivo en `docs/producto/historias/` (responsable, número de PR, estado y evidencias), su fila del [Product Backlog](../producto/product-backlog.md), la fila de su pantalla en la tabla de estado de la [guía de pantallas](../producto/guia-de-pantallas.md) y sus evidencias en `docs/evidencias/`. El estado de su fila se escribe como quedará al fusionarse: «Completo (Sn)».
+
+Lo que comparten todas las historias se actualiza **una sola vez, en el PR de documentación del cierre**: los totales del Product Backlog (encabezado, cada épica y el resumen), el índice de `docs/producto/historias/README.md`, el [historial de sprints](../sprints/historial.md) y el estado del README.
+
+**Por qué:** esos totales están en varios lugares a la vez. Si cada PR los cambia, los PR del sprint chocan entre sí y el total depende del orden en que se fusionen (acordado en el Sprint 6).
+
 #### Pull Requests de documentación
 
 Un PR que solo cambia documentación (`README.md` o `docs/`) **no necesita aprobación**: lo fusiona quien lo abre, con CircleCI en verde. Si cambia un acuerdo del equipo, se avisa en el grupo.
@@ -159,7 +167,7 @@ Una historia está terminada cuando:
 - [ ] El PR está revisado y fusionado en main.
 - [ ] La evidencia está en `docs/evidencias/`.
 - [ ] Si tiene pantalla, cumple su lista «Debe tener», las reglas comunes y las reglas de validación de la [guía de pantallas](../producto/guia-de-pantallas.md).
-- [ ] **(Propuesta del Sprint 5; se confirma en la planificación del Sprint 6.)** Su archivo en `docs/producto/historias/` y el [Product Backlog](../producto/product-backlog.md) están actualizados con el estado y las evidencias.
+- [ ] Su archivo en `docs/producto/historias/` y su fila del [Product Backlog](../producto/product-backlog.md) están actualizados con el estado y las evidencias (acordado en el Sprint 6).
 
 ### 5. Cierre del sprint
 
@@ -167,11 +175,11 @@ Sobre la versión final de main, después de la última fusión:
 
 1. **Verificación de principio a fin**, con una base de datos creada desde cero, comprobando cada criterio de aceptación del sprint.
 2. **Consola del navegador** (F12) sin errores de CSP.
-3. **Nikto 2.6.1**, comparado con el sprint anterior. Lo ejecuta quien se asignó en la planificación y se anota el commit escaneado. Instalación y comando: [stack y versiones](../tecnico/stack-y-versiones.md).
-4. **Métricas:** puntos comprometidos y completados, velocidad, pruebas (heredadas y nuevas), PR fusionados, hallazgos de Nikto, avance del backlog por épica y las métricas QA de cada historia.
-5. Actualizar el [historial de sprints](../sprints/historial.md), el [Product Backlog](../producto/product-backlog.md), el estado de cada historia y el estado de implementación de la [guía de pantallas](../producto/guia-de-pantallas.md).
+3. **Nikto 2.6.1**, comparado con el sprint anterior. Lo ejecuta quien se asignó en la planificación y se anota el commit escaneado. El informe se guarda en `docs/evidencias/sprint-N-nikto.txt`. Instalación y comando: [stack y versiones](../tecnico/stack-y-versiones.md).
+4. **Métricas:** puntos comprometidos y completados, velocidad, pruebas (heredadas y nuevas), PR fusionados, hallazgos de Nikto, avance del backlog por épica y las métricas QA de cada historia. Los tiempos de respuesta se leen en Prometheus antes de reiniciar la aplicación (consultas en [Prometheus](../prometheus.md#tiempo-de-respuesta-por-ruta)).
+5. **PR de documentación del cierre** («Docs: cierre del Sprint N»), sin aprobación: el [historial de sprints](../sprints/historial.md), los totales del [Product Backlog](../producto/product-backlog.md), el índice de historias, el estado del README, la fecha de la tabla de estado de la [guía de pantallas](../producto/guia-de-pantallas.md) y lo que haya cambiado en [arquitectura y seguridad](../tecnico/arquitectura-y-seguridad.md) o en el stack.
 
-**Evidencias:** se generan en el momento de la prueba, antes de fusionar o borrar la rama, y se guardan en `docs/evidencias/` con el nombre `HU-X.Y-descripcion.ext`.
+**Evidencias:** se generan en el momento de la prueba, antes de fusionar o borrar la rama, y se guardan en `docs/evidencias/` con el nombre `HU-X.Y-descripcion.ext`. Las del cierre, que no son de una historia, usan `sprint-N-descripcion.ext` (por ejemplo, `sprint-6-nikto.txt` y `sprint-6-rendimiento.txt`).
 
 ### 6. Retrospectiva
 

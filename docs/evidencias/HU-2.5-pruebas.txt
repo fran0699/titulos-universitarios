@@ -27,7 +27,7 @@ http://localhost:8080/verificar/7d972866-4d54-4fcb-9f31-cf430ef2a264
 
 Nota: la captura demuestra que el QR se abre en el navegador del telefono, pero localhost apunta al propio telefono, no a la computadora. Para cargar la aplicacion desde el telefono se necesita una URL accesible en la red local y la ruta publica de HU-3.1 implementada.
 
-Estado de cierre: la implementacion, las pruebas y la evidencia del escaneo estan listas. La revision/aprobacion del PR y su fusion a main siguen pendientes.
+Estado de cierre: la implementacion, las pruebas y la evidencia del escaneo estan listas. El PR #33 se reviso y se fusiono en main el 29/10/2026.
 
 Recorrido completo desde el telefono (29/10/2026):
 - HU-2.5-telefono-recorrido-completo-hotspot.png: la camara de un telefono Android real, conectado por hotspot, lee el QR de la credencial mostrada en la pantalla de la computadora (el escaner marca el codigo detectado) y Brave abre la pagina publica de verificacion en http://10.87.237.125:8080/verificar/{identificador}. Se hizo con TITULOS_VERIFICACION_URL apuntando a la IP de la computadora en esa red. Es la captura de vista de aplicaciones recientes: muestra la camara y la pagina ya abierta.

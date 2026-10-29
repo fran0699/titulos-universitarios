@@ -11,12 +11,49 @@ Un resumen por sprint: qué se completó, cómo se midió y qué se aprendió. S
 | 3 | — | HU-2.1, HU-2.2, HU-2.3, HU-4.3, HU-1.4 y HU-4.2 (agregada) | 16 | 15 | 2 | — |
 | 4 | 18/10/2026 | HU-1.9, HU-1.7, HU-1.6, HU-1.10 y HU-4.4 | 14 | 50 | 2 | 8 (#15 a #22) |
 | 5 | 25/10/2026 | HU-4.10, HU-4.7, HU-3.3 y HU-2.4 | 13 | 95 | 2 | 6 (#23 a #28) |
+| 6 | 29/10/2026 | HU-2.5, HU-3.1, HU-3.4 y HU-4.11 | 12 | 155 | 2 | 5 (#31 a #35) |
 
 - **Pts** son los puntos completados en el sprint (la velocidad).
 - **Nikto:** desde el Sprint 3 se usa siempre la versión 2.6.1, para que los hallazgos se puedan comparar. Las cifras del Sprint 1 y del Sprint 2 sirven solo como referencia.
 - En la Sprint Review del Sprint 2 se reestructuró el backlog en épicas, historias y tareas. Los commits más antiguos usan los identificadores anteriores (PB-01 a PB-11).
 
-**Avance del Product Backlog:** 30 de 97 pts al cierre del Sprint 3; 44 de 97 en el Sprint 4; 57 de 98 en el Sprint 5 (58 %). El total subió a 98 con HU-4.11.
+**Avance del Product Backlog:** 30 de 97 pts al cierre del Sprint 3; 44 de 97 en el Sprint 4; 57 de 98 en el Sprint 5 (58 %); 69 de 98 en el Sprint 6 (70 %). El total subió a 98 con HU-4.11.
+
+## Sprint 6 · 26 al 29 de octubre de 2026
+
+**Objetivo:** completar el MVP. Que la credencial tenga un QR que abra su verificación pública; que cualquiera compruebe un título sin iniciar sesión, en español e inglés; que el aprobador consulte la auditoría con filtros; y que iniciar sesión con la consola del navegador abierta no muestre un 404. Primer sprint con la regla de independencia: cada responsable es dueño de historias completas y nadie espera a otro.
+
+**Resultado:** objetivo cumplido, con 12 de 12 pts. El MVP funciona de punta a punta: registrar, aprobar, emitir la credencial con QR, verificarla desde un teléfono y consultar quién hizo qué.
+
+| Responsable | Historia | PR |
+|---|---|---|
+| Edinson Ramirez | HU-2.5 · QR en la credencial (3) | #33 |
+| Henry Birminghan | HU-3.1 · Verificación pública (5) | #32 |
+| Anel Gonzalez | HU-3.4 · Consulta de la auditoría (3) | #35 (completado por Francisco Lata) |
+| Francisco Lata | HU-4.11 · Inicio de sesión sin error 404 (1) | #34 |
+
+La planificación entró en el PR de documentación #31.
+
+**Mediciones:**
+
+- 155 pruebas en verde (95 heredadas y 60 nuevas) y 28 de 28 criterios de aceptación.
+- Verificación de principio a fin sobre `7b213ac` con una base de datos nueva, sin fallos y con la consola del navegador sin errores. El QR se leyó con un teléfono conectado a la misma red.
+- Nikto 2.6.1 sobre `7b213ac`: 8 350 peticiones, 0 errores y 2 hallazgos, los mismos del Sprint 5. Las páginas públicas nuevas no agregaron hallazgos ([informe](../evidencias/sprint-6-nikto.txt)).
+- Matriz de acceso: 12 de 12.
+- Tiempos con Prometheus ([detalle](../evidencias/sprint-6-rendimiento.txt)): verificación 9,8 ms de promedio y auditoría 23,1 ms (meta: menos de 1 s); credencial 70,5 ms de promedio y 313,7 ms la primera después de arrancar (meta: menos de 2 s).
+- Defectos: 3 corregidos en main (el nombre de tres líneas en la credencial y los dos 404 al iniciar sesión; edad promedio de 2,7 días) y 0 abiertos.
+
+**Lecciones**
+
+- La regla de independencia funcionó: las cuatro historias avanzaron en paralelo y se fusionaron en distinto orden, trayendo main con `git merge origin/main`, sin conflictos de código.
+- Cada PR de historia cambia solo su fila del Product Backlog; los totales se actualizan al cierre ([por qué](../proceso/como-trabajamos.md#qué-documentación-actualiza-cada-pull-request)).
+- Revisar qué métodos trae una interfaz heredada: `JpaSpecificationExecutor` (Spring Data JPA 4.0) incluye `delete` y `update`, lo que rompía la auditoría de solo lectura. Se reemplazó por una consulta con `@Query`, y una prueba comprueba que el repositorio no tenga métodos para borrar ni editar.
+- Escribir las pruebas antes de corregir: en HU-4.11 primero fallaron 5 pruebas, lo que confirmó la causa del 404.
+- Las pruebas van en el mismo PR desde su primera versión: un PR sin pruebas necesita más rondas de revisión y pone en riesgo el cierre del sprint.
+- Seguir la convención `T-X.Y.Z: …` también en los commits de corrección: 4 de 21 no la siguieron.
+- Prometheus necesita Docker Desktop abierto: comprobar el target en UP antes de medir, y medir antes de reiniciar la aplicación.
+
+**Quien se incorpora al proyecto** empieza por [Si te incorporas al proyecto](../../README.md#si-te-incorporas-al-proyecto).
 
 ## Sprint 5 · 20 al 25 de octubre de 2026
 
@@ -58,10 +95,9 @@ Un resumen por sprint: qué se completó, cómo se midió y qué se aprendió. S
 
 ## Próximos sprints (plan tentativo)
 
-Se reajusta en cada planificación. Quedan 41 pts. Desde el Sprint 6, el reparto sigue la regla de independencia ([cómo trabajamos](../proceso/como-trabajamos.md)): nadie espera a que otro termine.
+Se reajusta en cada planificación. Quedan 29 pts. El reparto sigue la regla de independencia ([cómo trabajamos](../proceso/como-trabajamos.md)): nadie espera a que otro termine.
 
 | Sprint | Propuesta | Notas |
 |---|---|---|
-| 6 · **MVP** | HU-2.5 (QR, 3), HU-3.1 (verificación pública, 5), HU-3.4 (consulta de auditoría, 3) y HU-4.11 (1) | 12 pts frente a una velocidad de 13; el margen se usa para preparar la demostración del MVP. El hash pasó a HU-2.8 (Sprint 7) |
-| 7 y 8 | Lo postergado: HU-2.8 (hash de integridad, 2), HU-1.11, HU-2.6, HU-1.5, HU-4.6, HU-1.8, HU-2.7, HU-3.2, HU-4.5, HU-4.8 y HU-4.9 | HU-4.6 (modo demostración) depende de HU-1.5 y debe estar antes de la entrega |
+| 7 y 8 | Lo postergado después del MVP: HU-2.8 (hash de integridad, 2), HU-1.11, HU-2.6, HU-1.5, HU-4.6, HU-1.8, HU-2.7, HU-3.2, HU-4.5, HU-4.8 y HU-4.9 | HU-2.8 completa la verificabilidad del documento. HU-4.6 (modo demostración) depende de HU-1.5 y debe estar antes de la entrega |
 | 9 y 10 | Margen, ajustes pedidos en las revisiones y preparación de la entrega | Entrega del producto: primera semana de diciembre de 2026 |
