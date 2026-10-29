@@ -1,15 +1,20 @@
 package pa.edu.utp.titulos_universitarios.entity;
 
 /**
- * T-3.3.1 (HU-3.3): acciones criticas que se auditan. Lista cerrada.
- * REVOCAR y SUSTITUIR se agregaran con HU-3.2.
- *
- * Nota: al sumar REVOCAR y SUSTITUIR, ddl-auto=update NO actualiza el
- * CHECK eventos_auditoria_accion_check de la base de datos; hay que
- * cambiarlo a mano, igual que paso con usuarios_rol_check en HU-4.10.
+ * Acciones críticas que se registran en la auditoría.
+ * Los nombres de los valores se conservan para no modificar los
+ * valores almacenados en la base de datos.
  */
 public enum AccionAuditoria {
     REGISTRAR,
     APROBAR,
-    RECHAZAR
+    RECHAZAR;
+
+    public String getEtiqueta() {
+        return switch (this) {
+            case REGISTRAR -> "Registro";
+            case APROBAR -> "Aprobación";
+            case RECHAZAR -> "Rechazo";
+        };
+    }
 }

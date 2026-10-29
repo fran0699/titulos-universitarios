@@ -214,7 +214,7 @@ Generada con PDFBox y ZXing · HU-2.4, HU-2.5, HU-2.8
 | P3 · Registrar título | Implementada | El título es texto libre de 5–150 caracteres hasta el catálogo (HU-1.11). El duplicado se rechaza con el error bajo «Nombre del título», todavía sin el enlace al registro existente (HU-2.6). |
 | P4 · Bandeja de revisión | Parcial | Sin «Ver» (HU-2.6). «Rechazar» todavía no pide confirmación ni usa el estilo de peligro (HU-2.7). |
 | P5 · Detalle | Pendiente | HU-2.6. |
-| P6 · Auditoría | Pendiente | HU-3.4 (Sprint 6). Los eventos ya se registran desde HU-3.3. «Título afectado» no llevará enlace hasta que exista el detalle (HU-2.6). |
+| P6 · Auditoría | Implementada | HU-3.4 (Sprint 6, PR #35). Los filtros van uno debajo de otro en lugar de en una fila, y «Título afectado» no lleva enlace hasta que exista el detalle (HU-2.6). |
 | P7 y P8 · Verificación pública | Implementada | HU-3.1 (Sprint 6, PR #32). Los estados revocado y sustituido llegan con HU-3.2. |
 | P9 · Página de error | Pendiente | HU-4.5. Hoy se ve la «Whitelabel Error Page». |
 | D1 · Credencial PDF | Parcial | Sin QR (HU-2.5, Sprint 6) ni hash (HU-2.8, Sprint 7). Defecto conocido, que corrige HU-2.5: un nombre de tres líneas se monta sobre la línea separadora. |
