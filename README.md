@@ -43,6 +43,7 @@ Francisco Lata (Product Owner) · Henry Birminghan · Anel Gonzalez · Edinson R
 | [Historias detalladas](docs/producto/historias/README.md) | Criterios de aceptación, reglas y riesgos de cada historia |
 | [Guía de pantallas](docs/producto/guia-de-pantallas.md) | Qué debe tener cada pantalla y cómo se valida cada campo |
 | [Stack y versiones](docs/tecnico/stack-y-versiones.md) | Herramientas, versiones e instalación |
+| [Configuración de PostgreSQL](docs/tecnico/configuracion-postgresql.md) | La base de datos local paso a paso, cómo restablecer la clave de `postgres` y errores frecuentes al arrancar |
 | [Arquitectura y seguridad](docs/tecnico/arquitectura-y-seguridad.md) | Capas, tablas, rutas por rol y controles de seguridad |
 | [Cómo trabajamos](docs/proceso/como-trabajamos.md) | Planificación, flujo de Git, revisión de PR y cierre del sprint |
 | [Historial de sprints](docs/sprints/historial.md) | Resultados, mediciones y lecciones de cada sprint |
@@ -55,7 +56,7 @@ Francisco Lata (Product Owner) · Henry Birminghan · Anel Gonzalez · Edinson R
 
 1. **Qué se construye y qué falta:** [visión y MVP](docs/producto/vision-y-mvp.md) y el [Product Backlog](docs/producto/product-backlog.md).
 2. **Cómo trabajamos:** ramas, Pull Requests, revisión, Definición de Terminado y cierre de cada sprint, en [cómo trabajamos](docs/proceso/como-trabajamos.md).
-3. **Tu computadora lista:** instala lo de [stack y versiones](docs/tecnico/stack-y-versiones.md), crea la base de datos y las variables de entorno (más abajo) y corre las pruebas con `.\mvnw.cmd clean test`: todas deben quedar en verde (155 al cierre del Sprint 6).
+3. **Tu computadora lista:** instala lo de [stack y versiones](docs/tecnico/stack-y-versiones.md), crea la base de datos (paso a paso en [configuración de PostgreSQL](docs/tecnico/configuracion-postgresql.md)) y las variables de entorno (más abajo) y corre las pruebas con `.\mvnw.cmd clean test`: todas deben quedar en verde (155 al cierre del Sprint 6).
 4. **La aplicación por dentro:** capas, tablas y quién entra a cada ruta, en [arquitectura y seguridad](docs/tecnico/arquitectura-y-seguridad.md).
 5. **Antes de tomar una historia:** lee su archivo en [historias detalladas](docs/producto/historias/README.md) (si no tiene, se escribe con la plantilla antes de planificar) y su pantalla en la [guía de pantallas](docs/producto/guia-de-pantallas.md).
 6. **Cómo se midió cada sprint:** [historial de sprints](docs/sprints/historial.md).
@@ -77,7 +78,7 @@ Detalle y comandos de comprobación: [stack y versiones](docs/tecnico/stack-y-ve
 
 Cada integrante debe:
 
-1. Tener PostgreSQL instalado localmente, con una base de datos llamada `titulos_db`.
+1. Tener PostgreSQL instalado localmente, con una base de datos llamada `titulos_db` (paso a paso y solución de problemas: [configuración de PostgreSQL](docs/tecnico/configuracion-postgresql.md)).
 2. En IntelliJ: **Edit Configurations** → tu configuración de ejecución → **Environment variables** → agregar las variables, separadas por `;`:
 ```
    DB_PASSWORD=tu_contraseña_local;PROMETHEUS_PASSWORD=contraseña_de_12_o_mas_caracteres
