@@ -1,6 +1,6 @@
 # HU-2.5 · QR en la credencial
 
-**Responsable 1 · Funcional · Verificabilidad internacional · Prioridad Alta · 3 pts (antes 5) · Sprint 6**
+**Responsable 1: Edinson Ramirez · Funcional · Verificabilidad internacional · Prioridad Alta · 3 pts (antes 5) · Sprint 6**
 
 ## Redacción
 
@@ -59,12 +59,12 @@
 
 | Tarea | Qué se hace | Responsable | PR |
 |---|---|---|---|
-| T-2.5.1 | ZXing en el `pom.xml` y el QR en la credencial con su dirección, tamaño, margen y leyenda; línea del pie nueva. | Responsable 1 | — |
-| T-2.5.2 | El diseño se acomoda al largo del nombre y del título (corrige el defecto de tres líneas). | Responsable 1 | — |
-| T-2.5.3 | Pruebas JUnit (decodificar el QR; nombre y título máximos en una página), variable `TITULOS_VERIFICACION_URL` en el README y evidencia (PDF y captura del teléfono). | Responsable 1 | — |
+| T-2.5.1 | ZXing en el `pom.xml` y el QR en la credencial con su dirección, tamaño, margen y leyenda; línea del pie nueva. | Edinson Ramirez | #33 |
+| T-2.5.2 | El diseño se acomoda al largo del nombre y del título (corrige el defecto de tres líneas). | Edinson Ramirez | #33 |
+| T-2.5.3 | Pruebas JUnit (decodificar el QR; nombre y título máximos en una página), variable `TITULOS_VERIFICACION_URL` en el README y evidencia (PDF y captura del teléfono). | Edinson Ramirez | #33 |
 
 ## Estado
 
-En curso (Sprint 6). Evidencias: `docs/evidencias/HU-2.5-qr-prueba-telefono.pdf`, `HU-2.5-credencial-qr-vista-previa.png`, `HU-2.5-telefono-redireccion-localhost.png` y `HU-2.5-pruebas.txt`. La captura muestra que al escanear el QR el navegador del teléfono intenta abrir la URL `localhost`; la conexión rechazada es esperable porque `localhost` apunta al teléfono, no a la computadora. La revisión/aprobación y fusión del PR siguen pendientes.
+Completo (Sprint 6, PR #33). Evidencias en `docs/evidencias/`: `HU-2.5-pruebas.txt` (los siete criterios), `HU-2.5-qr-prueba-telefono.pdf` (credencial de prueba), `HU-2.5-credencial-qr-vista-previa.png` (vista de la credencial con el QR) y `HU-2.5-telefono-redireccion-localhost.png` (el teléfono lee el QR y abre la dirección esperada, `…/verificar/{identificador}`; la conexión falla porque `localhost` apunta al propio teléfono). El recorrido completo desde el teléfono, con `TITULOS_VERIFICACION_URL` apuntando a la IP de la computadora, se comprueba en la verificación de cierre del sprint.
 
 _Criterios aprobados por el Product Owner en la planificación del Sprint 6 (26/10/2026)._

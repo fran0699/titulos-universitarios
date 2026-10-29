@@ -217,7 +217,7 @@ Generada con PDFBox y ZXing · HU-2.4, HU-2.5, HU-2.8
 | P6 · Auditoría | Implementada | HU-3.4 (Sprint 6, PR #35). Los filtros van uno debajo de otro en lugar de en una fila, y «Título afectado» no lleva enlace hasta que exista el detalle (HU-2.6). |
 | P7 y P8 · Verificación pública | Implementada | HU-3.1 (Sprint 6, PR #32). Los estados revocado y sustituido llegan con HU-3.2. |
 | P9 · Página de error | Pendiente | HU-4.5. Hoy se ve la «Whitelabel Error Page». |
-| D1 · Credencial PDF | Parcial | QR implementado y lectura con cámara confirmada por el responsable (HU-2.5); falta agregar la captura. Sin hash (HU-2.8, Sprint 7). |
+| D1 · Credencial PDF | Parcial | Con el QR de la verificación pública (HU-2.5, PR #33). Falta el hash de integridad (HU-2.8, Sprint 7). |
 
 ## Imágenes de las pantallas
 
