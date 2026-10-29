@@ -33,16 +33,16 @@ Se definió en la planificación del Sprint 5 (20/10/2026) como la cadena mínim
 
 **registrar → aprobar → emitir la credencial → verificarla públicamente → saber quién hizo qué**
 
-| Eslabón | Historias | Estado al cierre del Sprint 5 |
+| Eslabón | Historias | Estado al cierre del Sprint 6 |
 |---|---|---|
 | Registrar | HU-1.1, HU-1.2, HU-1.3, HU-1.9, HU-1.10 y HU-4.7 | Completo |
 | Aprobar | HU-2.1 y HU-2.2 | Completo |
-| Emitir la credencial | HU-2.4 (PDF) y HU-2.5 (QR) | PDF completo; QR en el Sprint 6 |
-| Verificar públicamente | HU-3.1 | Sprint 6 |
-| Saber quién hizo qué | HU-3.3 (registro) y HU-3.4 (consulta) | Registro completo; consulta en el Sprint 6 |
-| Seguridad transversal | HU-4.3 y HU-4.10 | Completo |
+| Emitir la credencial | HU-2.4 (PDF) y HU-2.5 (QR) | Completo (el hash de integridad llega con HU-2.8, Sprint 7) |
+| Verificar públicamente | HU-3.1 | Completo |
+| Saber quién hizo qué | HU-3.3 (registro) y HU-3.4 (consulta) | Completo |
+| Seguridad transversal | HU-4.3, HU-4.10 y HU-4.11 | Completo |
 
-El MVP completo se demuestra al cierre del **Sprint 6**, con sus métricas de calidad, seguridad, trazabilidad y operación.
+El MVP se completó al cierre del **Sprint 6** (29/10/2026). Sus métricas de calidad, seguridad, trazabilidad y operación están en el [historial de sprints](../sprints/historial.md).
 
 ## Decisiones de alcance
 
@@ -56,4 +56,4 @@ El MVP completo se demuestra al cierre del **Sprint 6**, con sus métricas de ca
 
 ## Calendario
 
-Son 10 sprints de una semana. El MVP se completa en el Sprint 6 y la entrega del producto es en la primera semana de diciembre de 2026. El historial está en [sprints/historial.md](../sprints/historial.md).
+Son 10 sprints de una semana. El MVP se completó en el Sprint 6 y la entrega del producto es en la primera semana de diciembre de 2026. El historial está en [sprints/historial.md](../sprints/historial.md).

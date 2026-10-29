@@ -1,0 +1,52 @@
+Cierre del Sprint 6 · tiempos de respuesta con Prometheus
+=========================================================
+
+Fecha: 29/10/2026
+Versión medida: main, commit 7b213ac
+Equipo: laptop con Windows, PostgreSQL local y Prometheus 3.15.0 en Docker Desktop
+Consultas: docs/prometheus.md, sección «Tiempo de respuesta por ruta»
+
+Cómo se generaron las peticiones
+--------------------------------
+Recorrido de principio a fin con una base de datos creada desde cero (registrar,
+aprobar, rechazar, descargar la credencial, consultar la auditoría y verificar en
+público), y después varias recargas de la verificación de un título aprobado y de
+la auditoría, y varias descargas de la credencial. La columna «Peticiones» tiene
+el total de cada ruta.
+
+1. Promedio y máximo (aplicación en marcha desde el recorrido)
+----------------------------------------------------------------
+
+Ruta                        Estado  Peticiones  Promedio   Máximo*   Meta
+/verificar/{codigo}         200     17          9,8 ms     23,7 ms   menos de 1 s
+/verificar/{codigo}         404     1           5,8 ms     —         —     (código «abc», no es UUID: no consulta la base)
+/verificar                  200     1           18,9 ms    —         —
+/verificar                  302     1           4,3 ms     —         —     (envío del formulario: redirige a /verificar/{codigo})
+/auditoria                  200     20          23,1 ms    47,4 ms   menos de 1 s
+/titulos/{id}/credencial    200     11          70,5 ms    53,6 ms   menos de 2 s
+
+* El máximo solo cubre las peticiones hechas con Prometheus encendido. Prometheus
+  se encendió después del recorrido, así que el promedio de la credencial (que
+  incluye la primera descarga) es mayor que su máximo.
+
+2. Primera petición después de reiniciar la aplicación (en frío)
+-----------------------------------------------------------------
+Con Prometheus encendido, se reinició la aplicación y se repitió una descarga y
+una verificación (consulta con max_over_time de 5 minutos).
+
+Ruta                        Estado  Primera petición   Meta
+/titulos/{id}/credencial    200     313,7 ms           menos de 2 s
+/verificar/{codigo}         200     35,8 ms            menos de 1 s
+
+La primera descarga tarda más porque la aplicación carga las fuentes del PDF y el
+generador del QR. Aun así queda unas 6 veces por debajo de la meta.
+
+Comparación con el Sprint 5
+---------------------------
+Credencial PDF: 20 ms de promedio en el Sprint 5 (sin QR) y 70,5 ms en el Sprint 6
+(con el QR y el diseño que se acomoda al largo del texto).
+
+Resultado
+---------
+Las tres metas se cumplen: verificación pública (HU-3.1) y consulta de la
+auditoría (HU-3.4) en menos de 1 s; credencial con QR (HU-2.5) en menos de 2 s.

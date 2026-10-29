@@ -205,7 +205,7 @@ Generada con PDFBox y ZXing · HU-2.4, HU-2.5, HU-2.8
 - Texto: «Verifique este título en …/verificar o escaneando el código QR».
 - Fuentes estándar del PDF (Times y Helvetica), para no incrustar fuentes.
 
-## Estado de implementación (cierre del Sprint 5)
+## Estado de implementación (cierre del Sprint 6)
 
 | Pantalla | Estado | Diferencias con la guía |
 |---|---|---|

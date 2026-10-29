@@ -21,10 +21,10 @@ Los criterios de aceptación son el acuerdo de qué significa «terminado» para
 | [HU-3.3](HU-3.3.md) | Registro de auditoría | Completo (Sprint 5) |
 | [HU-4.10](HU-4.10.md) | Usuario técnico de Prometheus | Completo (Sprint 5) |
 | [HU-2.4](HU-2.4.md) | Credencial PDF | Completo (Sprint 5) |
-| [HU-2.5](HU-2.5.md) | QR en la credencial | Pendiente (Sprint 6) |
-| [HU-3.1](HU-3.1.md) | Verificación pública | Pendiente (Sprint 6) |
-| [HU-3.4](HU-3.4.md) | Consulta de la auditoría | Pendiente (Sprint 6) |
-| [HU-4.11](HU-4.11.md) | Inicio de sesión sin error 404 | Pendiente (Sprint 6) |
+| [HU-2.5](HU-2.5.md) | QR en la credencial | Completo (Sprint 6) |
+| [HU-3.1](HU-3.1.md) | Verificación pública | Completo (Sprint 6) |
+| [HU-3.4](HU-3.4.md) | Consulta de la auditoría | Completo (Sprint 6) |
+| [HU-4.11](HU-4.11.md) | Inicio de sesión sin error 404 | Completo (Sprint 6) |
 
 Las historias completadas antes del Sprint 5 no tienen archivo propio: su redacción está en el Product Backlog. Se agregan aquí cuando se vuelvan a tocar.
 

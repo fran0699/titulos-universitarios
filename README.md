@@ -12,20 +12,21 @@ Más detalle en [visión y MVP](docs/producto/vision-y-mvp.md).
 
 ## Estado
 
-**Cierre del Sprint 5 (25/10/2026):** 57 de 98 pts del backlog (58 %), 95 pruebas en verde y 2 hallazgos de Nikto, los mismos del sprint anterior.
+**Cierre del Sprint 6 (29/10/2026): el MVP está completo.** 69 de 98 pts del backlog (70 %), 155 pruebas en verde y 2 hallazgos de Nikto, los mismos del sprint anterior.
 
-| Funciona hoy | Llega en el Sprint 6 (completa el MVP) |
+| Funciona hoy | Lo que sigue (Sprint 7 en adelante) |
 |---|---|
-| Inicio de sesión por rol y cierre de sesión | Código QR en la credencial (HU-2.5); el hash de integridad llega en el Sprint 7 (HU-2.8) |
-| Registro del graduado (por cédula o pasaporte) y de su título, validado en el servidor | Página pública de verificación, sin iniciar sesión (HU-3.1) |
-| Bandeja de revisión: aprobar o rechazar, con identificador único al aprobar | Consulta del registro de auditoría (HU-3.4) |
-| Credencial PDF de un título aprobado | Inicio de sesión sin 404 con F12 abierto (HU-4.11) |
-| Registro de auditoría de cada acción, que no se puede modificar | |
+| Inicio y cierre de sesión por rol, sin error 404 aunque el navegador pida archivos automáticos | Hash de integridad en la credencial y en la verificación (HU-2.8) |
+| Registro del graduado (por cédula o pasaporte) y de su título, validado en el servidor y en la base de datos | Detalle del título (HU-2.6) y búsqueda con paginación (HU-1.8) |
+| Bandeja de revisión: aprobar o rechazar, con identificador único al aprobar | Catálogo oficial de programas (HU-1.11) |
+| Credencial PDF con un código QR que abre su verificación pública | Revocar o sustituir un título, con confirmación (HU-3.2 y HU-2.7) |
+| Verificación pública bilingüe, sin iniciar sesión y con el documento enmascarado | Página de inicio de sesión propia (HU-1.5), páginas de error (HU-4.5) y modo demostración (HU-4.6) |
+| Registro de auditoría que no se puede modificar, y su consulta con filtros para el aprobador | Pruebas de acceso de todas las rutas (HU-4.8) y CSP sin estilos en línea (HU-4.9) |
 | Métricas para Prometheus con un usuario técnico | |
 
 ## Stack
 
-Java 21 · Spring Boot 4.1.1 (MVC, Security, Data JPA, Validation, Actuator) · Thymeleaf · PostgreSQL · Apache PDFBox · JUnit 5 · CircleCI · Prometheus (Docker) · Nikto 2.6.1.
+Java 21 · Spring Boot 4.1.1 (MVC, Security, Data JPA, Validation, Actuator) · Thymeleaf · PostgreSQL · Apache PDFBox · ZXing (QR) · JUnit 5 · CircleCI · Prometheus (Docker) · Nikto 2.6.1.
 
 Versiones, qué instalar y cómo comprobarlo: [stack y versiones](docs/tecnico/stack-y-versiones.md).
 
@@ -49,6 +50,15 @@ Francisco Lata (Product Owner) · Henry Birminghan · Anel Gonzalez · Edinson R
 | [Investigación de PDF y QR](docs/investigacion-pdf-qr.md) | Prueba de concepto de PDFBox y ZXing (HU-2.3) |
 
 **Regla del equipo:** si un Pull Request cambia el stack, la configuración, el backlog o una historia, actualiza también el documento que corresponde.
+
+## Si te incorporas al proyecto
+
+1. **Qué se construye y qué falta:** [visión y MVP](docs/producto/vision-y-mvp.md) y el [Product Backlog](docs/producto/product-backlog.md).
+2. **Cómo trabajamos:** ramas, Pull Requests, revisión, Definición de Terminado y cierre de cada sprint, en [cómo trabajamos](docs/proceso/como-trabajamos.md).
+3. **Tu computadora lista:** instala lo de [stack y versiones](docs/tecnico/stack-y-versiones.md), crea la base de datos y las variables de entorno (más abajo) y corre las pruebas con `.\mvnw.cmd clean test`: todas deben quedar en verde (155 al cierre del Sprint 6).
+4. **La aplicación por dentro:** capas, tablas y quién entra a cada ruta, en [arquitectura y seguridad](docs/tecnico/arquitectura-y-seguridad.md).
+5. **Antes de tomar una historia:** lee su archivo en [historias detalladas](docs/producto/historias/README.md) (si no tiene, se escribe con la plantilla antes de planificar) y su pantalla en la [guía de pantallas](docs/producto/guia-de-pantallas.md).
+6. **Cómo se midió cada sprint:** [historial de sprints](docs/sprints/historial.md).
 
 ---
 

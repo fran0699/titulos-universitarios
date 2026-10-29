@@ -1,6 +1,6 @@
 # Product Backlog
 
-**Actualizado:** planificación del Sprint 6 (26/10/2026). **Total:** 98 pts, 57 completados (58 %) al cierre del Sprint 5. Durante el sprint, cada historia cambia su estado en su propio Pull Request; los totales (encabezado, épicas y resumen) se actualizan una sola vez al cierre, para que los Pull Requests del sprint no choquen entre sí.
+**Actualizado:** cierre del Sprint 6 (29/10/2026). **Total:** 98 pts, 69 completados (70 %). Durante el sprint, cada historia cambia su estado en su propio Pull Request; los totales (encabezado, épicas y resumen) se actualizan una sola vez al cierre, para que los Pull Requests del sprint no choquen entre sí ([cómo trabajamos](../proceso/como-trabajamos.md#qué-documentación-actualiza-cada-pull-request)).
 
 Estructura: Product Backlog → épicas (EP-0X) → historias de usuario (HU-X.Y) → tareas (T-X.Y.Z). Cada historia es la unidad asignable, tiene un dueño y cabe en un sprint; los puntos y la prioridad se asignan a la historia, y el peso de una épica es la suma de sus historias. Tipos: Funcional, Técnica, Investigación y Entorno. Cada historia se asocia a al menos uno de los tres requisitos del cliente ([visión y MVP](vision-y-mvp.md)): Precisión, Seguridad o Verificabilidad internacional.
 
@@ -23,7 +23,7 @@ Las historias que ya tienen criterios de aceptación detallados enlazan a su arc
 | HU-1.10 | Funcional | Como registrador, quiero identificar al graduado por su tipo y número de documento (cédula o pasaporte) para no confundir personas con el mismo nombre ni registrar dos veces el mismo título. | Precisión | Alta | 5 | Completo (S4) |
 | HU-1.11 | Funcional | Como registrador, quiero elegir el programa de un catálogo oficial con búsqueda para que un mismo título no quede escrito de formas distintas. | Precisión | Alta | 5 | Pendiente |
 
-## EP-02 · Aprobación y emisión de la credencial — 24 pts (15 completados)
+## EP-02 · Aprobación y emisión de la credencial — 24 pts (18 completados)
 
 | ID | Tipo | Historia de usuario | Pilar | Prioridad | Pts | Estado |
 |---|---|---|---|---|---|---|
@@ -36,7 +36,7 @@ Las historias que ya tienen criterios de aceptación detallados enlazan a su arc
 | HU-2.7 | Funcional | Como aprobador, quiero confirmar antes de rechazar, revocar o sustituir un título para evitar errores que no se pueden deshacer. | Precisión | Media | 1 | Pendiente |
 | HU-2.8 | Funcional | Como verificador, quiero comparar el hash de integridad impreso en la credencial con el que muestra la verificación pública, para detectar si el documento fue alterado. | Precisión / Verificabilidad internacional | Alta | 2 | Pendiente (nueva) |
 
-## EP-03 · Verificación pública y ciclo de vida del título — 14 pts (3 completados)
+## EP-03 · Verificación pública y ciclo de vida del título — 14 pts (11 completados)
 
 | ID | Tipo | Historia de usuario | Pilar | Prioridad | Pts | Estado |
 |---|---|---|---|---|---|---|
@@ -45,7 +45,7 @@ Las historias que ya tienen criterios de aceptación detallados enlazan a su arc
 | [HU-3.3](historias/HU-3.3.md) | Técnica | Como institución, necesito que cada registro, aprobación y rechazo de un título quede en un registro de auditoría que no se pueda modificar, con quién lo hizo y cuándo, para rastrear cualquier cambio en un título. | Seguridad | Alta (antes Media) | 3 | Completo (S5) |
 | [HU-3.4](historias/HU-3.4.md) | Funcional | Como aprobador, quiero consultar el registro de auditoría filtrando por fechas, acción y usuario, para rastrear quién registró, aprobó o rechazó cada título y cuándo. | Seguridad | Alta (antes Media) | 3 | Completo (S6) |
 
-## EP-04 · Calidad, seguridad y operación — 23 pts (13 completados)
+## EP-04 · Calidad, seguridad y operación — 23 pts (14 completados)
 
 | ID | Tipo | Historia de usuario | Pilar | Prioridad | Pts | Estado |
 |---|---|---|---|---|---|---|
@@ -61,17 +61,17 @@ Las historias que ya tienen criterios de aceptación detallados enlazan a su arc
 | [HU-4.10](historias/HU-4.10.md) | Técnica | Como institución, necesito que las métricas solo las lea un usuario técnico de Prometheus, sin acceso a las pantallas, y que HTTP Basic solo funcione en `/actuator/**`, para que una contraseña filtrada de Prometheus no permita registrar ni aprobar títulos. | Seguridad | Alta | 2 | Completo (S5) |
 | [HU-4.11](historias/HU-4.11.md) | Técnica | Como usuario del sistema, quiero que al iniciar sesión la aplicación me lleve a una pantalla válida aunque el navegador haya pedido archivos automáticos, para no ver un error 404 después de entrar. | Seguridad | Alta | 1 | Completo (S6) |
 
-**Total del Product Backlog: 98 pts (97 del Sprint 4 + 1 de HU-4.11, nueva) — completados 57 pts (58 %).**
+**Total del Product Backlog: 98 pts (97 del Sprint 4 + 1 de HU-4.11) — completados 69 pts (70 %).**
 
 ## Resumen por épica
 
 | Épica | Pts | Completados |
 |---|---|---|
 | EP-01 · Registro y validación de títulos | 37 | 26 |
-| EP-02 · Aprobación y emisión de la credencial | 24 | 15 |
-| EP-03 · Verificación pública y ciclo de vida del título | 14 | 3 |
-| EP-04 · Calidad, seguridad y operación | 23 | 13 |
-| **Total** | **98** | **57 (58 %)** |
+| EP-02 · Aprobación y emisión de la credencial | 24 | 18 |
+| EP-03 · Verificación pública y ciclo de vida del título | 14 | 11 |
+| EP-04 · Calidad, seguridad y operación | 23 | 14 |
+| **Total** | **98** | **69 (70 %)** |
 
 ## Cobertura de los tres requisitos del cliente
 
@@ -83,6 +83,7 @@ Ningún pilar queda sin al menos una historia asociada.
 
 ## Cambios recientes
 
+- **Sprint 6 (cierre):** HU-2.5, HU-3.1, HU-3.4 y HU-4.11 completas (12 pts); el MVP quedó completo. HU-4.11 sumó un criterio (CA6: el ícono del sitio no da 404) sin cambiar su punto.
 - **Sprint 6 (planificación):** se corrigieron HU-2.5, HU-3.1, HU-3.4 y HU-4.11 con la Definición de Listo. HU-2.5 se dividió: se queda con el QR (3 pts) y el hash pasa a la nueva HU-2.8 (2 pts, Sprint 7), porque solo se puede comparar en la página de verificación que llega con HU-3.1; así ninguna historia del sprint espera a otra. El total sigue en 98 pts. HU-3.4 sube a prioridad Alta por ser parte del MVP.
 - **Sprint 5:** se corrigieron HU-2.4, HU-3.3, HU-4.7 y HU-4.10 con la Definición de Listo (HU-3.3 sube de Media a Alta por ser parte del MVP); se agregó HU-4.11 (1 pt) a partir de la verificación de cierre.
 - **Sprint 4:** se retiró HU-4.2, porque Nikto pasó a ser una actividad fija del cierre de cada sprint, y se agregó HU-4.10.
