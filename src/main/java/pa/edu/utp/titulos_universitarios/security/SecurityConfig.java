@@ -1,8 +1,12 @@
 package pa.edu.utp.titulos_universitarios.security;
 
+import java.util.Locale;
+
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -10,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
 
 @Configuration
 public class SecurityConfig {
@@ -46,11 +52,19 @@ public class SecurityConfig {
     @Order(2)
     public SecurityFilterChain webFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/verificar/**").permitAll()
+                        // T-3.1.1 (HU-3.1): P7 y P8 son publicas. /verificar/** cubre el
+                        // formulario (/verificar) y el resultado (/verificar/{codigo});
+                        // la hoja de estilos propia tambien debe ser publica, o sin
+                        // sesion la pantalla redirigiria al login para cargar el CSS (CA8).
+                        .requestMatchers("/verificar/**", "/css/verificacion.css").permitAll()
                         // T-4.10.2 (HU-4.10): /error queda accesible para que el código
                         // original (401 o 403) llegue tal cual al cliente. Spring Boot no
                         // muestra detalles técnicos en esa página por defecto.
                         .requestMatchers("/error").permitAll()
+                        // T-4.11.1 (HU-4.11, CA6): el ícono de la pestaña es público.
+                        // Sin esta regla, con sesión el navegador recibía 404 y la
+                        // consola (F12) mostraba un error en cada pantalla.
+                        .requestMatchers("/favicon.ico").permitAll()
                         // T-2.1.4 (HU-2.1): la revision de titulos (ver pendientes y
                         // aprobar/rechazar) es exclusiva del rol APROBADOR.
                         .requestMatchers("/titulos/pendientes",
@@ -69,9 +83,40 @@ public class SecurityConfig {
                         .requestMatchers("/auditoria").hasRole("APROBADOR")
                         .anyRequest().hasAnyRole("REGISTRADOR", "APROBADOR")
                 )
-                .formLogin(form -> form.permitAll());
+                .formLogin(form -> form.permitAll())
+                // T-4.11.1 (HU-4.11): al iniciar sesión solo se vuelve a una página.
+                .requestCache(cache -> cache.requestCache(paginaGuardada()));
         aplicarCabecerasDeSeguridad(http);
         return http.build();
+    }
+
+    /**
+     * T-4.11.1 (HU-4.11): decide qué petición sin sesión se recuerda como
+     * «página a la que volver» después de iniciar sesión.
+     *
+     * Solo se recuerda una página: una petición GET que el navegador pide como
+     * HTML (encabezado Accept con text/html), y nunca una dirección de
+     * /.well-known/. Con F12 abierto, Chrome pide por su cuenta
+     * /.well-known/appspecific/com.chrome.devtools.json aceptando cualquier
+     * formato; el criterio por defecto de Spring Security la recordaba y, al
+     * iniciar sesión, la persona terminaba en un error 404.
+     */
+    private RequestCache paginaGuardada() {
+        HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
+        requestCache.setRequestMatcher(request ->
+                "GET".equals(request.getMethod())
+                        && !esDeWellKnown(request)
+                        && pideHtml(request));
+        return requestCache;
+    }
+
+    private static boolean esDeWellKnown(HttpServletRequest request) {
+        return request.getRequestURI().startsWith(request.getContextPath() + "/.well-known/");
+    }
+
+    private static boolean pideHtml(HttpServletRequest request) {
+        String accept = request.getHeader(HttpHeaders.ACCEPT);
+        return accept != null && accept.toLowerCase(Locale.ROOT).contains("text/html");
     }
 
     /**

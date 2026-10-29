@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Resultado de verificación · Verification result</title>
+    <link rel="stylesheet" th:href="@{/css/verificacion.css}">
+</head>
+<body>
+<main class="verif-shell">
+    <section class="verif-card">
+        <p class="verif-institucion" th:text="${institucion}">Institución</p>
+
+        <div class="verif-estado verif-estado-ok" th:if="${valido}" role="status">
+            <svg class="verif-icono" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                 stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="m8 12 3 3 5-6"></path>
+            </svg>
+            <h1>Título válido<span class="verif-en">Valid degree</span></h1>
+        </div>
+
+        <div class="verif-estado verif-estado-no" th:unless="${valido}" role="status">
+            <svg class="verif-icono" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                 stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="m9 9 6 6M15 9l-6 6"></path>
+            </svg>
+            <h1>No encontrado<span class="verif-en">Not found</span></h1>
+        </div>
+
+        <dl class="verif-datos" th:if="${valido}">
+            <div class="verif-dato">
+                <dt>Graduado <span class="verif-en">Graduate</span></dt>
+                <dd th:text="${resultado.graduado}">Nombre</dd>
+            </div>
+            <div class="verif-dato">
+                <dt>Documento <span class="verif-en">Document</span></dt>
+                <dd><span th:text="${resultado.tipoDocumento}">Cédula</span>
+                    <span th:text="${resultado.documentoEnmascarado}">•-•••-4567</span></dd>
+            </div>
+            <div class="verif-dato">
+                <dt>Título <span class="verif-en">Degree</span></dt>
+                <dd th:text="${resultado.titulo}">Título</dd>
+            </div>
+            <div class="verif-dato">
+                <dt>Institución <span class="verif-en">Institution</span></dt>
+                <dd th:text="${resultado.institucion}">Institución</dd>
+            </div>
+            <div class="verif-dato">
+                <dt>Fecha de emisión <span class="verif-en">Issue date</span></dt>
+                <dd><span th:text="${resultado.fechaEmisionEs}">10 de octubre de 2026</span>
+                    · <span th:text="${resultado.fechaEmisionEn}">October 10, 2026</span></dd>
+            </div>
+            <div class="verif-dato">
+                <dt>Código <span class="verif-en">Code</span></dt>
+                <dd class="verif-codigo" th:text="${resultado.codigo}">código</dd>
+            </div>
+            <div class="verif-dato">
+                <dt>Consultado <span class="verif-en">Checked on</span></dt>
+                <dd><span th:text="${resultado.fechaConsultaEs}">26 de octubre de 2026, 14:35</span>
+                    (hora de Panamá, UTC−5)<br>
+                    <span th:text="${resultado.fechaConsultaEn}">October 26, 2026, 14:35</span>
+                    (Panama time, UTC−5)</dd>
+            </div>
+        </dl>
+
+        <p class="verif-ayuda" th:unless="${valido}">
+            No se encontró un título válido con ese código.
+            <span class="verif-en">No valid degree was found with that code.</span>
+        </p>
+
+        <a class="verif-boton verif-boton-secundario" th:href="@{/verificar}">
+            Verificar otro código <span class="verif-en-inline">· Verify another code</span>
+        </a>
+    </section>
+</main>
+</body>
+</html>

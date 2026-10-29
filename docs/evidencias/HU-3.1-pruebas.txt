@@ -1,0 +1,47 @@
+HU-3.1 Verificacion publica - evidencia (T-3.1.3)
+Fecha: 27/10/2026 · App local (Spring Boot, PostgreSQL 17) · Responsable: Henry
+
+PRUEBAS AUTOMATICAS
+  ./mvnw clean test  ->  124 pruebas, 0 fallos, 0 errores
+  VerificacionServiceTest (11): normalizacion, formato UUID (sin tocar la base si es
+    invalido), solo APROBADO, enmascarado (8-123-4567, PE-5-614, PA1234567), fechas
+    y hora de Panama con reloj fijo, titulo sin graduado/fecha -> no rompe.
+  VerificacionPublicaIntegracionTest (MockMvc + H2, 18): sin sesion no redirige,
+    200 aprobado, 404 inexistente/pendiente/rechazado/formato invalido con el mismo
+    mensaje, CA4 (sin documento completo, sin revisor, sin id interno), CA6
+    (espanol e ingles), CA8 (sin style=, <style>, <script>), /titulos sigue
+    pidiendo sesion, pasaporte enmascarado, institucion con acentos.
+
+COMPROBACION EN EL NAVEGADOR (ventana emulada de 360 x 780 px)
+  P7  /verificar                     campo 44 px, boton 44 px, sin desplazamiento
+                                     horizontal (scrollWidth 360), sin menu,
+                                     meta robots noindex, 0 atributos style, 0 scripts,
+                                     consola sin mensajes.
+  P7  codigo "  E5576BB2-...  "      lleva a /verificar/e5576bb2-... (normalizado).
+  P7  campo vacio                    error bajo el campo en los dos idiomas.
+  P8  titulo aprobado (cedula)       200, documento "•-••3-456" (de 8-123-456).
+  P8  titulo aprobado (pasaporte)    200, documento "••••3456" (de PA123456).
+  P8  codigo inexistente             404, «No encontrado · Not found».
+  Consola: el unico mensaje es "Failed to load resource: 404", que es el propio
+  404 del documento "No encontrado" (exigido por CA5), no un error de la app.
+
+CAPTURAS
+  HU-3.1-P7-campo-vacio-360px.jpg
+  HU-3.1-P8-valido-cedula-360px.jpg
+  HU-3.1-P8-valido-pasaporte-360px.jpg
+  HU-3.1-P8-no-encontrado-360px.jpg
+
+CAPTURAS CON BARRA DE DIRECCIONES (27/10/2026)
+  HU-3.1-celular-P7-formulario.png
+  HU-3.1-celular-P8-valido-cedula.png
+  HU-3.1-celular-P8-valido-pasaporte.png
+  HU-3.1-celular-P8-no-encontrado.png
+  Navegador Brave con perfil limpio; la pagina se muestra como un telefono Android
+  de 360 x 830 px (emulacion de dispositivo: ancho, pantalla tactil y agente de
+  usuario movil). Medido en esas mismas paginas: ancho 360, sin desplazamiento
+  horizontal, campo y boton de 44 px, 0 atributos style, 0 scripts.
+
+LIMITE DE ESTA EVIDENCIA
+  Es emulacion de dispositivo en la computadora, no un telefono fisico. Para CA7
+  (diseno a 360 px, botones de 44 px, sin desplazamiento) es suficiente. La lectura
+  del QR con la camara de un telefono es de HU-2.5 y se prueba con esa historia.
