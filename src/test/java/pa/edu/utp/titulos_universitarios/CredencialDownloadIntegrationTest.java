@@ -56,7 +56,7 @@ class CredencialDownloadIntegrationTest {
         Graduado graduadoAprobado = graduadoRepository.save(
                 new Graduado(TipoDocumento.CEDULA, "8-123-456", "Ana Perez"));
         Titulo aprobado = titulo("Ana Perez", graduadoAprobado, EstadoTitulo.APROBADO,
-                "ID-CREDENCIAL-PRUEBA-243");
+                "7d972866-4d54-4fcb-9f31-cf430ef2a264");
         aprobadoId = tituloRepository.save(aprobado).getId();
 
         Graduado graduadoPendiente = graduadoRepository.save(
@@ -78,7 +78,7 @@ class CredencialDownloadIntegrationTest {
         byte[] pdf = result.getResponse().getContentAsByteArray();
         assertTrue(new String(pdf, 0, 5, java.nio.charset.StandardCharsets.US_ASCII).startsWith("%PDF-"));
 
-        Path evidenceDirectory = Path.of("target", "evidencias-hu-2.4.3");
+        Path evidenceDirectory = Path.of("target", "evidencias-hu-2.5");
         Files.createDirectories(evidenceDirectory);
         Path pdfPath = evidenceDirectory.resolve("credencial-descargada.pdf");
         Path pngPath = evidenceDirectory.resolve("credencial-descargada.png");

@@ -84,6 +84,7 @@ Cada integrante debe:
 | `DB_PASSWORD` | Sí | Contraseña de PostgreSQL. |
 | `DB_USERNAME` | No (por defecto `postgres`) | Usuario de PostgreSQL. |
 | `PROMETHEUS_PASSWORD` | Para el monitoreo | Contraseña del usuario técnico `prometheus` (rol `MONITOREO`), mínimo 12 caracteres. Sin ella la app arranca, pero no crea ese usuario y Prometheus no puede leer las métricas (HU-4.10). |
+| `TITULOS_VERIFICACION_URL` | No (por defecto `http://localhost:8080/verificar`) | URL base impresa en la credencial y usada por su QR; puede terminar en `/`. |
 
 Las contraseñas nunca se escriben en el repositorio.
 

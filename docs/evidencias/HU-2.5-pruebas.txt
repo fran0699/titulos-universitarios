@@ -1,0 +1,30 @@
+HU-2.5 - QR en la credencial: matriz de verificacion
+Fecha: 2026-10-27
+Rama: feature/HU-2.5-qr-credencial
+
+Resultado automatizado:
+- Comando: .\mvnw.cmd test
+- 99 pruebas, 0 fallos, 0 errores.
+- CredencialPdfServiceTest: 8 pruebas.
+- CredencialDownloadIntegrationTest: 6 pruebas.
+
+Criterios de aceptacion:
+- CA1 - Cumple. ZXing decodifica la URL base mas el identificador, sin doble barra; tambien se prueba una URL base terminada en /.
+- CA2 - Cumple. El contenido del QR se comprueba y no contiene nombre ni documento.
+- CA3 - Cumple por codigo y pruebas. El QR mide 80 pt (2,82 cm), conserva el margen blanco de cuatro modulos de ZXing, y la leyenda queda centrada debajo del QR; una prueba comprueba su posicion. Incluye el texto del pie.
+- CA4 - Cumple. Se prueban nombre de 120 caracteres y titulo de 150 en una pagina; se comprueba que el nombre no toque el separador, que no haya texto solapado y que el QR no invada texto.
+- CA5 - Cumple. TITULOS_VERIFICACION_URL configura la URL base; esta documentada en README.md.
+- CA6 - Cumple. La prueba automatizada verifica la URL exacta del QR y la captura HU-2.5-telefono-redireccion-localhost.png muestra que, al escanearlo con el telefono, el navegador intenta abrir la direccion localhost. La conexion rechazada es esperable porque localhost apunta al propio telefono y no a la computadora donde corre la aplicacion.
+- CA7 - Cumple. Las pruebas conservan los ocho elementos D1 de HU-2.4 y excluyen el hash, que corresponde a HU-2.8.
+
+Evidencias:
+- HU-2.5-qr-prueba-telefono.pdf: credencial de prueba con identificador UUID.
+- HU-2.5-credencial-qr-vista-previa.png: vista renderizada de la credencial.
+- HU-2.5-telefono-redireccion-localhost.png: captura del telefono tras escanear el QR; el navegador muestra la URL localhost y el error de conexion.
+
+URL codificada en el PDF de prueba:
+http://localhost:8080/verificar/7d972866-4d54-4fcb-9f31-cf430ef2a264
+
+Nota: la captura demuestra que el QR se abre en el navegador del telefono, pero localhost apunta al propio telefono, no a la computadora. Para cargar la aplicacion desde el telefono se necesita una URL accesible en la red local y la ruta publica de HU-3.1 implementada.
+
+Estado de cierre: la implementacion, las pruebas y la evidencia del escaneo estan listas. La revision/aprobacion del PR y su fusion a main siguen pendientes.
