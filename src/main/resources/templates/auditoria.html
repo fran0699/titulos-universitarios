@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditoría | Títulos Universitarios</title>
+    <link rel="stylesheet" th:href="@{/css/titulos.css}">
+</head>
+<body>
+
+<header th:replace="~{fragments/encabezado :: encabezado}"></header>
+
+<main class="page-shell">
+    <section class="card">
+
+        <header class="page-header">
+            <p class="eyebrow">Seguridad y seguimiento</p>
+            <h1>Auditoría</h1>
+            <p class="subtitle">
+                Consulta las acciones realizadas en el sistema:
+                quién las ejecutó, cuándo ocurrieron y qué título fue afectado.
+            </p>
+        </header>
+
+        <section class="section-header" aria-labelledby="filtros-titulo">
+            <h2 id="filtros-titulo">Filtros de búsqueda</h2>
+            <p class="subtitle">
+                Puedes combinar los filtros para encontrar eventos específicos.
+            </p>
+        </section>
+
+        <form th:action="@{/auditoria}" method="get" class="form-grid">
+
+            <div class="form-grid">
+
+                <div class="form-field">
+                    <label for="desde">Fecha inicial</label>
+                    <input type="date"
+                           id="desde"
+                           name="desde"
+                           th:value="${desde}">
+
+                    <p class="field-error"
+                       th:if="${errores.containsKey('desde')}"
+                       th:text="${errores.get('desde')}"
+                       role="alert"></p>
+                </div>
+
+                <div class="form-field">
+                    <label for="hasta">Fecha final</label>
+                    <input type="date"
+                           id="hasta"
+                           name="hasta"
+                           th:value="${hasta}">
+
+                    <p class="field-error"
+                       th:if="${errores.containsKey('hasta')}"
+                       th:text="${errores.get('hasta')}"
+                       role="alert"></p>
+                </div>
+
+                <div class="form-field">
+                    <label for="accion">Acción</label>
+                    <select id="accion" name="accion">
+                        <option value="">Todas las acciones</option>
+
+                        <option th:each="opcion : ${acciones}"
+                                th:value="${opcion.name()}"
+                                th:text="${opcion.etiqueta}"
+                                th:selected="${accionValor == opcion.name()}">
+                        </option>
+                    </select>
+
+                    <p class="field-error"
+                       th:if="${errores.containsKey('accion')}"
+                       th:text="${errores.get('accion')}"
+                       role="alert"></p>
+                </div>
+
+                <div class="form-field">
+                    <label for="usuario">Usuario</label>
+                    <input type="text"
+                           id="usuario"
+                           name="usuario"
+                           minlength="3"
+                           maxlength="50"
+                           placeholder="Buscar por usuario"
+                           th:value="${usuario}">
+
+                    <p class="field-error"
+                       th:if="${errores.containsKey('usuario')}"
+                       th:text="${errores.get('usuario')}"
+                       role="alert"></p>
+                </div>
+
+            </div>
+
+            <input type="hidden" name="pagina" value="1">
+
+            <div class="form-actions">
+                <a class="button button-secondary"
+                   th:href="@{/auditoria}">
+                    Limpiar filtros
+                </a>
+
+                <button class="button button-primary" type="submit">
+                    Buscar
+                </button>
+            </div>
+
+        </form>
+
+        <p class="notice notice-error"
+           th:if="${errores.containsKey('general')}"
+           th:text="${errores.get('general')}"
+           role="alert"></p>
+
+        <section class="section-header">
+            <h2>Eventos registrados</h2>
+            <p class="subtitle">
+                Registro de consulta: los eventos no se pueden editar ni eliminar
+                desde esta pantalla.
+            </p>
+        </section>
+
+        <p class="empty-state"
+           th:if="${eventos != null and eventos.empty}">
+            No hay eventos con esos filtros
+        </p>
+
+        <div class="table-scroll"
+             th:if="${eventos != null and !eventos.empty}">
+
+            <table>
+                <thead>
+                <tr>
+                    <th scope="col">Fecha y hora</th>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">Acción</th>
+                    <th scope="col">Título afectado</th>
+                    <th scope="col">Detalle</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="evento : ${eventos.content}">
+                    <td th:text="${#temporals.format(evento.fechaHora, 'dd/MM/yyyy HH:mm')}">
+                        27/10/2026 10:30
+                    </td>
+
+                    <td th:text="${evento.usuario}">usuario</td>
+
+                    <td th:text="${evento.accion.etiqueta}">Registro</td>
+
+                    <td th:text="${evento.tituloAfectado}">
+                        Título universitario
+                    </td>
+
+                    <td th:text="${evento.detalle}">
+                        Detalle del evento
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <nav class="form-actions"
+             th:if="${eventos != null and eventos.totalPages > 0}"
+             aria-label="Paginación de auditoría">
+
+            <span class="subtitle"
+                  th:text="|Mostrando ${eventos.number * eventos.size + 1}–${eventos.number * eventos.size + eventos.numberOfElements} de ${eventos.totalElements} eventos|">
+                Mostrando 1–6 de 6 eventos
+            </span>
+
+            <a class="button button-secondary"
+               th:if="${!eventos.first}"
+               th:href="@{/auditoria(pagina=${paginaActual - 1},desde=${desde},hasta=${hasta},accion=${accionValor},usuario=${usuario})}">
+                Anterior
+            </a>
+
+            <a class="button button-secondary"
+               th:if="${!eventos.last}"
+               th:href="@{/auditoria(pagina=${paginaActual + 1},desde=${desde},hasta=${hasta},accion=${accionValor},usuario=${usuario})}">
+                Siguiente
+            </a>
+
+        </nav>
+
+    </section>
+</main>
+
+</body>
+</html>

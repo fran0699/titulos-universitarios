@@ -43,7 +43,7 @@ Las historias que ya tienen criterios de aceptación detallados enlazan a su arc
 | [HU-3.1](historias/HU-3.1.md) | Funcional | Como empleador, institución o el propio graduado, quiero consultar un título con su código de verificación, escribiéndolo o desde el QR de la credencial, sin iniciar sesión, para comprobar que es auténtico y válido. | Verificabilidad internacional | Alta | 5 | Completo (S6) |
 | HU-3.2 | Funcional | Como aprobador, quiero revocar o sustituir un título emitido para que la verificación muestre su estado real. | Verificabilidad internacional | Media | 3 | Pendiente |
 | [HU-3.3](historias/HU-3.3.md) | Técnica | Como institución, necesito que cada registro, aprobación y rechazo de un título quede en un registro de auditoría que no se pueda modificar, con quién lo hizo y cuándo, para rastrear cualquier cambio en un título. | Seguridad | Alta (antes Media) | 3 | Completo (S5) |
-| [HU-3.4](historias/HU-3.4.md) | Funcional | Como aprobador, quiero consultar el registro de auditoría filtrando por fechas, acción y usuario, para rastrear quién registró, aprobó o rechazó cada título y cuándo. | Seguridad | Alta (antes Media) | 3 | Pendiente (Sprint 6) |
+| [HU-3.4](historias/HU-3.4.md) | Funcional | Como aprobador, quiero consultar el registro de auditoría filtrando por fechas, acción y usuario, para rastrear quién registró, aprobó o rechazó cada título y cuándo. | Seguridad | Alta (antes Media) | 3 | Completo (S6) |
 
 ## EP-04 · Calidad, seguridad y operación — 23 pts (13 completados)
 

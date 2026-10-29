@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <body>
-<!-- T-1.7.1 (HU-1.7): encabezado comun de las pantallas con sesion. -->
+<!-- T-1.7.1 (HU-1.7): encabezado común de las pantallas con sesión. -->
 <header class="app-header" th:fragment="encabezado">
     <div class="app-header-inner">
         <a class="app-brand" th:href="@{/titulos}">
@@ -13,24 +13,38 @@
             </svg>
             Títulos Universitarios
         </a>
+
         <nav class="app-nav" aria-label="Principal">
             <a class="app-nav-link" th:href="@{/titulos}">Títulos</a>
-            <a class="app-nav-link" th:if="${usuarioActual != null and usuarioActual.aprobador}"
+
+            <a class="app-nav-link"
+               th:if="${usuarioActual != null and usuarioActual.aprobador}"
                th:href="@{/titulos/pendientes}">
                 Bandeja de revisión
                 <span class="app-nav-badge" th:text="${pendientesPorRevisar}">0</span>
             </a>
+
+            <!-- HU-3.4: consulta de auditoría exclusiva para el APROBADOR. -->
+            <a class="app-nav-link"
+               th:if="${usuarioActual != null and usuarioActual.aprobador}"
+               th:href="@{/auditoria}">
+                Auditoría
+            </a>
         </nav>
+
         <div class="app-session" th:if="${usuarioActual != null}">
             <div class="app-user">
                 <span class="app-user-name" th:text="${usuarioActual.nombre}">usuario</span>
                 <span class="app-user-role" th:text="${usuarioActual.rolTexto}">Rol</span>
             </div>
-            <!-- T-1.6.1 (HU-1.6): cerrar sesion por POST; Thymeleaf agrega el token CSRF. -->
+
+            <!-- T-1.6.1 (HU-1.6): cerrar sesión por POST; Thymeleaf agrega el token CSRF. -->
             <form class="app-logout" th:action="@{/logout}" method="post">
                 <button class="app-logout-button" type="submit">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round"
+                         aria-hidden="true">
                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                         <path d="m16 17 5-5-5-5"></path>
                         <path d="M21 12H9"></path>
