@@ -2,19 +2,14 @@ package pa.edu.utp.titulos_universitarios;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import jakarta.persistence.criteria.Predicate;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,11 +17,20 @@ import pa.edu.utp.titulos_universitarios.entity.AccionAuditoria;
 import pa.edu.utp.titulos_universitarios.entity.EventoAuditoria;
 import pa.edu.utp.titulos_universitarios.repository.EventoAuditoriaRepository;
 
+/**
+ * HU-3.4: consulta de solo lectura del registro de auditoría, con filtros
+ * por fechas, acción y usuario, 20 eventos por página.
+ */
 @Service
 @Transactional(readOnly = true)
 public class AuditoriaConsultaService {
 
     private static final int TAMANO_PAGINA = 20;
+
+    // Valores que no limitan la búsqueda cuando un filtro llega vacío.
+    private static final LocalDateTime SIN_FECHA_INICIAL = LocalDateTime.of(1900, 1, 1, 0, 0);
+    private static final LocalDateTime SIN_FECHA_FINAL = LocalDateTime.of(9999, 1, 1, 0, 0);
+    private static final String CUALQUIER_USUARIO = "%";
 
     private final EventoAuditoriaRepository auditoriaRepository;
     private final TituloRepository tituloRepository;
@@ -56,69 +60,26 @@ public class AuditoriaConsultaService {
         String usuarioNormalizado = normalizarUsuario(usuario);
 
         LocalDateTime fechaDesde =
-                desde == null ? null : desde.atStartOfDay();
+                desde == null ? SIN_FECHA_INICIAL : desde.atStartOfDay();
 
+        // «Hasta» incluye todo ese día: se busca antes del inicio del día siguiente.
         LocalDateTime fechaHasta =
-                hasta == null ? null : hasta.plusDays(1).atStartOfDay();
+                hasta == null ? SIN_FECHA_FINAL : hasta.plusDays(1).atStartOfDay();
 
-        Specification<EventoAuditoria> especificacion =
-                (root, query, cb) -> {
+        List<AccionAuditoria> acciones =
+                accion == null ? List.of(AccionAuditoria.values()) : List.of(accion);
 
-                    List<Predicate> predicados = new ArrayList<>();
+        // El usuario se busca por texto contenido, sin distinguir mayúsculas.
+        String patronUsuario = usuarioNormalizado == null
+                ? CUALQUIER_USUARIO
+                : "%" + usuarioNormalizado.toLowerCase(Locale.ROOT) + "%";
 
-                    if (fechaDesde != null) {
-                        predicados.add(
-                                cb.greaterThanOrEqualTo(
-                                        root.<LocalDateTime>get("fechaHora"),
-                                        fechaDesde
-                                )
-                        );
-                    }
-
-                    if (fechaHasta != null) {
-                        predicados.add(
-                                cb.lessThan(
-                                        root.<LocalDateTime>get("fechaHora"),
-                                        fechaHasta
-                                )
-                        );
-                    }
-
-                    if (accion != null) {
-                        predicados.add(
-                                cb.equal(root.get("accion"), accion)
-                        );
-                    }
-
-                    if (usuarioNormalizado != null) {
-                        predicados.add(
-                                cb.like(
-                                        cb.lower(root.get("usuario")),
-                                        "%"
-                                                + usuarioNormalizado
-                                                .toLowerCase(Locale.ROOT)
-                                                + "%"
-                                )
-                        );
-                    }
-
-                    return cb.and(
-                            predicados.toArray(new Predicate[0])
-                    );
-                };
-
-        Page<EventoAuditoria> eventos =
-                auditoriaRepository.findAll(
-                        especificacion,
-                        PageRequest.of(
-                                pagina - 1,
-                                TAMANO_PAGINA,
-                                Sort.by(
-                                        Sort.Order.desc("fechaHora"),
-                                        Sort.Order.desc("id")
-                                )
-                        )
-                );
+        Page<EventoAuditoria> eventos = auditoriaRepository.buscar(
+                fechaDesde,
+                fechaHasta,
+                acciones,
+                patronUsuario,
+                PageRequest.of(pagina - 1, TAMANO_PAGINA));
 
         List<Long> idsTitulos = eventos.getContent().stream()
                 .map(EventoAuditoria::getTituloId)

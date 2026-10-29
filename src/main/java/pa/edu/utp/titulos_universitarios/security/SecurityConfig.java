@@ -74,13 +74,13 @@ public class SecurityConfig {
                         // de registro. /titulos/nuevo cubre tanto el GET como el POST, asi
                         // un aprobador no puede registrar ni enviando el POST directamente.
                         .requestMatchers("/titulos/nuevo").hasRole("REGISTRADOR")
+                        // T-3.4.2 (HU-3.4): solo el APROBADOR consulta la auditoría.
+                        .requestMatchers("/auditoria").hasRole("APROBADOR")
                         // T-4.10.2 (HU-4.10): denegar por defecto. Toda ruta que no
                         // aparezca arriba (/titulos, "/", los estilos y las pantallas
                         // que se agreguen en el futuro) es solo para el personal; el
                         // usuario técnico (MONITOREO) recibe 403. Una ruta pública
                         // nueva debe declararse arriba con permitAll().
-                        // HU-3.4: solo el APROBADOR puede consultar la auditoría.
-                        .requestMatchers("/auditoria").hasRole("APROBADOR")
                         .anyRequest().hasAnyRole("REGISTRADOR", "APROBADOR")
                 )
                 .formLogin(form -> form.permitAll())
