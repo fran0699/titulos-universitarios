@@ -1,6 +1,6 @@
 # HU-3.4 · Consulta de la auditoría
 
-**Responsable por definir · Funcional · Seguridad · Prioridad Alta (antes Media) · 3 pts · Sprint 6**
+**Responsable 3: Anel Gonzalez · Funcional · Seguridad · Prioridad Alta (antes Media) · 3 pts · Sprint 6**
 
 ## Redacción
 
@@ -59,12 +59,18 @@
 
 | Tarea | Qué se hace | Responsable | PR |
 |---|---|---|---|
-| T-3.4.1 | Consultas de lectura con filtros y paginación en el repositorio, y validación de los filtros. | Por definir | — |
-| T-3.4.2 | P6: ruta y regla de seguridad, enlace «Auditoría» en el menú solo para el APROBADOR, tabla, filtros, paginación y mensaje sin resultados. | Por definir | — |
-| T-3.4.3 | Pruebas (filtros, validación, matriz de acceso, repositorio sin métodos para editar ni borrar) y evidencia con captura. | Por definir | — |
+| T-3.4.1 | Consultas de lectura con filtros y paginación en el repositorio, y validación de los filtros. | Anel Gonzalez | #35 |
+| T-3.4.2 | P6: ruta y regla de seguridad, enlace «Auditoría» en el menú solo para el APROBADOR, tabla, filtros, paginación y mensaje sin resultados. | Anel Gonzalez | #35 |
+| T-3.4.3 | Pruebas (filtros, validación, matriz de acceso, repositorio sin métodos para editar ni borrar) y evidencia con captura. | Anel Gonzalez | #35 |
 
 ## Estado
 
-Pendiente (Sprint 6).
+Completo (Sprint 6, PR #35).
+
+**Pruebas:** `AuditoriaSeguridadIntegrationTest` (matriz de acceso, 4 de 4), `AuditoriaConsultaIntegrationTest` (validación de los filtros: cada error bajo su filtro y sin consultar la base de datos) y `AuditoriaConsultaFiltrosIntegrationTest` (con H2: filtros combinados, «hasta» con todo el día, usuario parcial sin distinguir mayúsculas, orden, 20 por página y repositorio sin métodos para editar ni borrar).
+
+**Evidencias** en `docs/evidencias/`: `HU-3.4-eventos-registrados.png` (tabla y «Mostrando X–Y de N»), `HU-3.4-busqueda.png` (filtros de fecha y usuario aplicados), `HU-3.4-busqueda-vacia.png` («No hay eventos con esos filtros») y `HU-3.4-mensaje-error.png` (error bajo cada filtro).
+
+**Revisión del PR:** la primera versión de la consulta usaba `JpaSpecificationExecutor`, que trae métodos para borrar y editar (CA7). Se reemplazó por una consulta declarada en el repositorio, que no hereda esos métodos, y se agregó la prueba que lo comprueba. El tiempo de respuesta (meta: menos de 1 s) se mide con Prometheus en el cierre del sprint.
 
 _Criterios aprobados por el Product Owner en la planificación del Sprint 6 (26/10/2026)._
