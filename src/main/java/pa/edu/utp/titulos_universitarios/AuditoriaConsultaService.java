@@ -1,15 +1,20 @@
-
 package pa.edu.utp.titulos_universitarios;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import jakarta.persistence.criteria.Predicate;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +34,7 @@ public class AuditoriaConsultaService {
     public AuditoriaConsultaService(
             EventoAuditoriaRepository auditoriaRepository,
             TituloRepository tituloRepository) {
+
         this.auditoriaRepository = auditoriaRepository;
         this.tituloRepository = tituloRepository;
     }
@@ -55,13 +61,64 @@ public class AuditoriaConsultaService {
         LocalDateTime fechaHasta =
                 hasta == null ? null : hasta.plusDays(1).atStartOfDay();
 
+        Specification<EventoAuditoria> especificacion =
+                (root, query, cb) -> {
+
+                    List<Predicate> predicados = new ArrayList<>();
+
+                    if (fechaDesde != null) {
+                        predicados.add(
+                                cb.greaterThanOrEqualTo(
+                                        root.<LocalDateTime>get("fechaHora"),
+                                        fechaDesde
+                                )
+                        );
+                    }
+
+                    if (fechaHasta != null) {
+                        predicados.add(
+                                cb.lessThan(
+                                        root.<LocalDateTime>get("fechaHora"),
+                                        fechaHasta
+                                )
+                        );
+                    }
+
+                    if (accion != null) {
+                        predicados.add(
+                                cb.equal(root.get("accion"), accion)
+                        );
+                    }
+
+                    if (usuarioNormalizado != null) {
+                        predicados.add(
+                                cb.like(
+                                        cb.lower(root.get("usuario")),
+                                        "%"
+                                                + usuarioNormalizado
+                                                .toLowerCase(Locale.ROOT)
+                                                + "%"
+                                )
+                        );
+                    }
+
+                    return cb.and(
+                            predicados.toArray(new Predicate[0])
+                    );
+                };
+
         Page<EventoAuditoria> eventos =
-                auditoriaRepository.buscarConFiltros(
-                        fechaDesde,
-                        fechaHasta,
-                        accion,
-                        usuarioNormalizado,
-                        PageRequest.of(pagina - 1, TAMANO_PAGINA));
+                auditoriaRepository.findAll(
+                        especificacion,
+                        PageRequest.of(
+                                pagina - 1,
+                                TAMANO_PAGINA,
+                                Sort.by(
+                                        Sort.Order.desc("fechaHora"),
+                                        Sort.Order.desc("id")
+                                )
+                        )
+                );
 
         List<Long> idsTitulos = eventos.getContent().stream()
                 .map(EventoAuditoria::getTituloId)
@@ -72,7 +129,8 @@ public class AuditoriaConsultaService {
                 tituloRepository.findAllById(idsTitulos).stream()
                         .collect(Collectors.toMap(
                                 Titulo::getId,
-                                Function.identity()));
+                                Function.identity()
+                        ));
 
         return eventos.map(evento -> {
             Titulo titulo = titulosPorId.get(evento.getTituloId());
@@ -87,7 +145,8 @@ public class AuditoriaConsultaService {
                     evento.getUsuario(),
                     evento.getAccion(),
                     tituloAfectado,
-                    evento.getDetalle());
+                    evento.getDetalle()
+            );
         });
     }
 
