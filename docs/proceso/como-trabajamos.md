@@ -4,33 +4,31 @@ Los acuerdos del equipo para planificar, desarrollar, revisar y cerrar cada spri
 
 ## Equipo
 
-| Integrante | GitHub | Rol |
-|---|---|---|
-| Francisco Lata | `fran0699` | Product Owner y desarrollador |
-| Henry Birminghan | `birminghanhenry-arch` | Desarrollador |
-| Anel Gonzalez | `aggon14` | Desarrolladora |
-| Edinson Ramirez | `Edinson31` | Desarrollador |
+| Integrante | GitHub | Rol | Sprints |
+|---|---|---|---|
+| Francisco Lata | `fran0699` | Product Owner y desarrollador | Desde el 1 |
+| Henry Birminghan | `birminghanhenry-arch` | Desarrollador | 1 a 6 |
+| Anel Gonzalez | `aggon14` | Desarrolladora | 1 a 6 |
+| Edinson Ramirez | `Edinson31` | Desarrollador | 1 a 6 |
 
-Los roles de Scrum son formales: en la práctica, los cuatro deciden y desarrollan por igual. Las áreas de trabajo rotan entre sprints.
+Los integrantes que se suman en el Sprint 7 se agregan a esta tabla en su planificación.
+
+Los roles de Scrum son formales: en la práctica, todos deciden y desarrollan por igual. Las áreas de trabajo rotan entre sprints.
 
 ## El sprint en una semana
 
 ```
 Planificación ──► Desarrollo y revisión ──► Cierre ──────────► Retrospectiva
 (historias        (una rama por tarea,       (verificación      (qué funcionó,
- corregidas,       nadie espera a otro;       sobre main,        qué no y qué
+ listas,           nadie espera a otro;       sobre main,        qué no y qué
  cuadro)           PR revisado por otro)      Nikto, métricas)   se ajusta)
 ```
 
-### 1. Planificación (orden fijo)
+### 1. Planificación
 
-Primero se corrigen las historias y después se decide el alcance. Así el equipo recibe el cuadro con historias que ya no van a cambiar.
+Cada historia se refina **una sola vez**, antes de su primera planificación: tiene su archivo en [`docs/producto/historias/`](../producto/historias/README.md), con sus criterios de aceptación, y cumple la Definición de Listo. Una historia refinada no se vuelve a corregir, salvo que al dividirla en tareas o durante el sprint aparezca algo que la cambie; entonces se corrige su archivo y se avisa en el grupo.
 
-1. **Reunir insumos:** el resultado y las lecciones del sprint anterior ([historial](../sprints/historial.md)) y las prioridades del Product Owner.
-2. **Refinar:** corregir las historias candidatas hasta que cumplan la Definición de Listo. Cada historia corregida se escribe en [`docs/producto/historias/`](../producto/historias/README.md); el Product Owner la aprueba y se sube en un [Pull Request de documentación](#pull-requests-de-documentación). El equipo la recibe en el paso 5.
-3. **Planificar:** decidir el alcance según la velocidad reciente ([historial](../sprints/historial.md)) y armar el cuadro del Sprint Backlog.
-4. Si al dividir en tareas cambia una historia, se corrige la historia antes de enviar el cuadro.
-5. **Enviar al equipo** las historias corregidas y el cuadro. Cada integrante elige su número de responsable.
+En la planificación, el Product Owner presenta las historias del sprint y el cuadro del Sprint Backlog con «Responsable 1, 2, 3…». Cada integrante elige su número.
 
 **Comprometer o no comprometer:** no hay historias «opcionales». Lo que entra al sprint se compromete; lo demás queda en el backlog. Una historia agregada a mitad del sprint necesita el acuerdo del equipo y se registra como «agregada».
 
@@ -67,7 +65,7 @@ Un solo cuadro, con una fila por tarea:
 
 Debajo del cuadro se anotan los valores o contratos acordados y los archivos que comparten dos o más historias.
 
-**Revisión:** el 2 revisa al 1, el 3 al 2, el 4 al 3 y el 1 al 4. Si dos historias comparten un archivo o un contrato, conviene que una revise a la otra. El Product Owner puede aprobar cualquier PR. Si un revisor no responde, se avisa en el grupo y la revisión pasa al Product Owner.
+**Revisión:** cada responsable revisa al anterior (el 2 al 1, el 3 al 2…) y el 1 revisa al último. Si dos historias comparten un archivo o un contrato, conviene que una revise a la otra. El Product Owner puede aprobar cualquier PR. Si un revisor no responde, se avisa en el grupo y la revisión pasa al Product Owner.
 
 **Notas de fusión:** la tarea de mayor riesgo técnico se sube temprano, en un PR propio. Quien fusiona después de otro que cambió un archivo compartido (por ejemplo, `pom.xml`) trae main a su rama antes.
 
@@ -171,7 +169,7 @@ Una historia está terminada cuando:
 
 ### 5. Cierre del sprint
 
-Sobre la versión final de main, después de la última fusión:
+Sobre la versión final de main, después de la última fusión. Nikto lo ejecuta quien se asignó en la planificación; los demás pasos, el Product Owner.
 
 1. **Verificación de principio a fin**, con una base de datos creada desde cero, comprobando cada criterio de aceptación del sprint.
 2. **Consola del navegador** (F12) sin errores de CSP.

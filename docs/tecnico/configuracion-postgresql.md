@@ -43,15 +43,17 @@ $env:PGPASSWORD="TU_CLAVE"
 & "C:\Program Files\PostgreSQL\17\bin\psql.exe" -U postgres -h localhost -c "CREATE DATABASE titulos_db;"
 ```
 
-## 4. Corre la app pasando `DB_PASSWORD`
+## 4. Corre la app con las variables de entorno
 
 En **IntelliJ**: Run → Edit Configurations → Environment variables →
 
 ```
-DB_PASSWORD=TU_CLAVE
+DB_PASSWORD=TU_CLAVE;PROMETHEUS_PASSWORD=clave_de_12_o_mas_caracteres
 ```
 
-En **terminal (cmd)**:
+`DB_PASSWORD` es obligatoria. `PROMETHEUS_PASSWORD` solo hace falta para el monitoreo: sin ella la app arranca, pero Prometheus no puede leer las métricas. Todas las variables están en la [tabla del README](../../README.md#variables-de-entorno).
+
+En **terminal (cmd)**, solo con la base de datos:
 
 ```cmd
 set "DB_PASSWORD=TU_CLAVE" && .\mvnw.cmd spring-boot:run
@@ -116,10 +118,14 @@ Cierra y reabre IntelliJ / la terminal para que tome la variable, y vuelve a cor
 
 ### `Port 8080 was already in use`
 
-Hay otra instancia de la app corriendo. Ciérrala (en IntelliJ: botón Stop) o mátala:
+Hay otra instancia de la app corriendo. Ciérrala (en IntelliJ: botón Stop) o cierra solo el programa que usa el puerto 8080:
 
 ```powershell
-Get-Process java | Stop-Process -Force
+Get-NetTCPConnection -LocalPort 8080 -State Listen |
+    Select-Object -ExpandProperty OwningProcess -Unique |
+    ForEach-Object { Stop-Process -Id $_ }
 ```
+
+No uses `Get-Process java | Stop-Process`: cierra todos los programas Java de la computadora, no solo la app.
 
 Luego vuelve a arrancar.

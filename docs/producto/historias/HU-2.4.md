@@ -1,6 +1,6 @@
 # HU-2.4 · Credencial PDF
 
-**Responsable 4: Edinson Ramirez · Funcional · Verificabilidad internacional · Prioridad Alta · 5 pts**
+**Dueño: Edinson Ramirez · Funcional · Verificabilidad internacional · Prioridad Alta · 5 pts · Sprint 5**
 
 ## Redacción
 
@@ -59,6 +59,6 @@
 
 ## Estado
 
-Completo (Sprint 5). Evidencias: `docs/evidencias/HU-2.4.3-pruebas.txt`, `HU-2.4.3-credencial-descargada.pdf` y `.png`. Defecto conocido para HU-2.5: un nombre que ocupa tres líneas se monta sobre la línea separadora, porque esa posición es fija. La URL de verificación sale de la propiedad `titulos.verificacion.url`.
+Completo (Sprint 5). Evidencias: `docs/evidencias/HU-2.4.3-pruebas.txt`, `HU-2.4.3-credencial-descargada.pdf` y `.png`. Defecto encontrado al cerrar: un nombre que ocupaba tres líneas se montaba sobre la línea separadora, porque esa posición era fija; se corrigió en [HU-2.5](HU-2.5.md) (Sprint 6). La URL de verificación sale de la propiedad `titulos.verificacion.url`.
 
 _Criterios aprobados por el Product Owner en la planificación del Sprint 5 (21/10/2026)._

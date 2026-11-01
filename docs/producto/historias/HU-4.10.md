@@ -1,6 +1,6 @@
 # HU-4.10 · Usuario técnico de Prometheus
 
-**Responsable 3: Francisco Lata · Técnica · Seguridad · Prioridad Alta · 2 pts**
+**Dueño: Francisco Lata · Técnica · Seguridad · Prioridad Alta · 2 pts · Sprint 5**
 
 ## Redacción
 

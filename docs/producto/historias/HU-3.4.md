@@ -1,6 +1,6 @@
 # HU-3.4 · Consulta de la auditoría
 
-**Responsable 3: Anel Gonzalez · Funcional · Seguridad · Prioridad Alta (antes Media) · 3 pts · Sprint 6**
+**Dueño: Anel Gonzalez · Funcional · Seguridad · Prioridad Alta (antes Media) · 3 pts · Sprint 6**
 
 ## Redacción
 

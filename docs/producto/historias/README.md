@@ -1,6 +1,6 @@
 # Historias de usuario detalladas
 
-Aquí vive el detalle de cada historia que se corrige para entrar a un sprint: su redacción, sus **criterios de aceptación** y lo que el equipo acuerda para construirla y revisarla. El resumen de todas las historias está en el [Product Backlog](../product-backlog.md).
+Aquí vive el detalle de cada historia refinada: su redacción, sus **criterios de aceptación** y lo que el equipo acuerda para construirla y revisarla. El resumen de todas las historias está en el [Product Backlog](../product-backlog.md).
 
 ## Por qué están en el repositorio
 
@@ -8,7 +8,7 @@ Los criterios de aceptación son el acuerdo de qué significa «terminado» para
 
 ## Cómo se usan
 
-1. **Antes de planificar:** quien corrige una historia la escribe aquí con la plantilla de abajo. El Product Owner la aprueba contra la Definición de Listo y se sube en un Pull Request de documentación, que no necesita aprobación ([cómo trabajamos](../../proceso/como-trabajamos.md#pull-requests-de-documentación)). El equipo la recibe en la planificación.
+1. **Una sola vez, antes de su primera planificación:** el Product Owner refina la historia aquí con la plantilla de abajo, hasta que cumple la [Definición de Listo](../../proceso/como-trabajamos.md#definición-de-listo), y la sube en un Pull Request de documentación, que no necesita aprobación ([cómo trabajamos](../../proceso/como-trabajamos.md#pull-requests-de-documentación)). Una historia refinada no se vuelve a corregir, salvo que al dividirla en tareas o durante el sprint aparezca algo que la cambie.
 2. **Al desarrollar:** cada Pull Request de la historia dice qué criterios cumple (CA1, CA2…).
 3. **Al revisar:** el revisor comprueba cada criterio con sí o no.
 4. **Al cerrar:** se actualizan la sección «Estado», las evidencias y el estado en el Product Backlog.
@@ -35,7 +35,7 @@ Copia este bloque en `HU-X.Y.md` y completa cada sección:
 ```markdown
 # HU-X.Y · Título corto
 
-**Tipo · Pilar · Prioridad · Pts · Sprint · Dueño**
+**Dueño: Nombre · Tipo · Pilar · Prioridad · Pts · Sprint N**
 
 ## Redacción
 > Como [actor], quiero [qué] para [para qué].

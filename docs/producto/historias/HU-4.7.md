@@ -1,6 +1,6 @@
 # HU-4.7 · Validación en el servidor
 
-**Responsable 1: Anel Gonzalez · Técnica · Seguridad / Precisión · Prioridad Alta · 3 pts**
+**Dueño: Anel Gonzalez · Técnica · Seguridad / Precisión · Prioridad Alta · 3 pts · Sprint 5**
 
 ## Redacción
 

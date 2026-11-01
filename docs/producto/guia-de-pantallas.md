@@ -2,7 +2,7 @@
 
 Describe cómo deben verse y comportarse las pantallas de la aplicación: las reglas comunes, las reglas de validación de cada campo y lo que debe tener cada pantalla. Toda historia con pantalla se diseña y se revisa contra esta guía. Se acordó después del Sprint 3.
 
-> **Diseño objetivo, no estado actual.** Algunas pantallas todavía no existen y otras cambiaron por decisiones posteriores. Ver [Estado de implementación](#estado-de-implementación-cierre-del-sprint-5).
+> **Diseño objetivo, no estado actual.** Algunas pantallas todavía no existen y otras cambiaron por decisiones posteriores. Ver [Estado de implementación](#estado-de-implementación).
 >
 > Cada pantalla tiene su imagen en [`pantallas/`](pantallas/). Las imágenes son estáticas: ver [Imágenes de las pantallas](#imágenes-de-las-pantallas) para saber cuándo y cómo se actualizan.
 
@@ -205,7 +205,9 @@ Generada con PDFBox y ZXing · HU-2.4, HU-2.5, HU-2.8
 - Texto: «Verifique este título en …/verificar o escaneando el código QR».
 - Fuentes estándar del PDF (Times y Helvetica), para no incrustar fuentes.
 
-## Estado de implementación (cierre del Sprint 6)
+## Estado de implementación
+
+**Actualizado:** cierre del Sprint 6 (29/10/2026).
 
 | Pantalla | Estado | Diferencias con la guía |
 |---|---|---|
@@ -240,7 +242,7 @@ Las imágenes muestran el **diseño objetivo** y se suben a mano a `docs/product
 
 Si una pantalla necesita más de una imagen (por ejemplo, con errores de validación), se agrega con un sufijo: `P3-registrar-titulo-errores.png`.
 
-**Cuándo se actualiza una imagen:** cuando una historia corregida, una decisión del equipo o un Pull Request cambia el **diseño** de una pantalla: campos, columnas, botones, textos, colores o el paso de una pantalla a otra. Las diferencias temporales de implementación (por ejemplo, «Descargar PDF» en la lista hasta que exista el detalle) no cambian la imagen: se anotan en la tabla de estado.
+**Cuándo se actualiza una imagen:** cuando una historia refinada, una decisión del equipo o un Pull Request cambia el **diseño** de una pantalla: campos, columnas, botones, textos, colores o el paso de una pantalla a otra. Las diferencias temporales de implementación (por ejemplo, «Descargar PDF» en la lista hasta que exista el detalle) no cambian la imagen: se anotan en la tabla de estado.
 
 **Cómo:**
 

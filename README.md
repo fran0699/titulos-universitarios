@@ -32,7 +32,7 @@ Versiones, qué instalar y cómo comprobarlo: [stack y versiones](docs/tecnico/s
 
 ## Equipo
 
-Francisco Lata (Product Owner) · Henry Birminghan · Anel Gonzalez · Edinson Ramirez.
+Francisco Lata (Product Owner). Sprints 1 a 6: Henry Birminghan, Anel Gonzalez y Edinson Ramirez. Integrantes y usuarios de GitHub: [cómo trabajamos](docs/proceso/como-trabajamos.md#equipo).
 
 ## Documentación
 
@@ -58,7 +58,7 @@ Francisco Lata (Product Owner) · Henry Birminghan · Anel Gonzalez · Edinson R
 2. **Cómo trabajamos:** ramas, Pull Requests, revisión, Definición de Terminado y cierre de cada sprint, en [cómo trabajamos](docs/proceso/como-trabajamos.md).
 3. **Tu computadora lista:** instala lo de [stack y versiones](docs/tecnico/stack-y-versiones.md), crea la base de datos (paso a paso en [configuración de PostgreSQL](docs/tecnico/configuracion-postgresql.md)) y las variables de entorno (más abajo) y corre las pruebas con `.\mvnw.cmd clean test`: todas deben quedar en verde (155 al cierre del Sprint 6).
 4. **La aplicación por dentro:** capas, tablas y quién entra a cada ruta, en [arquitectura y seguridad](docs/tecnico/arquitectura-y-seguridad.md).
-5. **Antes de tomar una historia:** lee su archivo en [historias detalladas](docs/producto/historias/README.md) (si no tiene, se escribe con la plantilla antes de planificar) y su pantalla en la [guía de pantallas](docs/producto/guia-de-pantallas.md).
+5. **Antes de tomar una historia:** lee su archivo en [historias detalladas](docs/producto/historias/README.md), con sus criterios de aceptación, y su pantalla en la [guía de pantallas](docs/producto/guia-de-pantallas.md).
 6. **Cómo se midió cada sprint:** [historial de sprints](docs/sprints/historial.md).
 
 ---
