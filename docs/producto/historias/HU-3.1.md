@@ -1,6 +1,6 @@
 # HU-3.1 · Verificación pública
 
-**Henry Birminghan · Funcional · Verificabilidad internacional · Prioridad Alta · 5 pts · Sprint 6**
+**Dueño: Henry Birminghan · Funcional · Verificabilidad internacional · Prioridad Alta · 5 pts · Sprint 6**
 
 ## Redacción
 

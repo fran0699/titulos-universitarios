@@ -21,9 +21,9 @@ El cliente necesita garantizar tres cosas, y cada historia del [Product Backlog]
 | Rol | Quién es | Qué puede hacer |
 |---|---|---|
 | `REGISTRADOR` | Personal de la universidad que registra títulos | Registrar títulos, ver la lista y descargar la credencial de un título aprobado |
-| `APROBADOR` | Personal de la universidad que revisa | Ver la lista, aprobar o rechazar títulos pendientes y descargar credenciales |
+| `APROBADOR` | Personal de la universidad que revisa | Ver la lista, aprobar o rechazar títulos pendientes, descargar credenciales y consultar el registro de auditoría (HU-3.4) |
 | `MONITOREO` | Usuario técnico de Prometheus (no es una persona) | Solo leer las métricas en `/actuator/**` |
-| Verificador (sin cuenta) | Empleador, institución o el propio graduado | Consultar un título en la página pública (HU-3.1, pendiente) |
+| Verificador (sin cuenta) | Empleador, institución o el propio graduado | Consultar un título en la página pública, sin iniciar sesión (HU-3.1) |
 
 **Separación de funciones:** quien registra un título no puede aprobarlo (HU-1.9).
 
@@ -47,9 +47,9 @@ El MVP se completó al cierre del **Sprint 6** (29/10/2026). Sus métricas de ca
 ## Decisiones de alcance
 
 - **Se priorizó en el Sprint 5** lo que protege y completa la cadena: el usuario técnico de Prometheus (HU-4.10), la validación en el servidor (HU-4.7), la credencial PDF (HU-2.4) y el registro de auditoría (HU-3.3).
-- **Se postergó el hash de integridad en la planificación del Sprint 6:** HU-2.5 se dividió y el hash pasó a HU-2.8 (Sprint 7). Un hash impreso solo sirve si se puede comparar en la página de verificación (P8), que llega en el mismo sprint con HU-3.1; hacerlo después evita que una historia espere a otra. La cadena del MVP sigue completa: el QR lleva a la verificación pública, que muestra los datos oficiales para compararlos con la credencial.
+- **Se postergó el hash de integridad en la planificación del Sprint 6:** HU-2.5 se dividió y el hash pasó a HU-2.8 (Sprint 7). Un hash impreso solo sirve si se puede comparar en la página de verificación (P8), que llegaba en el mismo sprint con HU-3.1; hacerlo después evita que una historia espere a otra. La cadena del MVP sigue completa: el QR lleva a la verificación pública, que muestra los datos oficiales para compararlos con la credencial.
 - **Se postergó para después del MVP:** HU-2.8, HU-1.11 (catálogo de programas), HU-2.6 (detalle del título; mientras tanto, el PDF se descarga desde la lista), HU-1.5, HU-4.6, HU-1.8, HU-2.7, HU-3.2, HU-4.5, HU-4.8 y HU-4.9.
-- **HU-2.4 cambió de actor:** la descarga la hace el personal autorizado, porque el graduado no tiene cuenta; el acceso público llega con HU-3.1.
+- **HU-2.4 cambió de actor:** la descarga la hace el personal autorizado, porque el graduado no tiene cuenta; el acceso público llegó con HU-3.1 (Sprint 6).
 - **HU-3.3 subió a prioridad Alta,** porque la trazabilidad es parte del MVP.
 - **El APROBADOR dejó de ver las métricas** (mínimo privilegio, 20/10/2026). Las métricas se consultan en Prometheus.
 - **Nikto es una actividad fija del cierre** de cada sprint desde el Sprint 4 (por eso se retiró HU-4.2).

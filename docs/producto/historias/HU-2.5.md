@@ -1,6 +1,6 @@
 # HU-2.5 · QR en la credencial
 
-**Responsable 1: Edinson Ramirez · Funcional · Verificabilidad internacional · Prioridad Alta · 3 pts (antes 5) · Sprint 6**
+**Dueño: Edinson Ramirez · Funcional · Verificabilidad internacional · Prioridad Alta · 3 pts (antes 5) · Sprint 6**
 
 ## Redacción
 

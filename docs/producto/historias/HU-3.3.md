@@ -1,6 +1,6 @@
 # HU-3.3 · Registro de auditoría
 
-**Responsable 2: Henry Birminghan · Técnica · Seguridad · Prioridad Alta (antes Media) · 3 pts**
+**Dueño: Henry Birminghan · Técnica · Seguridad · Prioridad Alta (antes Media) · 3 pts · Sprint 5**
 
 ## Redacción
 

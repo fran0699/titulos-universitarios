@@ -1,6 +1,6 @@
 # HU-4.11 · Inicio de sesión sin error 404
 
-**Responsable 4: Francisco Lata · Técnica · Seguridad · Prioridad Alta · 1 pt · Sprint 6**
+**Dueño: Francisco Lata · Técnica · Seguridad · Prioridad Alta · 1 pt · Sprint 6**
 
 ## Redacción
 

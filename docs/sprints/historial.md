@@ -13,7 +13,7 @@ Un resumen por sprint: qué se completó, cómo se midió y qué se aprendió. S
 | 5 | 25/10/2026 | HU-4.10, HU-4.7, HU-3.3 y HU-2.4 | 13 | 95 | 2 | 6 (#23 a #28) |
 | 6 | 29/10/2026 | HU-2.5, HU-3.1, HU-3.4 y HU-4.11 | 12 | 155 | 2 | 5 (#31 a #35) |
 
-- **Pts** son los puntos completados en el sprint (la velocidad).
+- **Pts** son los puntos completados en el sprint (la velocidad). Suman 73, cuatro más que los 69 completados del [Product Backlog](../producto/product-backlog.md): HU-4.2 (Nikto, 2 pts) se contó en el Sprint 1 y en el Sprint 3, y en el Sprint 4 se retiró del backlog al pasar a ser una actividad fija del cierre.
 - **Nikto:** desde el Sprint 3 se usa siempre la versión 2.6.1, para que los hallazgos se puedan comparar. Las cifras del Sprint 1 y del Sprint 2 sirven solo como referencia.
 - En la Sprint Review del Sprint 2 se reestructuró el backlog en épicas, historias y tareas. Los commits más antiguos usan los identificadores anteriores (PB-01 a PB-11).
 
