@@ -16,7 +16,7 @@
 
 1. **CA1.** `/verificar` (P7) se abre sin sesión, con el nombre de la institución, el campo «Código de verificación» y el botón «Verificar». Al enviar un código lleva a `/verificar/{código}`; si el campo está vacío, el error aparece bajo el campo.
 2. **CA2.** Para un título APROBADO, `/verificar/{código}` (P8) muestra «Título válido · Valid degree» con icono y solo estos datos: graduado, tipo de documento con el número enmascarado, título, institución, fecha de emisión, código, y fecha y hora de la consulta.
-3. **CA3.** Enmascarado: se ocultan todos los caracteres salvo los últimos 4 que no sean guion, y los guiones quedan en su lugar. Ejemplos: `8-123-4567` → `•-•••-4567`, `PE-5-614` → `••-5-614`, `PA1234567` → `•••••4567`.
+3. **CA3.** Enmascarado: se ocultan todos los caracteres salvo los últimos 2 que no sean guion, y los guiones quedan en su lugar. Ejemplos: `8-123-4567` → `•-•••-••67`, `PE-5-614` → `••-•-•14`, `PA1234567` → `•••••••67` y una cédula corta, `8-71-23` → `•-••-23`. (Antes eran 4: ver [Ajuste después del cierre](#ajuste-después-del-cierre).)
 4. **CA4.** En ninguna parte de la respuesta, tampoco en el HTML, aparecen el documento completo, quién aprobó ni el id interno del título.
 5. **CA5.** Un código que no es un UUID de 36 caracteres muestra «No encontrado · Not found» sin consultar la base de datos. Un código que no existe, o de un título que no está APROBADO, muestra el mismo mensaje. En los dos casos la respuesta es 404.
 6. **CA6.** P7 y P8 muestran cada texto en español y en inglés a la vez, sin selector de idioma.
@@ -64,9 +64,14 @@
 | T-3.1.1 | P7 y la ruta `/verificar/{código}`: validación y normalización del código, búsqueda por identificador, solo títulos APROBADOS. | Henry Birminghan | #32 |
 | T-3.1.2 | P8: datos mínimos, enmascarado, textos en dos idiomas, fecha de la consulta y «No encontrado». | Henry Birminghan | #32 |
 | T-3.1.3 | Pruebas con MockMvc (casos de CA5, acceso sin sesión y ausencia del documento completo) y evidencia con capturas en el celular. | Henry Birminghan | #32 |
+| T-3.1.4 | Ajuste de CA3: dejar visibles los últimos 2 caracteres del documento en lugar de 4, con sus pruebas y el caso de una cédula corta. | Francisco Lata | #40 |
+
+## Ajuste después del cierre
+
+En la demostración del Sprint 6 se verificó un título con una cédula corta: con 4 caracteres visibles, solo quedaba oculto 1 (`8-71-23` → `•-71-23`). Se acordó dejar visibles solo los últimos 2 caracteres que no sean guion (`•-••-23`). Cambia el valor de CA3, no la historia: no suma puntos (Sprint 7, T-3.1.4).
 
 ## Estado
 
-Completo (Sprint 6, PR #32). Evidencias: `docs/evidencias/HU-3.1-pruebas.txt` y las capturas `HU-3.1-*` en la misma carpeta.
+Completo (Sprint 6, PR #32). Ajuste de CA3 en el Sprint 7 (T-3.1.4, PR #40). Evidencias: `docs/evidencias/HU-3.1-pruebas.txt` y las capturas `HU-3.1-*` en la misma carpeta; las del Sprint 6 muestran 4 caracteres visibles, y la del ajuste es `HU-3.1-enmascarado-2-caracteres.png`.
 
-_Criterios aprobados por el Product Owner en la planificación del Sprint 6 (26/10/2026)._
+_Criterios aprobados por el Product Owner en la planificación del Sprint 6 (26/10/2026). CA3 ajustado el 01/11/2026._

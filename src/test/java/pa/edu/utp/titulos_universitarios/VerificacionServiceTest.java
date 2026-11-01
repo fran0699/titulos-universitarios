@@ -111,12 +111,18 @@ class VerificacionServiceTest {
     }
 
     @Test
-    void enmascarar_dejaSoloLosUltimos4CaracteresQueNoSonGuion() {
-        assertEquals("•-•••-4567", VerificacionService.enmascarar("8-123-4567"));
-        assertEquals("••-5-614", VerificacionService.enmascarar("PE-5-614"));
-        assertEquals("•••••4567", VerificacionService.enmascarar("PA1234567"));
+    void enmascarar_dejaSoloLosUltimos2CaracteresQueNoSonGuion() {
+        assertEquals("•-•••-••67", VerificacionService.enmascarar("8-123-4567"));
+        assertEquals("••-•-•14", VerificacionService.enmascarar("PE-5-614"));
+        assertEquals("•••••••67", VerificacionService.enmascarar("PA1234567"));
         assertEquals("", VerificacionService.enmascarar(null));
-        assertEquals("1234", VerificacionService.enmascarar("1234"));
+        assertEquals("••34", VerificacionService.enmascarar("1234"));
+    }
+
+    @Test
+    void enmascarar_cedulaCorta_ocultaLaMayorParte() {
+        // Con 4 visibles, 8-71-23 quedaba •-71-23: solo se ocultaba 1 caracter.
+        assertEquals("•-••-23", VerificacionService.enmascarar("8-71-23"));
     }
 
     @Test
@@ -132,7 +138,7 @@ class VerificacionServiceTest {
 
         assertEquals("Ana Perez", r.graduado());
         assertEquals("Cédula", r.tipoDocumento());
-        assertEquals("•-•••-4567", r.documentoEnmascarado());
+        assertEquals("•-•••-••67", r.documentoEnmascarado());
         assertEquals("Licenciatura en Ingenieria de Software", r.titulo());
         assertEquals("Institucion de Prueba", r.institucion());
         assertEquals("10 de octubre de 2026", r.fechaEmisionEs());

@@ -15,7 +15,7 @@ Describe cómo deben verse y comportarse las pantallas de la aplicación: las re
 - Los mensajes de éxito o error van arriba del contenido; toda lista tiene un **estado vacío**.
 - Botones de **al menos 44 px de alto**; texto con contraste mínimo de **4.5:1**.
 - En el código: **sin estilos ni scripts en línea** (lo exige la CSP). Se usan clases de `titulos.css` y JavaScript en archivos `.js`.
-- **Documento de identidad:** completo solo en las páginas internas y en la credencial PDF. En las páginas públicas va enmascarado: se ocultan todos los caracteres salvo los últimos 4 que no sean guion, y los guiones quedan en su lugar (`8-123-4567` → `•-•••-4567`).
+- **Documento de identidad:** completo solo en las páginas internas y en la credencial PDF. En las páginas públicas va enmascarado: se ocultan todos los caracteres salvo los últimos 2 que no sean guion, y los guiones quedan en su lugar (`8-123-4567` → `•-•••-••67`).
 - Páginas públicas: sin menú interno y pensadas primero para celular.
 - Ninguna página debe terminar en la «Whitelabel Error Page» de Spring.
 
@@ -174,7 +174,7 @@ Ruta `/verificar/{código}` · Público · HU-3.1, HU-3.2
 ![P8 · Resultado de verificación (celular)](pantallas/P8-resultado-de-verificacion.png)
 
 - Estado grande con icono: válido, revocado, sustituido o no encontrado.
-- Solo datos mínimos: graduado, documento enmascarado (últimos 4 caracteres que no sean guion), título, institución, fecha de emisión y código.
+- Solo datos mínimos: graduado, documento enmascarado (últimos 2 caracteres que no sean guion), título, institución, fecha de emisión y código.
 - Fecha y hora de la consulta.
 - Texto bilingüe ES / EN.
 - Fechas como en la credencial, en los dos idiomas («10 de octubre de 2026 · October 10, 2026»); la consulta con la hora y la zona («hora de Panamá, UTC−5») (acordado el 26/10/2026).
@@ -217,7 +217,7 @@ Generada con PDFBox y ZXing · HU-2.4, HU-2.5, HU-2.8
 | P4 · Bandeja de revisión | Parcial | Sin «Ver» (HU-2.6). «Rechazar» todavía no pide confirmación ni usa el estilo de peligro (HU-2.7). |
 | P5 · Detalle | Pendiente | HU-2.6. |
 | P6 · Auditoría | Implementada | HU-3.4 (Sprint 6, PR #35). Los filtros van uno debajo de otro en lugar de en una fila, y «Título afectado» no lleva enlace hasta que exista el detalle (HU-2.6). |
-| P7 y P8 · Verificación pública | Implementada | HU-3.1 (Sprint 6, PR #32). Los estados revocado y sustituido llegan con HU-3.2. |
+| P7 y P8 · Verificación pública | Implementada | HU-3.1 (Sprint 6, PR #32). Desde T-3.1.4 (Sprint 7, PR #40), el documento muestra solo los últimos 2 caracteres. Los estados revocado y sustituido llegan con HU-3.2. |
 | P9 · Página de error | Pendiente | HU-4.5. Hoy se ve la «Whitelabel Error Page». |
 | D1 · Credencial PDF | Parcial | Con el QR de la verificación pública (HU-2.5, PR #33). Falta el hash de integridad (HU-2.8, Sprint 7). |
 
