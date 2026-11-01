@@ -30,7 +30,7 @@ public class VerificacionService {
             "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
 
     private static final char OCULTO = '•'; // •
-    private static final int VISIBLES = 4;
+    private static final int VISIBLES = 2;
 
     private static final ZoneId PANAMA = ZoneId.of("America/Panama");
     private static final Locale ES = Locale.forLanguageTag("es-PA");
@@ -75,9 +75,11 @@ public class VerificacionService {
     }
 
     /**
-     * Oculta todos los caracteres del documento salvo los ultimos 4 que no sean
-     * guion; los guiones quedan en su lugar.
-     * 8-123-4567 -> •-•••-4567, PE-5-614 -> ••-5-614, PA1234567 -> •••••4567.
+     * Oculta todos los caracteres del documento salvo los ultimos 2 que no sean
+     * guion; los guiones quedan en su lugar. Con 2 visibles, una cedula corta
+     * tambien queda oculta en su mayor parte (con 4, 8-71-23 dejaba ver casi todo).
+     * 8-123-4567 -> •-•••-••67, PE-5-614 -> ••-•-•14, PA1234567 -> •••••••67,
+     * 8-71-23 -> •-••-23.
      */
     public static String enmascarar(String documento) {
         if (documento == null) {

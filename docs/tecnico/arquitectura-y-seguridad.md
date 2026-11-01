@@ -89,7 +89,7 @@ graduados 1 ──── N titulo           usuarios           eventos_auditoria
 | Validación en el servidor | Anotaciones en `TituloForm` y reglas en `GraduadoValidator`; cada error se muestra en su campo | HU-4.7 |
 | Revisor y autor desde la sesión | El usuario sale de `Principal`, nunca del formulario | HU-2.1 y HU-3.3 |
 | Consulta de la auditoría | Solo el APROBADOR y solo por GET. Los filtros se validan en el servidor y el error se muestra bajo su campo, sin consultar la base de datos | HU-3.4 |
-| Datos públicos mínimos | La verificación muestra solo graduado, tipo de documento con el número enmascarado (`8-123-4567` → `•-•••-4567`), título, institución y fechas; nunca el documento completo, el revisor ni el id interno | HU-3.1 |
+| Datos públicos mínimos | La verificación muestra solo graduado, tipo de documento con el número enmascarado, dejando visibles solo los últimos 2 caracteres (`8-123-4567` → `•-•••-••67`), título, institución y fechas; nunca el documento completo, el revisor ni el id interno | HU-3.1 |
 | QR sin datos personales | El QR de la credencial solo lleva la dirección de verificación con el identificador | HU-2.5 |
 | Auditoría | Registrar, aprobar y rechazar guardan su evento en la misma transacción: si la acción falla, no queda evento; si el evento falla, la acción se deshace | HU-3.3 |
 | Cabeceras HTTP | CSP (`default-src 'self'`, `script-src 'self'`, `frame-ancestors 'none'`…), Referrer-Policy, Permissions-Policy y HSTS, en las dos cadenas | HU-4.3 |

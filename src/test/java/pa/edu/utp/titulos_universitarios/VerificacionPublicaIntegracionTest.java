@@ -124,7 +124,7 @@ class VerificacionPublicaIntegracionTest {
         String html = cuerpo("/verificar/" + CODIGO_APROBADO);
 
         assertTrue(html.contains("Graduado APROBADO"));
-        assertTrue(html.contains("•-••1-111"));
+        assertTrue(html.contains("•-•••-•11"));
         assertFalse(html.contains("8-111-111\""), "el documento completo no debe aparecer");
         assertFalse(html.contains(">8-111-111<"), "el documento completo no debe aparecer");
         assertTrue(html.contains("10 de octubre de 2026"));
@@ -219,7 +219,7 @@ class VerificacionPublicaIntegracionTest {
 
         String html = cuerpo("/verificar/55555555-5555-4555-8555-555555555555");
         assertTrue(html.contains("Pasaporte"));
-        assertTrue(html.contains("•••••4567"));
+        assertTrue(html.contains("•••••••67"));
         assertFalse(html.contains("PA1234567"));
     }
 
