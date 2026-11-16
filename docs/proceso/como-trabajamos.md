@@ -6,12 +6,16 @@ Los acuerdos del equipo para planificar, desarrollar, revisar y cerrar cada spri
 
 | Integrante | GitHub | Rol | Sprints |
 |---|---|---|---|
-| Francisco Lata | `fran0699` | Product Owner y desarrollador | Desde el 1 |
+| Francisco Lata | `fran0699` | Product Owner y desarrollador | 1 a 7 |
 | Henry Birminghan | `birminghanhenry-arch` | Desarrollador | 1 a 6 |
 | Anel Gonzalez | `aggon14` | Desarrolladora | 1 a 6 |
 | Edinson Ramirez | `Edinson31` | Desarrollador | 1 a 6 |
+| Carol | `Carolrdzag` | Desarrolladora | Desde el 7 |
+| Marleni | `16marleni` | Desarrolladora | Desde el 7 |
+| Maria González | `maridlsa` | Desarrolladora | Desde el 7 |
+| Aldo Bovell | `AldoB216` | Desarrollador | Desde el 7 |
 
-Los integrantes que se suman en el Sprint 7 se agregan a esta tabla en su planificación.
+**Desde el Sprint 8 cambia el Product Owner.** El equipo le presenta el producto con esta documentación: la [visión y el MVP](../producto/vision-y-mvp.md) (con sus decisiones de alcance), el [Product Backlog](../producto/product-backlog.md), las [historias refinadas](../producto/historias/README.md) y el [historial de sprints](../sprints/historial.md). Todo lo que se decida o se aprenda durante el Sprint 7 queda escrito en el repositorio, en el Pull Request donde ocurre.
 
 Los roles de Scrum son formales: en la práctica, todos deciden y desarrollan por igual. Las áreas de trabajo rotan entre sprints.
 

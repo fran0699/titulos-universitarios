@@ -40,11 +40,11 @@ Describe cómo deben verse y comportarse las pantallas de la aplicación: las re
 | Nombre del graduado | 3–120. Letras (con tildes, ñ y ü), espacios, apóstrofo, guion y punto; los espacios dobles se reducen a uno. |
 | Nombre del título | 5–150 (acordado el 21/10/2026). Cuando exista el catálogo (HU-1.11): un programa activo del catálogo, con nombre de 5–150 y único. |
 | Motivo de revocación o sustitución | 10–500. |
-| Búsqueda | Vacía o 2–100. |
+| Búsqueda | Vacía o 2–100. Sin distinguir mayúsculas; las tildes cuentan (acordado el 16/11/2026, HU-1.8). |
 | Usuario (filtro de auditoría) | Vacío o 3–50. Busca el texto contenido en el usuario, sin distinguir mayúsculas (acordado el 26/10/2026). |
 | Filtros de estado, acción e idioma | Solo valores de su lista. |
 | Fechas de auditoría | Válidas; «desde» no puede ser posterior a «hasta». «Hasta» incluye todo ese día (acordado el 26/10/2026). |
-| Paginación | Página desde 1; tamaño 10, 20 o 50. La auditoría (P6) usa 20 por página (acordado el 26/10/2026). |
+| Paginación | Página desde 1; tamaño 10, 20 o 50. La auditoría (P6) usa 20 por página (acordado el 26/10/2026) y la lista de títulos (P2), también (acordado el 16/11/2026). |
 | Código de verificación | Sin espacios al inicio o al final y en minúsculas antes de buscar. UUID de 36 caracteres; si no cumple, «No encontrado» sin consultar la base de datos. |
 | Estado, revisor, fechas e identificador | Los pone el servidor, nunca el formulario. |
 
@@ -83,7 +83,7 @@ Ruta `/login` · Público · HU-1.2, HU-1.5, HU-4.6
 - Mensaje de credenciales incorrectas (`?error`) y de sesión cerrada (`?logout`).
 - Enlace a «Verificar un título» (público).
 - Al ingresar, llevar a `/titulos`.
-- **Modo demostración (HU-4.6, solo con el perfil demo):** franja «Modo demostración» arriba de la página y botones «Registrador» y «Aprobador» que llenan usuario y contraseña (la persona presiona «Ingresar»). Sin el perfil demo no aparecen los botones ni existen los usuarios de prueba.
+- **Modo demostración (HU-4.6, solo con el perfil demo):** franja «Modo demostración» arriba de la página y botones «Registrador» y «Aprobador» que llenan usuario y contraseña (la persona presiona «Ingresar»). Cada botón es un enlace que devuelve el formulario ya lleno, sin JavaScript (acordado el 16/11/2026). Sin el perfil demo no aparecen los botones ni existen los usuarios de prueba.
 
 ### P2 · Títulos
 Ruta `/titulos` · Ambos roles · HU-1.3, HU-1.8, HU-1.10, HU-2.1
@@ -95,7 +95,7 @@ Ruta `/titulos` · Ambos roles · HU-1.3, HU-1.8, HU-1.10, HU-2.1
 - Mensajes de éxito o error.
 - Búsqueda por nombre o documento del graduado, o por título, y filtro por estado.
 - Tabla: Graduado, Tipo de documento, N.º de documento, Título, Fecha de registro, Estado (insignia) y «Ver».
-- Estado vacío y paginación (volumen esperado: 30 000 graduados).
+- Estado vacío y paginación de 20 por página (volumen esperado: 30 000 graduados).
 
 ### P3 · Registrar título
 Ruta `/titulos/nuevo` · Solo REGISTRADOR · HU-1.3, HU-1.9, HU-1.10, HU-1.11
@@ -105,7 +105,7 @@ Ruta `/titulos/nuevo` · Solo REGISTRADOR · HU-1.3, HU-1.9, HU-1.10, HU-1.11
 - Encabezado común y ruta de navegación (Títulos › Registrar).
 - Campos obligatorios marcados (*) con texto de ayuda.
 - Documento de identidad: tipo (Cédula o Pasaporte) y número, según la validación de datos.
-- Programa: lista del catálogo con búsqueda, sin importar tildes ni mayúsculas; el servidor valida que el programa exista y esté activo (HU-1.11).
+- Programa: campo con sugerencias de los programas activos del catálogo (lista `datalist` de HTML, sin JavaScript), sin distinguir mayúsculas; el servidor valida que el programa exista y esté activo (HU-1.11; acordado el 16/11/2026).
 - Error junto al campo que falla, no solo arriba.
 - Título duplicado (mismo documento y mismo programa): se rechaza, con enlace al registro existente.
 - Documento ya registrado con otro nombre: aviso junto al campo del nombre.
@@ -120,7 +120,7 @@ Ruta `/titulos/pendientes` · Solo APROBADOR · HU-2.1
 - Encabezado común con el contador de pendientes en el menú.
 - Mensajes de éxito o error.
 - Tabla: Graduado, Tipo de documento, N.º de documento, Título, Fecha de registro y acciones.
-- Acciones: «Ver», «Aprobar» (primario) y «Rechazar» (peligro). «Rechazar» abre el diálogo de confirmación.
+- Acciones: «Ver», «Aprobar» (primario) y «Rechazar» (peligro). «Rechazar» lleva a la página de confirmación.
 - Estado vacío: «No hay títulos pendientes de revisión».
 
 ### P5 · Detalle del título
@@ -135,16 +135,15 @@ Ruta `/titulos/{id}` · Ambos roles (acciones según el rol) · HU-2.1, HU-2.2, 
 - Acciones del APROBADOR según el estado: aprobar o rechazar si está PENDIENTE; revocar o sustituir si está APROBADO.
 - Historial del título (HU-3.3).
 
-### Diálogo de confirmación
-Se usa en rechazar, revocar y sustituir.
+### Página de confirmación
+Se usa en rechazar (HU-2.7), revocar y sustituir (HU-3.2). Es una página propia y no un diálogo con JavaScript: abrirla (GET) no cambia nada y la acción se ejecuta con un POST con CSRF; así funciona con la CSP estricta y se prueba con MockMvc (acordado el 16/11/2026). La imagen muestra el diseño anterior, como diálogo; el contenido es el mismo.
 
-![Diálogo de confirmación](pantallas/C1-dialogo-de-confirmacion.png)
+![Página de confirmación](pantallas/C1-dialogo-de-confirmacion.png)
 
 - Pregunta clara, con el nombre del graduado.
 - Consecuencia: «Esta acción no se puede deshacer».
 - Motivo obligatorio en revocar y sustituir.
-- «Cancelar» con el foco inicial; el botón de peligro, a la derecha.
-- Implementado con JavaScript en un archivo `.js`, no en línea (CSP).
+- «Cancelar» con el foco inicial (atributo `autofocus`); el botón de peligro, a la derecha.
 
 ### P6 · Auditoría
 Ruta `/auditoria` · Solo APROBADOR · HU-3.4 (consulta del registro de HU-3.3)
@@ -173,12 +172,12 @@ Ruta `/verificar/{código}` · Público · HU-3.1, HU-3.2
 
 ![P8 · Resultado de verificación (celular)](pantallas/P8-resultado-de-verificacion.png)
 
-- Estado grande con icono: válido, revocado, sustituido o no encontrado.
-- Solo datos mínimos: graduado, documento enmascarado (últimos 2 caracteres que no sean guion), título, institución, fecha de emisión y código.
+- Estado grande con icono: válido, revocado, sustituido, no coincide con la emisión (HU-2.8) o no encontrado.
+- Solo datos mínimos: graduado, documento enmascarado (últimos 2 caracteres que no sean guion), título, institución, fecha de emisión, código y huella de integridad en 8 grupos de 8 caracteres (HU-2.8). En «No coincide con la emisión», solo el código y la fecha de la consulta.
 - Fecha y hora de la consulta.
 - Texto bilingüe ES / EN.
 - Fechas como en la credencial, en los dos idiomas («10 de octubre de 2026 · October 10, 2026»); la consulta con la hora y la zona («hora de Panamá, UTC−5») (acordado el 26/10/2026).
-- Nunca datos personales adicionales.
+- Nunca datos personales adicionales ni el motivo de una revocación o sustitución (HU-3.2).
 
 ### P9 · Página de error
 Rutas: 403, 404 y 500 · Todos · HU-4.5
@@ -201,7 +200,7 @@ Generada con PDFBox y ZXing · HU-2.4, HU-2.5, HU-2.8
 - Documento de identidad completo (cédula o pasaporte) debajo del nombre.
 - Fecha de emisión e identificador.
 - QR con la URL de verificación, sin datos personales, de al menos 2,5 cm con su margen blanco y la leyenda «Escanee para verificar» (HU-2.5).
-- Hash de integridad en letra pequeña (HU-2.8).
+- Huella de integridad (SHA-256) en letra pequeña, en 8 grupos de 8 caracteres (HU-2.8).
 - Texto: «Verifique este título en …/verificar o escaneando el código QR».
 - Fuentes estándar del PDF (Times y Helvetica), para no incrustar fuentes.
 
@@ -214,8 +213,8 @@ Generada con PDFBox y ZXing · HU-2.4, HU-2.5, HU-2.8
 | P1 · Iniciar sesión | Parcial | Usa la página por defecto de Spring Security; la página propia es HU-1.5 y el modo demostración, HU-4.6. |
 | P2 · Títulos | Parcial | Sin búsqueda ni paginación (HU-1.8) y sin «Ver» (HU-2.6). Tiene las columnas Estado y Credencial: «Descargar PDF» va en la lista hasta que exista el detalle (decisión del 20/10/2026). El estado se muestra como texto (`PENDIENTE`), sin insignia ni icono (sin historia asignada). |
 | P3 · Registrar título | Implementada | El título es texto libre de 5–150 caracteres hasta el catálogo (HU-1.11). El duplicado se rechaza con el error bajo «Nombre del título», todavía sin el enlace al registro existente (HU-2.6). |
-| P4 · Bandeja de revisión | Parcial | Sin «Ver» (HU-2.6). «Rechazar» todavía no pide confirmación ni usa el estilo de peligro (HU-2.7). |
-| P5 · Detalle | Pendiente | HU-2.6. |
+| P4 · Bandeja de revisión | Parcial | Sin «Ver» (HU-2.6). «Rechazar» todavía no pide confirmación ni usa el estilo de peligro (HU-2.7, con una página de confirmación). |
+| P5 · Detalle | Pendiente | HU-2.6, sin el botón para copiar el identificador ni la vista del QR, que necesitan JavaScript o una dirección nueva y quedan como diseño objetivo (decisión del 16/11/2026). Revocar y sustituir llegan con HU-3.2. |
 | P6 · Auditoría | Implementada | HU-3.4 (Sprint 6, PR #35). Los filtros van uno debajo de otro en lugar de en una fila, y «Título afectado» no lleva enlace hasta que exista el detalle (HU-2.6). |
 | P7 y P8 · Verificación pública | Implementada | HU-3.1 (Sprint 6, PR #32). Desde T-3.1.4 (Sprint 7, PR #40), el documento muestra solo los últimos 2 caracteres. Los estados revocado y sustituido llegan con HU-3.2. |
 | P9 · Página de error | Pendiente | HU-4.5. Hoy se ve la «Whitelabel Error Page». |
@@ -233,7 +232,7 @@ Las imágenes muestran el **diseño objetivo** y se suben a mano a `docs/product
 | `P3-registrar-titulo.png` | P3 · Registrar título |
 | `P4-bandeja-de-revision.png` | P4 · Bandeja de revisión |
 | `P5-detalle-del-titulo.png` | P5 · Detalle del título |
-| `C1-dialogo-de-confirmacion.png` | Diálogo de confirmación |
+| `C1-dialogo-de-confirmacion.png` | Página de confirmación (la imagen muestra el diseño anterior, como diálogo) |
 | `P6-auditoria.png` | P6 · Auditoría |
 | `P7-verificar-titulo.png` | P7 · Verificar título (celular) |
 | `P8-resultado-de-verificacion.png` | P8 · Resultado de verificación (celular) |

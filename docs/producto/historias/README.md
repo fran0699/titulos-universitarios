@@ -25,8 +25,19 @@ Los criterios de aceptación son el acuerdo de qué significa «terminado» para
 | [HU-3.1](HU-3.1.md) | Verificación pública | Completo (Sprint 6) |
 | [HU-3.4](HU-3.4.md) | Consulta de la auditoría | Completo (Sprint 6) |
 | [HU-4.11](HU-4.11.md) | Inicio de sesión sin error 404 | Completo (Sprint 6) |
+| [HU-1.5](HU-1.5.md) | Página de inicio de sesión propia | Pendiente |
+| [HU-1.8](HU-1.8.md) | Búsqueda y paginación de títulos | Pendiente |
+| [HU-1.11](HU-1.11.md) | Catálogo oficial de programas | Pendiente |
+| [HU-2.6](HU-2.6.md) | Detalle del título | Pendiente |
+| [HU-2.7](HU-2.7.md) | Página de confirmación antes de rechazar | Pendiente |
+| [HU-2.8](HU-2.8.md) | Huella de integridad | Pendiente |
+| [HU-3.2](HU-3.2.md) | Revocar o sustituir un título | Pendiente |
+| [HU-4.5](HU-4.5.md) | Páginas de error propias | Pendiente |
+| [HU-4.6](HU-4.6.md) | Modo demostración y usuarios iniciales | Pendiente |
+| [HU-4.8](HU-4.8.md) | Pruebas de acceso por rol y cabeceras | Pendiente |
+| [HU-4.9](HU-4.9.md) | CSP sin estilos en línea | Pendiente |
 
-Las historias completadas antes del Sprint 5 no tienen archivo propio: su redacción está en el Product Backlog. Se agregan aquí cuando se vuelvan a tocar.
+Desde la planificación del Sprint 7, todas las historias pendientes tienen su archivo. Las completadas antes del Sprint 5 no tienen archivo propio: su redacción está en el Product Backlog. Se agregan aquí cuando se vuelvan a tocar.
 
 ## Plantilla
 

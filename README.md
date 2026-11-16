@@ -6,7 +6,7 @@ Aplicación web para que una universidad **registre, apruebe y emita títulos un
 
 - **Precisión:** datos validados y normalizados en el servidor, sin graduados ni títulos duplicados.
 - **Seguridad:** acceso por rol, separación de funciones y un registro de auditoría que no se puede modificar.
-- **Verificabilidad internacional:** credencial con identificador único, QR y hash, y una página pública bilingüe para comprobarla.
+- **Verificabilidad internacional:** credencial con identificador único, QR y huella de integridad, y una página pública bilingüe para comprobarla.
 
 Más detalle en [visión y MVP](docs/producto/vision-y-mvp.md).
 
@@ -32,7 +32,7 @@ Versiones, qué instalar y cómo comprobarlo: [stack y versiones](docs/tecnico/s
 
 ## Equipo
 
-Francisco Lata (Product Owner). Sprints 1 a 6: Henry Birminghan, Anel Gonzalez y Edinson Ramirez. Integrantes y usuarios de GitHub: [cómo trabajamos](docs/proceso/como-trabajamos.md#equipo).
+Francisco Lata (Product Owner, sprints 1 a 7). Desde el Sprint 7: Carol, Marleni, Maria González y Aldo Bovell. Sprints 1 a 6: Henry Birminghan, Anel Gonzalez y Edinson Ramirez. Desde el Sprint 8 cambia el Product Owner. Integrantes y usuarios de GitHub: [cómo trabajamos](docs/proceso/como-trabajamos.md#equipo).
 
 ## Documentación
 
