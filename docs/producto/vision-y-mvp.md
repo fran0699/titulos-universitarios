@@ -53,6 +53,13 @@ El MVP se completó al cierre del **Sprint 6** (29/10/2026). Sus métricas de ca
 - **HU-3.3 subió a prioridad Alta,** porque la trazabilidad es parte del MVP.
 - **El APROBADOR dejó de ver las métricas** (mínimo privilegio, 20/10/2026). Las métricas se consultan en Prometheus.
 - **Nikto es una actividad fija del cierre** de cada sprint desde el Sprint 4 (por eso se retiró HU-4.2).
+- **Refinamiento del Sprint 7** (16/11/2026): las 11 historias pendientes quedaron refinadas en [`historias/`](historias/README.md). Decisiones principales:
+  - **Huella de integridad (HU-2.8):** se guarda al aprobar y la verificación avisa si los datos del título cambiaron después de la emisión. Una huella impresa no detecta un PDF editado (basta con copiarla); eso lo detecta la comparación de datos de HU-3.1. Calcularla con una clave secreta (HMAC) queda como mejora.
+  - **Sin JavaScript por ahora:** la confirmación de acciones es una página (HU-2.7 y HU-3.2), los botones del modo demostración son enlaces (HU-4.6) y el programa se elige con sugerencias de HTML (HU-1.11). El detalle (HU-2.6) no tiene botón para copiar ni vista del QR.
+  - **Sustituir sin enlace (HU-3.2):** el título viejo se marca como sustituido y el corregido se registra y aprueba como uno nuevo; la regla de duplicados deja de contar los títulos rechazados, revocados y sustituidos.
+  - **Catálogo completo (HU-1.11):** todos los programas de la oferta académica oficial de 2025 de la universidad, en un archivo de datos del repositorio.
+  - **Usuarios iniciales por variables de entorno (HU-4.6):** fuera del modo demostración no existen usuarios de prueba.
+  - **Búsqueda (HU-1.8):** sin distinguir mayúsculas, pero las tildes cuentan; 20 por página.
 
 ## Calendario
 

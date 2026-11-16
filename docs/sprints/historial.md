@@ -95,9 +95,9 @@ La planificación entró en el PR de documentación #31.
 
 ## Próximos sprints (plan tentativo)
 
-Se reajusta en cada planificación. Quedan 29 pts. El reparto sigue la regla de independencia ([cómo trabajamos](../proceso/como-trabajamos.md)): nadie espera a que otro termine.
+Se reajusta en cada planificación. Quedan 33 pts (el total subió a 102 con la reestimación de la planificación del Sprint 7). Todas las historias pendientes están refinadas en [`historias/`](../producto/historias/README.md). El reparto sigue la regla de independencia ([cómo trabajamos](../proceso/como-trabajamos.md)): nadie espera a que otro termine.
 
 | Sprint | Propuesta | Notas |
 |---|---|---|
-| 7 y 8 | Lo postergado después del MVP: HU-2.8 (hash de integridad, 2), HU-1.11, HU-2.6, HU-1.5, HU-4.6, HU-1.8, HU-2.7, HU-3.2, HU-4.5, HU-4.8 y HU-4.9 | HU-2.8 completa la verificabilidad del documento. HU-4.6 (modo demostración) depende de HU-1.5 y debe estar antes de la entrega |
-| 9 y 10 | Margen, ajustes pedidos en las revisiones y preparación de la entrega | Entrega del producto: primera semana de diciembre de 2026 |
+| 7 | HU-2.7 (1, Marleni), HU-1.8 (3, Aldo Bovell), HU-1.5 (3, Maria González) y HU-4.5 (2, Carol): 9 pts | Equipo nuevo; ninguna historia depende de otra. Revisión: Aldo revisa a Marleni, Maria a Aldo, Carol a Maria y Marleni a Carol. Al cierre, Marleni ejecuta Nikto y el Product Owner hace la verificación completa sobre main |
+| 8 a 10 | Las otras 7 historias (24 pts): HU-2.8, HU-2.6, HU-3.2, HU-1.11, HU-4.6, HU-4.9 y HU-4.8; ajustes pedidos en las revisiones y preparación de la entrega | Desde el Sprint 8 las prioriza el nuevo Product Owner con el equipo. Dependencias: HU-4.6 y HU-4.9 necesitan HU-1.5; HU-3.2 necesita HU-2.6 y HU-2.7; HU-2.8 y HU-3.2 cambian los mismos estados de la verificación. HU-4.6 (modo demostración) debe estar antes de la entrega del producto (primera semana de diciembre de 2026) |
