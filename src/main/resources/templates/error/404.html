@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 404 - Página no encontrada</title>
+    <link rel="stylesheet" th:href="@{/css/titulos.css}">
+</head>
+<body>
+
+<!-- El encabezado solo aparece para usuarios autenticados con rol del sistema. -->
+<th:block th:if="${usuarioActual != null
+        and (usuarioActual.registrador or usuarioActual.aprobador)}">
+    <header th:replace="~{fragments/encabezado :: encabezado}"></header>
+</th:block>
+
+<main class="error-page">
+    <section class="error-content" aria-labelledby="error-title">
+
+        <div class="error-icon" aria-hidden="true">ⓘ</div>
+
+        <p class="error-code">ERROR 404</p>
+
+        <h1 id="error-title">
+            Página no encontrada
+        </h1>
+
+        <p class="error-description">
+            La página que está buscando no existe o no se encuentra disponible.
+            Verifique la dirección e inténtelo nuevamente.
+        </p>
+
+        <a class="button button-primary"
+           th:if="${usuarioActual != null
+                   and (usuarioActual.registrador or usuarioActual.aprobador)}"
+           th:href="@{/titulos}">
+            Volver a Títulos
+        </a>
+
+        <a class="button button-primary"
+           th:if="${usuarioActual == null}"
+           th:href="@{/login}">
+            Iniciar sesión
+        </a>
+
+    </section>
+</main>
+
+</body>
+</html>
