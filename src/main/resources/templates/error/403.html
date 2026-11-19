@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 403 - Acceso denegado</title>
+    <link rel="stylesheet" th:href="@{/css/titulos.css}">
+</head>
+<body>
+
+<!-- El encabezado solo aparece para el personal autorizado. -->
+<th:block th:if="${usuarioActual != null
+        and (usuarioActual.registrador or usuarioActual.aprobador)}">
+    <header th:replace="~{fragments/encabezado :: encabezado}"></header>
+</th:block>
+
+<main class="error-page">
+    <section class="error-content" aria-labelledby="error-title">
+
+        <div class="error-icon" aria-hidden="true">ⓘ</div>
+
+        <p class="error-code">ERROR 403</p>
+
+        <h1 id="error-title">
+            No tiene permiso para ver esta página
+        </h1>
+
+        <p class="error-description">
+            No tiene autorización para acceder a esta sección.
+            Si cree que debería tener acceso, consulte con el administrador.
+        </p>
+
+        <a class="button button-primary"
+           th:if="${usuarioActual != null
+                   and (usuarioActual.registrador or usuarioActual.aprobador)}"
+           th:href="@{/titulos}">
+            Volver a Títulos
+        </a>
+
+        <a class="button button-primary"
+           th:if="${usuarioActual == null}"
+           th:href="@{/login}">
+            Iniciar sesión
+        </a>
+
+    </section>
+</main>
+
+</body>
+</html>
