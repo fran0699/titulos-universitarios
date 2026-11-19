@@ -180,6 +180,23 @@ public class TituloService {
         return tituloRepository.findByEstado(EstadoTitulo.PENDIENTE);
     }
 
+
+    //Este método solamente consulta información. No modifica el estado ni registra auditoría.
+    @Transactional(readOnly = true)
+    public Titulo obtenerPendienteParaConfirmacion(Long id) {
+        Titulo titulo = tituloRepository.findById(id)
+           .orElseThrow(() -> new IllegalArgumentException(
+               "No existe el título con id " + id + "."));
+
+        if (titulo.getEstado() != EstadoTitulo.PENDIENTE) {
+            throw new IllegalStateException(
+                "El título ya no está pendiente de revisión.");
+        }
+
+        return titulo;
+    }
+
+
     // T-1.7.2 (HU-1.7): cantidad de titulos pendientes para el contador del menu.
     public long contarPendientes() {
         return tituloRepository.countByEstado(EstadoTitulo.PENDIENTE);

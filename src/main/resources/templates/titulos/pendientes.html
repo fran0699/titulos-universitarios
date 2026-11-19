@@ -44,10 +44,11 @@
                               style="display:inline;">
                             <button class="button button-primary" type="submit">Aprobar</button>
                         </form>
-                        <form th:action="@{/titulos/{id}/rechazar(id=${titulo.id})}" method="post"
-                              style="display:inline;">
-                            <button class="button" type="submit">Rechazar</button>
-                        </form>
+
+                        <a class="button button-secondary"
+                           th:href="@{/titulos/{id}/rechazar(id=${titulo.id})}">
+                             Rechazar
+                        </a>
                     </td>
                 </tr>
                 </tbody>
