@@ -1,0 +1,9 @@
+HU-1.5 - Pagina de inicio de sesion propia
+Comando: .\mvnw.cmd clean test (JDK 21, base H2 de pruebas)
+
+LoginPaginaIntegracionTest ........ Tests run: 10, Failures: 0, Errors: 0
+LoginDemoIntegracionTest .......... Tests run: 3,  Failures: 0, Errors: 0
+InicioSesionSin404IntegracionTest . (HU-4.11, CA4) en verde
+
+Total del proyecto: 169 pruebas, 0 fallos, 0 errores
+(156 existentes + 13 nuevas)
