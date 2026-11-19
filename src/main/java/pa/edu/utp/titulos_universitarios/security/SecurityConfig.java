@@ -61,6 +61,9 @@ public class SecurityConfig {
                         // original (401 o 403) llegue tal cual al cliente. Spring Boot no
                         // muestra detalles técnicos en esa página por defecto.
                         .requestMatchers("/error").permitAll()
+                        // T-1.5.1 (HU-1.5): la pagina de inicio de sesion propia y su hoja
+                        // de estilos son publicas; si no, nadie podria llegar al login.
+                        .requestMatchers("/login", "/css/titulos.css").permitAll()
                         // T-4.11.1 (HU-4.11, CA6): el ícono de la pestaña es público.
                         // Sin esta regla, con sesión el navegador recibía 404 y la
                         // consola (F12) mostraba un error en cada pantalla.
@@ -83,7 +86,10 @@ public class SecurityConfig {
                         // nueva debe declararse arriba con permitAll().
                         .anyRequest().hasAnyRole("REGISTRADOR", "APROBADOR")
                 )
-                .formLogin(form -> form.permitAll())
+                // T-1.5.1 (HU-1.5): pagina propia en /login. El POST a /login, el error
+                // (/login?error) y el cierre de sesion (/login?logout) conservan los
+                // valores por defecto; la pagina de llegada no cambia.
+                .formLogin(form -> form.loginPage("/login").permitAll())
                 // T-4.11.1 (HU-4.11): al iniciar sesión solo se vuelve a una página.
                 .requestCache(cache -> cache.requestCache(paginaGuardada()));
         aplicarCabecerasDeSeguridad(http);

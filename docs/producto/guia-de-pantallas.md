@@ -210,7 +210,7 @@ Generada con PDFBox y ZXing · HU-2.4, HU-2.5, HU-2.8
 
 | Pantalla | Estado | Diferencias con la guía |
 |---|---|---|
-| P1 · Iniciar sesión | Parcial | Usa la página por defecto de Spring Security; la página propia es HU-1.5 y el modo demostración, HU-4.6. |
+| P1 · Iniciar sesión | Parcial | Página propia desde HU-1.5 (sin estilos en línea). Falta el modo demostración (HU-4.6). |
 | P2 · Títulos | Parcial | Sin búsqueda ni paginación (HU-1.8) y sin «Ver» (HU-2.6). Tiene las columnas Estado y Credencial: «Descargar PDF» va en la lista hasta que exista el detalle (decisión del 20/10/2026). El estado se muestra como texto (`PENDIENTE`), sin insignia ni icono (sin historia asignada). |
 | P3 · Registrar título | Implementada | El título es texto libre de 5–150 caracteres hasta el catálogo (HU-1.11). El duplicado se rechaza con el error bajo «Nombre del título», todavía sin el enlace al registro existente (HU-2.6). |
 | P4 · Bandeja de revisión | Parcial | Sin «Ver» (HU-2.6). «Rechazar» todavía no pide confirmación ni usa el estilo de peligro (HU-2.7, con una página de confirmación). |
