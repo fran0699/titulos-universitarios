@@ -12,12 +12,40 @@ Un resumen por sprint: qué se completó, cómo se midió y qué se aprendió. S
 | 4 | 18/10/2026 | HU-1.9, HU-1.7, HU-1.6, HU-1.10 y HU-4.4 | 14 | 50 | 2 | 8 (#15 a #22) |
 | 5 | 25/10/2026 | HU-4.10, HU-4.7, HU-3.3 y HU-2.4 | 13 | 95 | 2 | 6 (#23 a #28) |
 | 6 | 29/10/2026 | HU-2.5, HU-3.1, HU-3.4 y HU-4.11 | 12 | 155 | 2 | 5 (#31 a #35) |
+| 7 | 16/11/2026 | — (transferencia al equipo nuevo) | 0 | 156 | — | 3 (#39 a #41) |
 
 - **Pts** son los puntos completados en el sprint (la velocidad). Suman 73, cuatro más que los 69 completados del [Product Backlog](../producto/product-backlog.md): HU-4.2 (Nikto, 2 pts) se contó en el Sprint 1 y en el Sprint 3, y en el Sprint 4 se retiró del backlog al pasar a ser una actividad fija del cierre.
-- **Nikto:** desde el Sprint 3 se usa siempre la versión 2.6.1, para que los hallazgos se puedan comparar. Las cifras del Sprint 1 y del Sprint 2 sirven solo como referencia.
+- **Nikto:** desde el Sprint 3 se usa siempre la versión 2.6.1, para que los hallazgos se puedan comparar. Las cifras del Sprint 1 y del Sprint 2 sirven solo como referencia. En el Sprint 7 no se escaneó: el único cambio de código fue el del PR #40; el siguiente escaneo es al cierre del Sprint 8.
 - En la Sprint Review del Sprint 2 se reestructuró el backlog en épicas, historias y tareas. Los commits más antiguos usan los identificadores anteriores (PB-01 a PB-11).
 
-**Avance del Product Backlog:** 30 de 97 pts al cierre del Sprint 3; 44 de 97 en el Sprint 4; 57 de 98 en el Sprint 5 (58 %); 69 de 98 en el Sprint 6 (70 %). El total subió a 98 con HU-4.11.
+**Avance del Product Backlog:** 30 de 97 pts al cierre del Sprint 3; 44 de 97 en el Sprint 4; 57 de 98 en el Sprint 5 (58 %); 69 de 98 en el Sprint 6 (70 %); 69 de 102 en el Sprint 7 (68 %). El total subió a 98 con HU-4.11 y a 102 con la reestimación del refinamiento del Sprint 7.
+
+## Sprint 7 · 30 de octubre al 16 de noviembre de 2026
+
+**Objetivo:** transferir el proyecto al equipo nuevo y dejar planificado el Sprint 8 sin perder calidad, trazabilidad ni visión de negocio. Sprint de transición: sin historias nuevas.
+
+**Resultado:** objetivo cumplido. El equipo nuevo recibió el proyecto con las 11 historias pendientes refinadas (33 pts), aceptó el plan del Sprint 8 y cada integrante eligió su historia ([plan tentativo](#próximos-sprints-plan-tentativo)).
+
+| PR | Qué entró |
+|---|---|
+| #39 | Documentación corregida antes de la llegada del equipo nuevo (16 archivos). |
+| #40 | T-3.1.4: la verificación pública muestra solo los últimos 2 caracteres del documento ([HU-3.1](../producto/historias/HU-3.1.md)). |
+| #41 | Las 11 historias pendientes refinadas, el Product Backlog en 102 pts, la guía de pantallas, el equipo nuevo, las decisiones de alcance y el plan del Sprint 8. |
+
+**Mediciones:**
+
+- 156 pruebas en verde (155 heredadas y 1 nueva, del PR #40).
+- 11 de 11 historias pendientes refinadas con la Definición de Listo: 75 criterios de aceptación, 40 métricas QA y 35 riesgos con su mitigación. Cambió la redacción de 7 y se reestimaron 3: el total pasa de 98 a 102 pts.
+- 5 inconsistencias encontradas al refinar y corregidas en las historias antes de llegar al código ([decisiones de alcance](../producto/vision-y-mvp.md#decisiones-de-alcance)).
+- Plan del Sprint 8: 4 historias independientes (9 pts), una por integrante.
+
+**Lecciones**
+
+- Refinar todas las historias pendientes antes del traspaso: al revisarlas contra el código aparecieron 5 inconsistencias que habrían salido a mitad de un sprint.
+- Para quien llega, lo primero es distinguir lo terminado de lo pendiente: está en la tabla «Estado» del README y en el [Product Backlog](../producto/product-backlog.md), y conviene señalarlo desde el primer día.
+- La transferencia necesita un tiempo acorde con la complejidad del proyecto y con las horas disponibles del equipo, y sesiones de conocimiento entre equipos, no solo entre Product Owners.
+- Presentar el plan como propuesta y documentarlo en GitHub con el acuerdo del equipo: así cada integrante eligió su historia.
+- Una huella impresa en el mismo PDF no prueba que el PDF no fue editado, porque se puede copiar o cambiar junto con el documento: [HU-2.8](../producto/historias/HU-2.8.md) guarda la huella al aprobar y la verificación avisa si los datos cambiaron.
 
 ## Sprint 6 · 26 al 29 de octubre de 2026
 
@@ -95,9 +123,9 @@ La planificación entró en el PR de documentación #31.
 
 ## Próximos sprints (plan tentativo)
 
-Se reajusta en cada planificación. Quedan 33 pts (el total subió a 102 con la reestimación de la planificación del Sprint 7). Todas las historias pendientes están refinadas en [`historias/`](../producto/historias/README.md). El reparto sigue la regla de independencia ([cómo trabajamos](../proceso/como-trabajamos.md)): nadie espera a que otro termine.
+Se reajusta en cada planificación. Quedan 33 pts (el total subió a 102 con la reestimación del refinamiento del Sprint 7). Todas las historias pendientes están refinadas en [`historias/`](../producto/historias/README.md). El reparto sigue la regla de independencia ([cómo trabajamos](../proceso/como-trabajamos.md)): nadie espera a que otro termine.
 
 | Sprint | Propuesta | Notas |
 |---|---|---|
-| 7 | HU-2.7 (1, Marleni), HU-1.8 (3, Aldo Bovell), HU-1.5 (3, Maria González) y HU-4.5 (2, Carol): 9 pts | Equipo nuevo; ninguna historia depende de otra. Revisión: Aldo revisa a Marleni, Maria a Aldo, Carol a Maria y Marleni a Carol. Al cierre, Marleni ejecuta Nikto y el Product Owner hace la verificación completa sobre main |
-| 8 a 10 | Las otras 7 historias (24 pts): HU-2.8, HU-2.6, HU-3.2, HU-1.11, HU-4.6, HU-4.9 y HU-4.8; ajustes pedidos en las revisiones y preparación de la entrega | El Sprint 8 lo planifica el Product Owner actual con el equipo; desde el Sprint 9, el nuevo Product Owner. Dependencias: HU-4.6 y HU-4.9 necesitan HU-1.5; HU-3.2 necesita HU-2.6 y HU-2.7; HU-2.8 y HU-3.2 cambian los mismos estados de la verificación. HU-4.6 (modo demostración) debe estar antes de la entrega del producto (primera semana de diciembre de 2026) |
+| 8 | HU-2.7 (1, Marleni Barria), HU-1.8 (3, Aldo Bovell), HU-1.5 (3, Maria Gonzalez) y HU-4.5 (2, Carolina Rodriguez): 9 pts | Primera iteración del equipo nuevo; ninguna historia depende de otra. Revisión: Aldo revisa a Marleni, Maria a Aldo, Carolina a Maria y Marleni a Carolina. Al cierre, Marleni ejecuta Nikto y el Product Owner hace la verificación completa sobre main |
+| 9 y 10 | Las otras 7 historias (24 pts): HU-2.8, HU-2.6, HU-3.2, HU-1.11, HU-4.6, HU-4.9 y HU-4.8; ajustes pedidos en las revisiones y preparación de la entrega | Los planifica el nuevo Product Owner con el equipo. Dependencias: HU-4.6 y HU-4.9 necesitan HU-1.5; HU-3.2 necesita HU-2.6 y HU-2.7; HU-2.8 y HU-3.2 cambian los mismos estados de la verificación. HU-4.6 (modo demostración) debe estar antes de la entrega del producto (primera semana de diciembre de 2026) |

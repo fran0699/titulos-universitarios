@@ -37,7 +37,7 @@ Se definió en la planificación del Sprint 5 (20/10/2026) como la cadena mínim
 |---|---|---|
 | Registrar | HU-1.1, HU-1.2, HU-1.3, HU-1.9, HU-1.10 y HU-4.7 | Completo |
 | Aprobar | HU-2.1 y HU-2.2 | Completo |
-| Emitir la credencial | HU-2.4 (PDF) y HU-2.5 (QR) | Completo (el hash de integridad llega con HU-2.8, Sprint 7) |
+| Emitir la credencial | HU-2.4 (PDF) y HU-2.5 (QR) | Completo (la huella de integridad queda pendiente en HU-2.8) |
 | Verificar públicamente | HU-3.1 | Completo |
 | Saber quién hizo qué | HU-3.3 (registro) y HU-3.4 (consulta) | Completo |
 | Seguridad transversal | HU-4.3, HU-4.10 y HU-4.11 | Completo |
