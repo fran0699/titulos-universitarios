@@ -37,7 +37,7 @@ Los criterios de aceptación son el acuerdo de qué significa «terminado» para
 | [HU-4.8](HU-4.8.md) | Pruebas de acceso por rol y cabeceras | Pendiente |
 | [HU-4.9](HU-4.9.md) | CSP sin estilos en línea | Pendiente |
 
-Desde la planificación del Sprint 7, todas las historias pendientes tienen su archivo. Las completadas antes del Sprint 5 no tienen archivo propio: su redacción está en el Product Backlog. Se agregan aquí cuando se vuelvan a tocar.
+Desde el refinamiento del Sprint 7, todas las historias pendientes tienen su archivo. Las completadas antes del Sprint 5 no tienen archivo propio: su redacción está en el Product Backlog. Se agregan aquí cuando se vuelvan a tocar.
 
 ## Plantilla
 

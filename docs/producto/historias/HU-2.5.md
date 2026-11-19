@@ -27,7 +27,7 @@
 - Solo un título APROBADO tiene credencial (y, por tanto, QR).
 - El QR solo lleva la dirección de verificación con el identificador; nunca el nombre ni el documento.
 - La dirección base es la misma de la línea «Verifique este título en …»: la propiedad `titulos.verificacion.url`.
-- El hash de integridad llega con HU-2.8 (Sprint 7).
+- La huella de integridad queda en [HU-2.8](HU-2.8.md).
 
 ## Validaciones
 

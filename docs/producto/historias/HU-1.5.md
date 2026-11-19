@@ -1,6 +1,6 @@
 # HU-1.5 · Página de inicio de sesión propia
 
-**Dueño: Maria González · Funcional · Seguridad · Prioridad Media · 3 pts · Sprint 7**
+**Dueño: Maria Gonzalez · Funcional · Seguridad · Prioridad Media · 3 pts · Sprint 8**
 
 ## Redacción
 
@@ -59,8 +59,8 @@
 
 | Tarea | Qué se hace | Responsable | PR |
 |---|---|---|---|
-| T-1.5.1 | Página `/login` con su plantilla y sus estilos en `titulos.css`; Spring Security la usa como página de inicio de sesión (CA1 a CA3, CA6 y CA7). | Maria González | — |
-| T-1.5.2 | Pruebas con MockMvc (página sin sesión, error, cierre de sesión, llegada a `/titulos`, sin estilos en línea) y evidencia (capturas de la página en computadora y celular, y de la consola sin errores), y la fila de P1 en la tabla de estado de la guía (CA4 y CA5). | Maria González | — |
+| T-1.5.1 | Página `/login` con su plantilla y sus estilos en `titulos.css`; Spring Security la usa como página de inicio de sesión (CA1 a CA3, CA6 y CA7). | Maria Gonzalez | — |
+| T-1.5.2 | Pruebas con MockMvc (página sin sesión, error, cierre de sesión, llegada a `/titulos`, sin estilos en línea) y evidencia (capturas de la página en computadora y celular, y de la consola sin errores), y la fila de P1 en la tabla de estado de la guía (CA4 y CA5). | Maria Gonzalez | — |
 
 ## Estado
 
