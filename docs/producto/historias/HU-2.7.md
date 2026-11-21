@@ -59,8 +59,8 @@
 
 | Tarea | Qué se hace | Responsable | PR |
 |---|---|---|---|
-| T-2.7.1 | Página de confirmación y «Rechazar» de la bandeja con el estilo de peligro (CA1 a CA6). Pruebas con MockMvc y evidencia (capturas de la página y de la bandeja), y las filas de P4 y de la página de confirmación en la tabla de estado de la guía. | Marleni Barria | — |
+| T-2.7.1 | Página de confirmación y «Rechazar» de la bandeja con el estilo de peligro (CA1 a CA6). Pruebas con MockMvc y evidencia. | Marleni Barria | #42 |
 
 ## Estado
 
-Pendiente.
+Completo (S8). PR #42. Evidencia: [HU-2.7-confirmacion-rechazo.png](../evidencias/HU-2.7-confirmacion-rechazo.png).
