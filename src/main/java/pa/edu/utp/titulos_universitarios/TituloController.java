@@ -127,6 +127,28 @@ public class TituloController {
         return "titulos/pendientes";
     }
 
+    @GetMapping("/{id}/rechazar")
+    public String confirmarRechazo(
+            @PathVariable String id,
+            Model model,
+            RedirectAttributes redirectAttributes) {
+        try {
+            Long tituloId = Long.parseLong(id);
+
+            Titulo titulo = tituloService.obtenerPendienteParaConfirmacion(tituloId);
+            model.addAttribute("titulo", titulo);
+            return "titulos/confirmar-rechazo";
+        } catch (IllegalArgumentException | IllegalStateException exception) {
+            redirectAttributes.addFlashAttribute(
+                    "error",
+                    exception.getMessage() != null
+                            ? exception.getMessage()
+                            : "No se pudo encontrar el título solicitado.");
+            return "redirect:/titulos/pendientes";
+        }
+    }
+
+
     @PostMapping("/{id}/aprobar")
     public String aprobar(
             @PathVariable Long id,
