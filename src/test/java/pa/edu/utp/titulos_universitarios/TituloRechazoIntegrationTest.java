@@ -79,7 +79,11 @@ class TituloRechazoIntegrationTest {
                 .andExpect(model().attributeExists("titulo"))
                 .andExpect(content().string(containsString("Ana Pérez")))
                 .andExpect(content().string(containsString(
-                        "Licenciatura en Desarrollo de Software")));
+                        "Licenciatura en Desarrollo de Software")))
+                .andExpect(content().string(containsString(
+                        "¿Rechazar el título «Licenciatura en Desarrollo de Software» de Ana Pérez?")))
+                .andExpect(content().string(containsString(
+                        "Esta acción no se puede deshacer.")));
 
         Titulo recargado = tituloRepository.findById(titulo.getId()).orElseThrow();
         org.junit.jupiter.api.Assertions.assertEquals(
