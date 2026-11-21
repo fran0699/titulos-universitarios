@@ -127,18 +127,23 @@ public class TituloController {
         return "titulos/pendientes";
     }
 
-    //Este método muestra nuestra página de confirmación. Si el título ya no está pendiente, regresará a la bandeja con un mensaje.
     @GetMapping("/{id}/rechazar")
     public String confirmarRechazo(
-            @PathVariable Long id,
+            @PathVariable String id,
             Model model,
             RedirectAttributes redirectAttributes) {
         try {
-            Titulo titulo = tituloService.obtenerPendienteParaConfirmacion(id);
+            Long tituloId = Long.parseLong(id);
+
+            Titulo titulo = tituloService.obtenerPendienteParaConfirmacion(tituloId);
             model.addAttribute("titulo", titulo);
             return "titulos/confirmar-rechazo";
         } catch (IllegalArgumentException | IllegalStateException exception) {
-            redirectAttributes.addFlashAttribute("error", exception.getMessage());
+            redirectAttributes.addFlashAttribute(
+                    "error",
+                    exception.getMessage() != null
+                            ? exception.getMessage()
+                            : "No se pudo encontrar el título solicitado.");
             return "redirect:/titulos/pendientes";
         }
     }

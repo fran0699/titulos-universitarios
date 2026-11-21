@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmar rechazo de título</title>
+    <title th:text="|¿Rechazar el título «${titulo.nombreTitulo}» de ${titulo.nombreGraduado}?|">
+    Confirmar rechazo
+    </title>
     <link rel="stylesheet" th:href="@{/css/titulos.css}">
 </head>
 <body>
@@ -14,7 +16,7 @@
     <section class="card">
         <header class="page-header">
             <p class="eyebrow">Gestión académica</p>
-            <h1>Confirmar rechazo de título</h1>
+            <h1 th:text="|¿Rechazar el título «${titulo.nombreTitulo}» de ${titulo.nombreGraduado}?|"></h1>
             <p class="subtitle">
                 Estás a punto de rechazar el siguiente título universitario.
             </p>
@@ -34,7 +36,7 @@
 
         <div class="rejection-warning" role="alert">
             <strong>¡Atención!</strong>
-            Esta acción es irreversible. Al confirmar, el título cambiará
+            Esta acción no se puede deshacer. Al confirmar, el título cambiará
             su estado a rechazado y quedará registrado en el sistema.
             Verifica que la información sea correcta antes de continuar.
         </div>
