@@ -12,9 +12,9 @@ Más detalle en [visión y MVP](docs/producto/vision-y-mvp.md).
 
 ## Estado
 
-**Cierre del Sprint 6 (29/10/2026): el MVP está completo.** 69 de 98 pts del backlog (70 %), 155 pruebas en verde y 2 hallazgos de Nikto, los mismos del sprint anterior.
+**Cierre del Sprint 7 (16/11/2026): el MVP está completo y el proyecto pasó a un equipo nuevo.** 69 de 102 pts del backlog (68 %; el total subió con la reestimación del refinamiento), 156 pruebas en verde y 2 hallazgos de Nikto en el último escaneo (cierre del Sprint 6).
 
-| Funciona hoy | Lo que sigue (Sprint 7 en adelante) |
+| Funciona hoy | Lo que sigue (Sprint 8 en adelante) |
 |---|---|
 | Inicio y cierre de sesión por rol, sin error 404 aunque el navegador pida archivos automáticos | Hash de integridad en la credencial y en la verificación (HU-2.8) |
 | Registro del graduado (por cédula o pasaporte) y de su título, validado en el servidor y en la base de datos | Detalle del título (HU-2.6) y búsqueda con paginación (HU-1.8) |
@@ -32,7 +32,7 @@ Versiones, qué instalar y cómo comprobarlo: [stack y versiones](docs/tecnico/s
 
 ## Equipo
 
-Francisco Lata (Product Owner, sprints 1 a 7). Desde el Sprint 7: Carol, Marleni, Maria González y Aldo Bovell. Sprints 1 a 6: Henry Birminghan, Anel Gonzalez y Edinson Ramirez. Desde el Sprint 8 cambia el Product Owner. Integrantes y usuarios de GitHub: [cómo trabajamos](docs/proceso/como-trabajamos.md#equipo).
+Francisco Lata (Product Owner, sprints 1 a 8). Desde el Sprint 7: Carolina Rodriguez, Aldo Bovell, Marleni Barria y Maria Gonzalez. Sprints 1 a 6: Henry Birminghan, Anel Gonzalez y Edinson Ramirez. Desde el Sprint 9 cambia el Product Owner. Integrantes y usuarios de GitHub: [cómo trabajamos](docs/proceso/como-trabajamos.md#equipo).
 
 ## Documentación
 
@@ -56,7 +56,7 @@ Francisco Lata (Product Owner, sprints 1 a 7). Desde el Sprint 7: Carol, Marleni
 
 1. **Qué se construye y qué falta:** [visión y MVP](docs/producto/vision-y-mvp.md) y el [Product Backlog](docs/producto/product-backlog.md).
 2. **Cómo trabajamos:** ramas, Pull Requests, revisión, Definición de Terminado y cierre de cada sprint, en [cómo trabajamos](docs/proceso/como-trabajamos.md).
-3. **Tu computadora lista:** instala lo de [stack y versiones](docs/tecnico/stack-y-versiones.md), crea la base de datos (paso a paso en [configuración de PostgreSQL](docs/tecnico/configuracion-postgresql.md)) y las variables de entorno (más abajo) y corre las pruebas con `.\mvnw.cmd clean test`: todas deben quedar en verde (155 al cierre del Sprint 6).
+3. **Tu computadora lista:** instala lo de [stack y versiones](docs/tecnico/stack-y-versiones.md), crea la base de datos (paso a paso en [configuración de PostgreSQL](docs/tecnico/configuracion-postgresql.md)) y las variables de entorno (más abajo) y corre las pruebas con `.\mvnw.cmd clean test`: todas deben quedar en verde (156 al cierre del Sprint 7).
 4. **La aplicación por dentro:** capas, tablas y quién entra a cada ruta, en [arquitectura y seguridad](docs/tecnico/arquitectura-y-seguridad.md).
 5. **Antes de tomar una historia:** lee su archivo en [historias detalladas](docs/producto/historias/README.md), con sus criterios de aceptación, y su pantalla en la [guía de pantallas](docs/producto/guia-de-pantallas.md).
 6. **Cómo se midió cada sprint:** [historial de sprints](docs/sprints/historial.md).

@@ -1,6 +1,6 @@
 # HU-4.5 · Páginas de error propias
 
-**Dueño: Carol · Técnica · Seguridad · Prioridad Media · 2 pts · Sprint 7**
+**Dueño: Carolina Rodriguez · Técnica · Seguridad · Prioridad Media · 2 pts · Sprint 8**
 
 ## Redacción
 
@@ -55,8 +55,8 @@ No hay datos de entrada: la página solo usa el código de error y si hay sesió
 
 | Tarea | Qué se hace | Responsable | PR |
 |---|---|---|---|
-| T-4.5.1 | Plantillas de 403, 404 y 500 según P9 y configuración sin trazas (CA1 a CA4, CA6 a CA8). | Carol | — |
-| T-4.5.2 | Pruebas de CA5 con cada rol y sin sesión; evidencia (capturas de cada página) y la fila de P9 en la tabla de estado de la guía. | Carol | — |
+| T-4.5.1 | Plantillas de 403, 404 y 500 según P9 y configuración sin trazas (CA1 a CA4, CA6 a CA8). | Carolina Rodriguez | — |
+| T-4.5.2 | Pruebas de CA5 con cada rol y sin sesión; evidencia (capturas de cada página) y la fila de P9 en la tabla de estado de la guía. | Carolina Rodriguez | — |
 
 ## Estado
 

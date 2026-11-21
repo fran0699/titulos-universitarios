@@ -56,7 +56,7 @@ public class SecurityConfig {
                         // formulario (/verificar) y el resultado (/verificar/{codigo});
                         // la hoja de estilos propia tambien debe ser publica, o sin
                         // sesion la pantalla redirigiria al login para cargar el CSS (CA8).
-                        .requestMatchers("/verificar/**", "/css/verificacion.css").permitAll()
+                        .requestMatchers("/verificar/**", "/css/verificacion.css", "/css/titulos.css").permitAll()
                         // T-4.10.2 (HU-4.10): /error queda accesible para que el código
                         // original (401 o 403) llegue tal cual al cliente. Spring Boot no
                         // muestra detalles técnicos en esa página por defecto.

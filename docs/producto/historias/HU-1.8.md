@@ -1,6 +1,6 @@
 # HU-1.8 · Búsqueda y paginación de títulos
 
-**Dueño: Aldo Bovell · Funcional · Precisión · Prioridad Media · 3 pts · Sprint 7**
+**Dueño: Aldo Bovell · Funcional · Precisión · Prioridad Media · 3 pts · Sprint 8**
 
 ## Redacción
 
