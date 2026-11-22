@@ -412,6 +412,43 @@ a.button {
 
 
 
+/* HU-2.7: pantalla de confirmación de rechazo */
+.rejection-warning {
+    margin: 24px 0;
+    padding: 16px;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    background: #fef2f2;
+    color: #991b1b;
+    line-height: 1.5;
+}
+
+.rejection-details {
+    display: grid;
+    gap: 12px;
+    margin: 24px 0;
+}
+
+.rejection-details p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.button-danger {
+    background: #b91c1c;
+    color: #fff;
+}
+
+.button-danger:hover {
+    background: #991b1b;
+}
+
+.button-danger:focus-visible {
+    outline: 3px solid rgb(185 28 28 / 35%);
+    outline-offset: 2px;
+}
+
+
 /* HU-4.5: estilos de las paginas de error 403, 404 y 500 */
 
 .error-page {
