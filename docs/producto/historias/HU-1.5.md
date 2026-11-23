@@ -67,6 +67,7 @@
 Completo (Sprint 8). Evidencias en `docs/evidencias/`:
 
 - `HU-1.5-login-computadora.png`: CA1, la página P1 completa en la computadora.
+- `HU-1.5-login-celular.png`: CA7, la página P1 en vista de celular (F12).
 - `HU-1.5-consola-sin-errores.png`: CA5, la consola (F12) de `/login` sin errores de CSP.
 - `HU-1.5-pruebas.txt`: las pruebas de login (13 en verde) y el total (169 en verde, incluidas las de HU-4.11, CA4).
 
