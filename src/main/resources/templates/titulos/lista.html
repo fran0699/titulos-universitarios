@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -13,7 +13,7 @@
         <header class="page-header">
             <p class="eyebrow">Gestión académica</p>
             <h1>Títulos registrados</h1>
-            <p class="subtitle">Consulta todos los títulos registrados.</p>
+            <p class="subtitle">Busca por graduado, documento o título, y filtra por estado.</p>
             <p th:if="${usuarioActual != null and usuarioActual.registrador}">
                 <a class="button button-primary" th:href="@{/titulos/nuevo}">Registrar título</a>
             </p>
@@ -22,8 +22,66 @@
         <p class="notice notice-success" th:if="${mensaje}" th:text="${mensaje}" role="status"></p>
         <p class="notice notice-error" th:if="${error}" th:text="${error}" role="alert"></p>
 
-        <p class="empty-state" th:if="${#lists.isEmpty(titulos)}">Aún no hay títulos registrados.</p>
-        <div class="table-scroll" th:unless="${#lists.isEmpty(titulos)}">
+        <!-- T-1.8.2 (HU-1.8): búsqueda y filtro por estado, igual que en la auditoría. -->
+        <form th:action="@{/titulos}" method="get" class="form-grid">
+
+            <div class="form-grid">
+
+                <div class="form-field">
+                    <label for="q">Buscar</label>
+                    <input type="text"
+                           id="q"
+                           name="q"
+                           maxlength="100"
+                           placeholder="Graduado, documento o título"
+                           th:value="${q}">
+
+                    <p class="field-error"
+                       th:if="${errores.containsKey('q')}"
+                       th:text="${errores.get('q')}"
+                       role="alert"></p>
+                </div>
+
+                <div class="form-field">
+                    <label for="estado">Estado</label>
+                    <select id="estado" name="estado">
+                        <option value="">Todos</option>
+
+                        <option th:each="opcion : ${estados}"
+                                th:value="${opcion.name()}"
+                                th:text="${opcion.name()}"
+                                th:selected="${estadoValor == opcion.name()}">
+                        </option>
+                    </select>
+
+                    <p class="field-error"
+                       th:if="${errores.containsKey('estado')}"
+                       th:text="${errores.get('estado')}"
+                       role="alert"></p>
+                </div>
+
+            </div>
+
+            <input type="hidden" name="pagina" value="1">
+
+            <div class="form-actions">
+                <a class="button button-secondary" th:href="@{/titulos}">Limpiar filtros</a>
+
+                <button class="button button-primary" type="submit">Buscar</button>
+            </div>
+
+        </form>
+
+        <p class="notice notice-error"
+           th:if="${errores.containsKey('pagina')}"
+           th:text="${errores.get('pagina')}"
+           role="alert"></p>
+
+        <p class="empty-state"
+           th:if="${resultados.empty and errores.isEmpty() and hayFiltros}">No hay títulos con esa búsqueda</p>
+        <p class="empty-state"
+           th:if="${resultados.empty and errores.isEmpty() and !hayFiltros}">Todavía no hay títulos registrados</p>
+        <div class="table-scroll" th:unless="${resultados.empty}">
             <table>
                 <thead>
                 <tr>
@@ -37,7 +95,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="titulo : ${titulos}">
+                <tr th:each="titulo : ${resultados.content}">
                     <td th:text="${titulo.nombreGraduado}"></td>
                     <td th:text="${titulo.graduado != null ? titulo.graduado.tipoDocumento.etiqueta : '—'}"></td>
                     <td th:text="${titulo.graduado != null ? titulo.graduado.numeroDocumento : '—'}"></td>
@@ -57,6 +115,29 @@
                 </tbody>
             </table>
         </div>
+
+        <nav class="form-actions"
+             th:unless="${resultados.empty}"
+             aria-label="Paginación de títulos">
+
+            <span class="subtitle"
+                  th:text="|Mostrando ${resultados.number * resultados.size + 1}–${resultados.number * resultados.size + resultados.numberOfElements} de ${resultados.totalElements} títulos|">
+                Mostrando 1–20 de 45 títulos
+            </span>
+
+            <a class="button button-secondary"
+               th:if="${!resultados.first}"
+               th:href="@{/titulos(pagina=${paginaActual - 1},q=${q},estado=${estadoValor})}">
+                Anterior
+            </a>
+
+            <a class="button button-secondary"
+               th:if="${!resultados.last}"
+               th:href="@{/titulos(pagina=${paginaActual + 1},q=${q},estado=${estadoValor})}">
+                Siguiente
+            </a>
+
+        </nav>
     </section>
 </main>
 </body>

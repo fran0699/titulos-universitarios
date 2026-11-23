@@ -1,6 +1,6 @@
 # HU-1.5 · Página de inicio de sesión propia
 
-**Dueño: Maria González · Funcional · Seguridad · Prioridad Media · 3 pts · Sprint 7**
+**Dueño: Maria Gonzalez · Funcional · Seguridad · Prioridad Media · 3 pts · Sprint 8**
 
 ## Redacción
 
@@ -64,7 +64,7 @@
 
 ## Estado
 
-Completo (Sprint 7). Evidencias en `docs/evidencias/`:
+Completo (Sprint 8). Evidencias en `docs/evidencias/`:
 
 - `HU-1.5-login-computadora.png`: CA1, la página P1 completa en la computadora.
 - `HU-1.5-consola-sin-errores.png`: CA5, la consola (F12) de `/login` sin errores de CSP.

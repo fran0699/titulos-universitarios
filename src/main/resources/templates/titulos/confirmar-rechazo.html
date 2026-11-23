@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="|¿Rechazar el título «${titulo.nombreTitulo}» de ${titulo.nombreGraduado}?|">
+    Confirmar rechazo
+    </title>
+    <link rel="stylesheet" th:href="@{/css/titulos.css}">
+</head>
+<body>
+<header th:replace="~{fragments/encabezado :: encabezado}"></header>
+
+<main class="page-shell">
+    <section class="card">
+        <header class="page-header">
+            <p class="eyebrow">Gestión académica</p>
+            <h1 th:text="|¿Rechazar el título «${titulo.nombreTitulo}» de ${titulo.nombreGraduado}?|"></h1>
+            <p class="subtitle">
+                Estás a punto de rechazar el siguiente título universitario.
+            </p>
+        </header>
+
+        <div class="rejection-details">
+            <p>
+                <strong>Graduado:</strong>
+                <span th:text="${titulo.nombreGraduado}"></span>
+            </p>
+
+            <p>
+                <strong>Título universitario:</strong>
+                <span th:text="${titulo.nombreTitulo}"></span>
+            </p>
+        </div>
+
+        <div class="rejection-warning" role="alert">
+            <strong>¡Atención!</strong>
+            Esta acción no se puede deshacer. Al confirmar, el título cambiará
+            su estado a rechazado y quedará registrado en el sistema.
+            Verifica que la información sea correcta antes de continuar.
+        </div>
+
+        <div class="form-actions">
+            <form th:action="@{/titulos/pendientes}" method="get">
+                <button class="button button-secondary"
+                        type="submit"
+                        autofocus>
+                    Cancelar
+                </button>
+            </form>
+
+            <form th:action="@{/titulos/{id}/rechazar(id=${titulo.id})}"
+                  method="post">
+                <button class="button button-danger" type="submit">
+                    Rechazar título
+                </button>
+            </form>
+        </div>
+    </section>
+</main>
+</body>
+</html>

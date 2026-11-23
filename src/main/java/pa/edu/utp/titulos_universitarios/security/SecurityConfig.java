@@ -56,14 +56,14 @@ public class SecurityConfig {
                         // formulario (/verificar) y el resultado (/verificar/{codigo});
                         // la hoja de estilos propia tambien debe ser publica, o sin
                         // sesion la pantalla redirigiria al login para cargar el CSS (CA8).
-                        .requestMatchers("/verificar/**", "/css/verificacion.css").permitAll()
+                        .requestMatchers("/verificar/**", "/css/verificacion.css", "/css/titulos.css").permitAll()
                         // T-4.10.2 (HU-4.10): /error queda accesible para que el código
                         // original (401 o 403) llegue tal cual al cliente. Spring Boot no
                         // muestra detalles técnicos en esa página por defecto.
                         .requestMatchers("/error").permitAll()
                         // T-1.5.1 (HU-1.5): la pagina de inicio de sesion propia y su hoja
-                        // de estilos son publicas; si no, nadie podria llegar al login.
-                        .requestMatchers("/login", "/css/titulos.css").permitAll()
+                        // es publica (su CSS ya lo cubre la regla de /verificar); si no, nadie llegaria al login.
+                        .requestMatchers("/login").permitAll()
                         // T-4.11.1 (HU-4.11, CA6): el ícono de la pestaña es público.
                         // Sin esta regla, con sesión el navegador recibía 404 y la
                         // consola (F12) mostraba un error en cada pantalla.

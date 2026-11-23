@@ -1,6 +1,6 @@
 # HU-1.8 · Búsqueda y paginación de títulos
 
-**Dueño: Aldo Bovell · Funcional · Precisión · Prioridad Media · 3 pts · Sprint 7**
+**Dueño: Aldo Bovell · Funcional · Precisión · Prioridad Media · 3 pts · Sprint 8**
 
 ## Redacción
 
@@ -64,8 +64,8 @@
 
 | Tarea | Qué se hace | Responsable | PR |
 |---|---|---|---|
-| T-1.8.1 | Consulta paginada con búsqueda y filtro por estado, y su validación (CA1, CA2, CA4 y CA6). Pruebas con H2. | Aldo Bovell | — |
-| T-1.8.2 | Campo de búsqueda, filtro, paginación y estados vacíos en la lista (CA3 y CA5). Pruebas con MockMvc, evidencia (capturas de una búsqueda, un filtro y la segunda página) y la fila de P2 en la tabla de estado de la guía. | Aldo Bovell | — |
+| T -1.8.1 | Consulta paginada con búsqueda y filtro por estado, y su validación (CA1, CA2, CA4 y CA6). Pruebas con H2. | Aldo Bovell | #47 |
+| T- 1.8.2 | Campo de búsqueda, filtro, paginación y estados vacíos en la lista (CA3 y CA5). Pruebas con MockMvc, evidencia (capturas de una búsqueda, un filtro y la segunda página) y la fila de P2 en la tabla de estado de la guía. | Aldo Bovell | #47 |
 
 ## Estado
 
