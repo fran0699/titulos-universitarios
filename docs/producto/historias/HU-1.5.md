@@ -59,9 +59,15 @@
 
 | Tarea | Qué se hace | Responsable | PR |
 |---|---|---|---|
-| T-1.5.1 | Página `/login` con su plantilla y sus estilos en `titulos.css`; Spring Security la usa como página de inicio de sesión (CA1 a CA3, CA6 y CA7). | Maria Gonzalez | — |
-| T-1.5.2 | Pruebas con MockMvc (página sin sesión, error, cierre de sesión, llegada a `/titulos`, sin estilos en línea) y evidencia (capturas de la página en computadora y celular, y de la consola sin errores), y la fila de P1 en la tabla de estado de la guía (CA4 y CA5). | Maria Gonzalez | — |
+| T-1.5.1 | Página `/login` con su plantilla y sus estilos en `titulos.css`; Spring Security la usa como página de inicio de sesión (CA1 a CA3, CA6 y CA7). | Maria González | #45 |
+| T-1.5.2 | Pruebas con MockMvc (página sin sesión, error, cierre de sesión, llegada a `/titulos`, sin estilos en línea) y evidencia (capturas de la página en computadora y celular, y de la consola sin errores), y la fila de P1 en la tabla de estado de la guía (CA4 y CA5). | Maria González | #45 |
 
 ## Estado
 
-Pendiente.
+Completo (Sprint 8). Evidencias en `docs/evidencias/`:
+
+- `HU-1.5-login-computadora.png`: CA1, la página P1 completa en la computadora.
+- `HU-1.5-consola-sin-errores.png`: CA5, la consola (F12) de `/login` sin errores de CSP.
+- `HU-1.5-pruebas.txt`: las pruebas de login (13 en verde) y el total (169 en verde, incluidas las de HU-4.11, CA4).
+
+_Nota: la página incluye también la parte visual del modo demostración de [HU-4.6](HU-4.6.md) (franja y botones, solo con el perfil `demo`), pedida durante el sprint. Los usuarios iniciales y la regla de que fuera de `demo` no existan usuarios de prueba siguen pendientes en HU-4.6._
