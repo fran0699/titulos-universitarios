@@ -563,8 +563,8 @@ a.button {
 @media (max-width: 600px) {
     .login-demo-botones {
         grid-template-columns: 1fr;
-
-
+    }
+}
 
 /* HU-2.7: pantalla de confirmación de rechazo */
 .rejection-warning {
