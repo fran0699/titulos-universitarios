@@ -55,9 +55,19 @@ No hay datos de entrada: la página solo usa el código de error y si hay sesió
 
 | Tarea | Qué se hace | Responsable | PR |
 |---|---|---|---|
-| T-4.5.1 | Plantillas de 403, 404 y 500 según P9 y configuración sin trazas (CA1 a CA4, CA6 a CA8). | Carolina Rodriguez | — |
-| T-4.5.2 | Pruebas de CA5 con cada rol y sin sesión; evidencia (capturas de cada página) y la fila de P9 en la tabla de estado de la guía. | Carolina Rodriguez | — |
+| T-4.5.1 | Plantillas de 403, 404 y 500 según P9 y configuración sin trazas (CA1 a CA4, CA6 a CA8). | Carolina Rodriguez | #44 |
+| T-4.5.2 | Pruebas de CA5 con cada rol y sin sesión; evidencia (capturas de cada página) y la fila de P9 en la tabla de estado de la guía. | Carolina Rodriguez | #44 |
 
 ## Estado
 
-Pendiente.
+Completo (Sprint 8). PR #44. Evidencias en `docs/evidencias/`:
+
+- `HU-4.5-404-ruta-inexistente.png`: el 404 de una ruta que no existe.
+- `HU-4.5-403-registrador.png`: el 403 de una pantalla prohibida para el rol.
+- `HU-4.5-500-error-interno.png`: la página del 500.
+- `HU-4.5-404-sin-sesion-prueba.png`: la prueba automática del 404 sin sesión.
+- `HU-4.5-monitoreo-403.png`: CA6, el usuario técnico de Prometheus ve el 403.
+- `HU-4.5-verificacion-publica.png`: CA7, la verificación pública conserva su página.
+- `HU-4.5-pruebas-completas.png`: las pruebas del PR (7 nuevas). Al cierre, CircleCI corre 205 pruebas, 0 fallos.
+
+Tras fusionar main en la rama de HU-1.5, los estilos de las páginas de error dejaron de aplicarse por un bloque de CSS sin cerrar; se corrigió en el PR #49 y las capturas del cierre se repitieron sobre main.

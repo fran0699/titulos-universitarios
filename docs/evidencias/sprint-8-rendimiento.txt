@@ -1,0 +1,24 @@
+Cierre del Sprint 8 · tiempos de respuesta con Prometheus
+=========================================================
+
+Fecha: 24/11/2026
+Versión medida: main, commit 2e48c04
+Equipo: laptop con Windows, PostgreSQL local y Prometheus en Docker Desktop
+Consultas: docs/prometheus.md, sección «Tiempo de respuesta por ruta»
+
+Cómo se generaron las peticiones
+--------------------------------
+Base de datos creada desde cero, con 32 títulos (2 registrados a mano y 30
+insertados con SQL: 11 pendientes, 10 aprobados y 11 rechazados). Sobre la lista
+de títulos se hicieron búsquedas por nombre, por documento y por título, filtros
+por cada estado, la paginación (20 por página) y entradas inválidas. La aplicación
+no se reinició entre las peticiones y la medición.
+
+Resultado
+---------
+
+Ruta       Promedio   Máximo     Meta
+/titulos   19,8 ms    134,3 ms   menos de 1 s
+
+La lista de títulos con búsqueda, filtro y paginación responde muy por debajo de
+la meta con 32 títulos.

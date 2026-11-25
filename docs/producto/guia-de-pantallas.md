@@ -206,19 +206,19 @@ Generada con PDFBox y ZXing · HU-2.4, HU-2.5, HU-2.8
 
 ## Estado de implementación
 
-**Actualizado:** cierre del Sprint 6 (29/10/2026).
+**Actualizado:** cierre del Sprint 8 (24/11/2026).
 
 | Pantalla | Estado | Diferencias con la guía |
 |---|---|---|
-| P1 · Iniciar sesión | Parcial | Página propia desde HU-1.5 (sin estilos en línea). Falta el modo demostración (HU-4.6). |
-| P2 · Títulos | Parcial | Sin búsqueda ni paginación (HU-1.8) y sin «Ver» (HU-2.6). Tiene las columnas Estado y Credencial: «Descargar PDF» va en la lista hasta que exista el detalle (decisión del 20/10/2026). El estado se muestra como texto (`PENDIENTE`), sin insignia ni icono (sin historia asignada). |
+| P1 · Iniciar sesión | Parcial | Página propia desde HU-1.5 (Sprint 8, PR #45), sin estilos en línea. La parte visual del modo demostración (franja y botones, solo con el perfil `demo`) ya está; los usuarios iniciales y la regla de que fuera de `demo` no existan usuarios de prueba siguen pendientes (HU-4.6). |
+| P2 · Títulos | Parcial | Con búsqueda por nombre, documento o título, filtro por estado y paginación de 20 (HU-1.8, Sprint 8, PR #47). Sin «Ver» (HU-2.6). Tiene las columnas Estado y Credencial: «Descargar PDF» va en la lista hasta que exista el detalle (decisión del 20/10/2026). El estado se muestra como texto (`PENDIENTE`), sin insignia ni icono (sin historia asignada). |
 | P3 · Registrar título | Implementada | El título es texto libre de 5–150 caracteres hasta el catálogo (HU-1.11). El duplicado se rechaza con el error bajo «Nombre del título», todavía sin el enlace al registro existente (HU-2.6). |
 | P4 · Bandeja de revisión | Parcial | Sin «Ver» (HU-2.6). «Rechazar» usa el estilo de peligro y abre la página de confirmación (HU-2.7, PR #42). |
-| P10 · Confirmación de rechazo | Implementada | HU-2.7 (Sprint 8, PR #42). Muestra el título y el graduado, advierte que la acción no se puede deshacer y ofrece «Cancelar» y «Rechazar título». |
+| Página de confirmación | Implementada | HU-2.7 (Sprint 8, PR #42). Muestra el título y el graduado, advierte que la acción no se puede deshacer y ofrece «Cancelar» y «Rechazar título». |
 | P5 · Detalle | Pendiente | HU-2.6, sin el botón para copiar el identificador ni la vista del QR, que necesitan JavaScript o una dirección nueva y quedan como diseño objetivo (decisión del 16/11/2026). Revocar y sustituir llegan con HU-3.2. |
 | P6 · Auditoría | Implementada | HU-3.4 (Sprint 6, PR #35). Los filtros van uno debajo de otro en lugar de en una fila, y «Título afectado» no lleva enlace hasta que exista el detalle (HU-2.6). |
 | P7 y P8 · Verificación pública | Implementada | HU-3.1 (Sprint 6, PR #32). Desde T-3.1.4 (Sprint 7, PR #40), el documento muestra solo los últimos 2 caracteres. Los estados revocado y sustituido llegan con HU-3.2. |
-| P9 · Página de error | Pendiente | HU-4.5. Hoy se ve la «Whitelabel Error Page». |
+| P9 · Página de error | Implementada | HU-4.5 (Sprint 8, PR #44). Páginas 403, 404 y 500 con el código real en cada respuesta y sin detalles técnicos; con sesión llevan el encabezado común. La verificación pública conserva su propia página de «No encontrado». |
 | D1 · Credencial PDF | Parcial | Con el QR de la verificación pública (HU-2.5, PR #33). Falta la huella de integridad (HU-2.8). |
 
 ## Imágenes de las pantallas
