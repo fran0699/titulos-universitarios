@@ -13,12 +13,45 @@ Un resumen por sprint: qué se completó, cómo se midió y qué se aprendió. S
 | 5 | 25/10/2026 | HU-4.10, HU-4.7, HU-3.3 y HU-2.4 | 13 | 95 | 2 | 6 (#23 a #28) |
 | 6 | 29/10/2026 | HU-2.5, HU-3.1, HU-3.4 y HU-4.11 | 12 | 155 | 2 | 5 (#31 a #35) |
 | 7 | 16/11/2026 | — (transferencia al equipo nuevo) | 0 | 156 | — | 3 (#39 a #41) |
+| 8 | 24/11/2026 | HU-2.7, HU-1.8, HU-1.5 y HU-4.5 | 9 | 205 | 2 | 8 (#42 a #49) |
 
-- **Pts** son los puntos completados en el sprint (la velocidad). Suman 73, cuatro más que los 69 completados del [Product Backlog](../producto/product-backlog.md): HU-4.2 (Nikto, 2 pts) se contó en el Sprint 1 y en el Sprint 3, y en el Sprint 4 se retiró del backlog al pasar a ser una actividad fija del cierre.
-- **Nikto:** desde el Sprint 3 se usa siempre la versión 2.6.1, para que los hallazgos se puedan comparar. Las cifras del Sprint 1 y del Sprint 2 sirven solo como referencia. En el Sprint 7 no se escaneó: el único cambio de código fue el del PR #40; el siguiente escaneo es al cierre del Sprint 8.
+- **Pts** son los puntos completados en el sprint (la velocidad). Suman 82, cuatro más que los 78 completados del [Product Backlog](../producto/product-backlog.md): HU-4.2 (Nikto, 2 pts) se contó en el Sprint 1 y en el Sprint 3, y en el Sprint 4 se retiró del backlog al pasar a ser una actividad fija del cierre.
+- **Nikto:** desde el Sprint 3 se usa siempre la versión 2.6.1, para que los hallazgos se puedan comparar. Las cifras del Sprint 1 y del Sprint 2 sirven solo como referencia. En el Sprint 7 no se escaneó: el único cambio de código fue el del PR #40. En el Sprint 8 se escaneó de nuevo, con los mismos 2 hallazgos del Sprint 6.
 - En la Sprint Review del Sprint 2 se reestructuró el backlog en épicas, historias y tareas. Los commits más antiguos usan los identificadores anteriores (PB-01 a PB-11).
 
-**Avance del Product Backlog:** 30 de 97 pts al cierre del Sprint 3; 44 de 97 en el Sprint 4; 57 de 98 en el Sprint 5 (58 %); 69 de 98 en el Sprint 6 (70 %); 69 de 102 en el Sprint 7 (68 %). El total subió a 98 con HU-4.11 y a 102 con la reestimación del refinamiento del Sprint 7.
+**Avance del Product Backlog:** 30 de 97 pts al cierre del Sprint 3; 44 de 97 en el Sprint 4; 57 de 98 en el Sprint 5 (58 %); 69 de 98 en el Sprint 6 (70 %); 69 de 102 en el Sprint 7 (68 %); 78 de 102 en el Sprint 8 (76 %). El total subió a 98 con HU-4.11 y a 102 con la reestimación del refinamiento del Sprint 7.
+
+## Sprint 8 · 17 al 24 de noviembre de 2026
+
+**Objetivo:** primera iteración completa del equipo nuevo: que el aprobador confirme antes de rechazar un título, que la lista de títulos se pueda buscar y paginar, que el inicio de sesión tenga página propia y que los errores no muestren detalles técnicos.
+
+**Resultado:** objetivo cumplido, con 9 de 9 pts. Las cuatro historias del plan entraron a main, cada una con sus pruebas y su evidencia.
+
+| Responsable | Historia | PR |
+|---|---|---|
+| Marleni Barria | HU-2.7 · Página de confirmación antes de rechazar (1) | #42 |
+| Aldo Bovell | HU-1.8 · Búsqueda y paginación de títulos (3) | #47 |
+| Maria Gonzalez | HU-1.5 · Página de inicio de sesión propia (3) | #45 y #48 |
+| Carolina Rodriguez | HU-4.5 · Páginas de error propias (2) | #44 |
+
+Además entraron los PR de documentación #43 (el cambio de Product Owner en el plan) y #46 (cierre del Sprint 7), y la corrección #49.
+
+**Mediciones:**
+
+- 205 pruebas en verde (156 heredadas y 49 nuevas: 7 de HU-4.5, 8 de HU-2.7, 21 de HU-1.8 y 13 de HU-1.5) y 27 de 27 criterios de aceptación.
+- Verificación de principio a fin sobre `2e48c04` con una base de datos nueva y la consola del navegador sin errores.
+- Nikto 2.6.1: 2 hallazgos, los mismos del Sprint 6 (falta HSTS, que solo se envía por HTTPS, y una IP en la cabecera `Location` que repite la que pone el propio Nikto). El login propio, las páginas de error y la búsqueda no agregaron hallazgos ([informe](../evidencias/sprint-8-nikto.txt)).
+- Tiempos con Prometheus ([detalle](../evidencias/sprint-8-rendimiento.txt)): la lista de títulos con búsqueda y filtro, 19,8 ms de promedio y 134,3 ms de máximo con 32 títulos (meta: menos de 1 s).
+- Código: 8 443 líneas (6 557 de código efectivo) entre producción y pruebas, 968 más de producción y 993 más de pruebas que al cierre del Sprint 7. Las pruebas pasaron de 0,72 a 0,78 líneas por cada línea de producción.
+- Defectos: 1 encontrado en la verificación de cierre y corregido en main (PR #49): en `titulos.css` quedó sin cerrar un bloque `@media` al traer main a la rama de HU-1.5, y los estilos de HU-2.7 y de las páginas de error no se aplicaban. Edad: el mismo día; abiertos: 0.
+
+**Pendientes técnicos que dejó el sprint:**
+
+- La página de error de un aprobador usa el encabezado común, que consulta la base de datos para el contador de pendientes. Si un error 500 viniera de una caída de la base, la página de error también podría fallar.
+
+**Lecciones**
+
+- Las pruebas con MockMvc no revisan el CSS: un bloque sin cerrar dejó sin estilos dos historias mientras todas las pruebas seguían en verde. Lo detectó la verificación de cierre en el navegador.
 
 ## Sprint 7 · 30 de octubre al 16 de noviembre de 2026
 
@@ -123,9 +156,8 @@ La planificación entró en el PR de documentación #31.
 
 ## Próximos sprints (plan tentativo)
 
-Se reajusta en cada planificación. Quedan 33 pts (el total subió a 102 con la reestimación del refinamiento del Sprint 7). Todas las historias pendientes están refinadas en [`historias/`](../producto/historias/README.md). El reparto sigue la regla de independencia ([cómo trabajamos](../proceso/como-trabajamos.md)): nadie espera a que otro termine.
+Se reajusta en cada planificación. Quedan 24 pts (el total es 102, tras la reestimación del refinamiento del Sprint 7). Todas las historias pendientes están refinadas en [`historias/`](../producto/historias/README.md). El reparto sigue la regla de independencia ([cómo trabajamos](../proceso/como-trabajamos.md)): nadie espera a que otro termine.
 
 | Sprint | Propuesta | Notas |
 |---|---|---|
-| 8 | HU-2.7 (1, Marleni Barria), HU-1.8 (3, Aldo Bovell), HU-1.5 (3, Maria Gonzalez) y HU-4.5 (2, Carolina Rodriguez): 9 pts | Primera iteración del equipo nuevo; ninguna historia depende de otra. Revisión: Aldo revisa a Marleni, Maria a Aldo, Carolina a Maria y Marleni a Carolina. Al cierre, Marleni ejecuta Nikto y el Product Owner hace la verificación completa sobre main |
-| 9 y 10 | Las otras 7 historias (24 pts): HU-2.8, HU-2.6, HU-3.2, HU-1.11, HU-4.6, HU-4.9 y HU-4.8; ajustes pedidos en las revisiones y preparación de la entrega | Los planifica el nuevo Product Owner con el equipo. Dependencias: HU-4.6 y HU-4.9 necesitan HU-1.5; HU-3.2 necesita HU-2.6 y HU-2.7; HU-2.8 y HU-3.2 cambian los mismos estados de la verificación. HU-4.6 (modo demostración) debe estar antes de la entrega del producto (primera semana de diciembre de 2026) |
+| 9 y 10 | Las otras 7 historias (24 pts): HU-2.8, HU-2.6, HU-3.2, HU-1.11, HU-4.6, HU-4.9 y HU-4.8; ajustes pedidos en las revisiones y preparación de la entrega | Los planifica el nuevo Product Owner con el equipo. Dependencias: HU-3.2 necesita HU-2.6 (HU-2.7 ya está completa); HU-2.8 y HU-3.2 cambian los mismos estados de la verificación. HU-4.6 (modo demostración) debe estar antes de la entrega del producto (primera semana de diciembre de 2026); la parte visual ya está en el inicio de sesión (HU-1.5) |

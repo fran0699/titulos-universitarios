@@ -64,9 +64,15 @@
 
 | Tarea | Qué se hace | Responsable | PR |
 |---|---|---|---|
-| T -1.8.1 | Consulta paginada con búsqueda y filtro por estado, y su validación (CA1, CA2, CA4 y CA6). Pruebas con H2. | Aldo Bovell | #47 |
-| T- 1.8.2 | Campo de búsqueda, filtro, paginación y estados vacíos en la lista (CA3 y CA5). Pruebas con MockMvc, evidencia (capturas de una búsqueda, un filtro y la segunda página) y la fila de P2 en la tabla de estado de la guía. | Aldo Bovell | #47 |
+| T-1.8.1 | Consulta paginada con búsqueda y filtro por estado, y su validación (CA1, CA2, CA4 y CA6). Pruebas con H2. | Aldo Bovell | #47 |
+| T-1.8.2 | Campo de búsqueda, filtro, paginación y estados vacíos en la lista (CA3 y CA5). Pruebas con MockMvc, evidencia (capturas de una búsqueda, un filtro y la segunda página) y la fila de P2 en la tabla de estado de la guía. | Aldo Bovell | #47 |
 
 ## Estado
 
-Pendiente.
+Completo (Sprint 8). PR #47. Evidencias en `docs/evidencias/`:
+
+- `HU-1.8-busqueda.jpg`: CA1, una búsqueda.
+- `HU-1.8-filtro-pendiente.jpg`, `HU-1.8-filtro-aprobado.jpg` y `HU-1.8-filtro-rechazado.jpg`: CA2, el filtro por cada estado.
+- `HU-1.8-pagina-2.jpg`: CA3, la segunda página.
+- 21 pruebas nuevas. Al cierre, CircleCI corre 205 pruebas, 0 fallos.
+- Verificación de cierre sobre main con 32 títulos: la lista tarda 19,8 ms de promedio y 134,3 ms de máximo (meta: menos de 1 s). Detalle en [`sprint-8-rendimiento.txt`](../../evidencias/sprint-8-rendimiento.txt).

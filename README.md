@@ -12,16 +12,18 @@ Más detalle en [visión y MVP](docs/producto/vision-y-mvp.md).
 
 ## Estado
 
-**Cierre del Sprint 7 (16/11/2026): el MVP está completo y el proyecto pasó a un equipo nuevo.** 69 de 102 pts del backlog (68 %; el total subió con la reestimación del refinamiento), 156 pruebas en verde y 2 hallazgos de Nikto en el último escaneo (cierre del Sprint 6).
+**Cierre del Sprint 8 (24/11/2026): primera iteración completa del equipo nuevo.** 78 de 102 pts del backlog (76 %), 205 pruebas en verde y 2 hallazgos de Nikto en el último escaneo (los mismos del Sprint 6).
 
-| Funciona hoy | Lo que sigue (Sprint 8 en adelante) |
+| Funciona hoy | Lo que sigue (Sprint 9 en adelante) |
 |---|---|
-| Inicio y cierre de sesión por rol, sin error 404 aunque el navegador pida archivos automáticos | Hash de integridad en la credencial y en la verificación (HU-2.8) |
-| Registro del graduado (por cédula o pasaporte) y de su título, validado en el servidor y en la base de datos | Detalle del título (HU-2.6) y búsqueda con paginación (HU-1.8) |
-| Bandeja de revisión: aprobar o rechazar, con identificador único al aprobar | Catálogo oficial de programas (HU-1.11) |
-| Credencial PDF con un código QR que abre su verificación pública | Revocar o sustituir un título, con confirmación (HU-3.2 y HU-2.7) |
-| Verificación pública bilingüe, sin iniciar sesión y con el documento enmascarado | Página de inicio de sesión propia (HU-1.5), páginas de error (HU-4.5) y modo demostración (HU-4.6) |
-| Registro de auditoría que no se puede modificar, y su consulta con filtros para el aprobador | Pruebas de acceso de todas las rutas (HU-4.8) y CSP sin estilos en línea (HU-4.9) |
+| Página de inicio de sesión propia y cierre de sesión por rol, sin error 404 aunque el navegador pida archivos automáticos | Hash de integridad en la credencial y en la verificación (HU-2.8) |
+| Registro del graduado (por cédula o pasaporte) y de su título, validado en el servidor y en la base de datos | Detalle del título (HU-2.6) |
+| Lista de títulos con búsqueda, filtro por estado y paginación | Catálogo oficial de programas (HU-1.11) |
+| Bandeja de revisión: aprobar o rechazar (con una página de confirmación antes de rechazar), con identificador único al aprobar | Revocar o sustituir un título, con confirmación (HU-3.2) |
+| Credencial PDF con un código QR que abre su verificación pública | Modo demostración y usuarios iniciales (HU-4.6; la franja y los botones ya están en el inicio de sesión) |
+| Verificación pública bilingüe, sin iniciar sesión y con el documento enmascarado | Pruebas de acceso de todas las rutas (HU-4.8) y CSP sin estilos en línea (HU-4.9) |
+| Registro de auditoría que no se puede modificar, y su consulta con filtros para el aprobador | |
+| Páginas de error propias (403, 404 y 500), sin detalles técnicos | |
 | Métricas para Prometheus con un usuario técnico | |
 
 ## Stack
