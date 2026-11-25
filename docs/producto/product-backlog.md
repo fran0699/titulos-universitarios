@@ -1,6 +1,6 @@
 # Product Backlog
 
-**Actualizado:** cierre del Sprint 8 (24/11/2026). **Total:** 102 pts, 78 completados (76 %). Durante el sprint, cada historia cambia su estado en su propio Pull Request; los totales (encabezado, épicas y resumen) se actualizan una sola vez al cierre, para que los Pull Requests del sprint no choquen entre sí ([cómo trabajamos](../proceso/como-trabajamos.md#qué-documentación-actualiza-cada-pull-request)).
+**Actualizado:** 25/11/2026 (se agregan las 2 innovaciones). **Total:** 107 pts, 78 completados (73 %). Durante el sprint, cada historia cambia su estado en su propio Pull Request; los totales (encabezado, épicas y resumen) se actualizan una sola vez al cierre, para que los Pull Requests del sprint no choquen entre sí ([cómo trabajamos](../proceso/como-trabajamos.md#qué-documentación-actualiza-cada-pull-request)).
 
 Estructura: Product Backlog → épicas (EP-0X) → historias de usuario (HU-X.Y) → tareas (T-X.Y.Z). Cada historia es la unidad asignable, tiene un dueño y cabe en un sprint; los puntos y la prioridad se asignan a la historia, y el peso de una épica es la suma de sus historias. Tipos: Funcional, Técnica, Investigación y Entorno. Cada historia se asocia a al menos uno de los tres requisitos del cliente ([visión y MVP](vision-y-mvp.md)): Precisión, Seguridad o Verificabilidad internacional.
 
@@ -36,7 +36,7 @@ Las historias que ya tienen criterios de aceptación detallados enlazan a su arc
 | [HU-2.7](historias/HU-2.7.md) | Funcional | Como aprobador, quiero confirmar en una página aparte antes de rechazar un título, para no rechazar uno por error, porque el rechazo no se puede deshacer. | Precisión | Media | 1 | Completo (S8) |
 | [HU-2.8](historias/HU-2.8.md) | Funcional | Como verificador (un empleador u otra institución), quiero que la credencial y la verificación pública muestren la misma huella de integridad, y que la verificación me avise si los datos del título cambiaron después de emitir la credencial, para confiar en que lo que tengo en la mano corresponde al registro oficial. | Precisión / Verificabilidad internacional | Alta | 3 | Pendiente |
 
-## EP-03 · Verificación pública y ciclo de vida del título — 16 pts (11 completados)
+## EP-03 · Verificación pública y ciclo de vida del título — 19 pts (11 completados)
 
 | ID | Tipo | Historia de usuario | Pilar | Prioridad | Pts | Estado |
 |---|---|---|---|---|---|---|
@@ -44,8 +44,9 @@ Las historias que ya tienen criterios de aceptación detallados enlazan a su arc
 | [HU-3.2](historias/HU-3.2.md) | Funcional | Como aprobador, quiero revocar un título emitido, o marcarlo como sustituido por otro corregido, indicando el motivo, para que la verificación pública muestre su estado real. | Verificabilidad internacional | Media | 5 | Pendiente |
 | [HU-3.3](historias/HU-3.3.md) | Técnica | Como institución, necesito que cada registro, aprobación y rechazo de un título quede en un registro de auditoría que no se pueda modificar, con quién lo hizo y cuándo, para rastrear cualquier cambio en un título. | Seguridad | Alta (antes Media) | 3 | Completo (S5) |
 | [HU-3.4](historias/HU-3.4.md) | Funcional | Como aprobador, quiero consultar el registro de auditoría filtrando por fechas, acción y usuario, para rastrear quién registró, aprobó o rechazó cada título y cuándo. | Seguridad | Alta (antes Media) | 3 | Completo (S6) |
+| [HU-3.5](historias/HU-3.5.md) | Funcional | Como sistema de otra institución o empresa (por ejemplo, de contratación o admisión), quiero consultar un título con su código de verificación en una dirección que responda en un formato que mi sistema pueda leer, para verificar títulos de forma automática sin abrir la página. | Verificabilidad internacional | Alta | 3 | Pendiente |
 
-## EP-04 · Calidad, seguridad y operación — 24 pts (16 completados)
+## EP-04 · Calidad, seguridad y operación — 26 pts (16 completados)
 
 | ID | Tipo | Historia de usuario | Pilar | Prioridad | Pts | Estado |
 |---|---|---|---|---|---|---|
@@ -60,8 +61,9 @@ Las historias que ya tienen criterios de aceptación detallados enlazan a su arc
 | [HU-4.9](historias/HU-4.9.md) | Técnica | Como institución, necesito una política de seguridad de contenido (CSP) que no permita estilos en línea, para reducir el riesgo de inyección de código. | Seguridad | Baja | 2 | Pendiente |
 | [HU-4.10](historias/HU-4.10.md) | Técnica | Como institución, necesito que las métricas solo las lea un usuario técnico de Prometheus, sin acceso a las pantallas, y que HTTP Basic solo funcione en `/actuator/**`, para que una contraseña filtrada de Prometheus no permita registrar ni aprobar títulos. | Seguridad | Alta | 2 | Completo (S5) |
 | [HU-4.11](historias/HU-4.11.md) | Técnica | Como usuario del sistema, quiero que al iniciar sesión la aplicación me lleve a una pantalla válida aunque el navegador haya pedido archivos automáticos, para no ver un error 404 después de entrar. | Seguridad | Alta | 1 | Completo (S6) |
+| [HU-4.12](historias/HU-4.12.md) | Técnica | Como institución, quiero que el sistema cuente las credenciales emitidas y las verificaciones en línea y calcule las hojas de papel que se evitaron, visible en Prometheus, para medir el impacto ambiental del sistema. | Verificabilidad internacional | Alta | 2 | Pendiente |
 
-**Total del Product Backlog: 102 pts (98 del Sprint 6 + 4 de la reestimación del Sprint 7) — completados 78 pts (76 %).**
+**Total del Product Backlog: 107 pts (98 del Sprint 6 + 4 de la reestimación del Sprint 7 + 5 de las 2 innovaciones) — completados 78 pts (73 %).**
 
 ## Resumen por épica
 
@@ -69,20 +71,21 @@ Las historias que ya tienen criterios de aceptación detallados enlazan a su arc
 |---|---|---|
 | EP-01 · Registro y validación de títulos | 37 | 32 |
 | EP-02 · Aprobación y emisión de la credencial | 25 | 19 |
-| EP-03 · Verificación pública y ciclo de vida del título | 16 | 11 |
-| EP-04 · Calidad, seguridad y operación | 24 | 16 |
-| **Total** | **102** | **78 (76 %)** |
+| EP-03 · Verificación pública y ciclo de vida del título | 19 | 11 |
+| EP-04 · Calidad, seguridad y operación | 26 | 16 |
+| **Total** | **107** | **78 (73 %)** |
 
 ## Cobertura de los tres requisitos del cliente
 
 - **Precisión:** HU-1.1, HU-1.3, HU-1.4, HU-1.8, HU-1.9, HU-1.10, HU-1.11, HU-2.1, HU-2.6, HU-2.7, HU-2.8, HU-4.1 y HU-4.7.
 - **Seguridad:** HU-1.2, HU-1.5, HU-1.6, HU-1.7, HU-1.9, HU-2.1, HU-3.3, HU-3.4 y HU-4.3 a HU-4.11.
-- **Verificabilidad internacional:** HU-2.2, HU-2.3, HU-2.4, HU-2.5, HU-2.8, HU-3.1 y HU-3.2.
+- **Verificabilidad internacional:** HU-2.2, HU-2.3, HU-2.4, HU-2.5, HU-2.8, HU-3.1, HU-3.2, HU-3.5 y HU-4.12.
 
 Ningún pilar queda sin al menos una historia asociada.
 
 ## Cambios recientes
 
+- **Innovaciones (25/11/2026):** se agregan HU-3.5 (verificación para otros sistemas, 3 pts) y HU-4.12 (indicador de papel evitado, 2 pts), las 2 innovaciones elegidas por el equipo. El total sube de 102 a 107 pts; quedan 29 por completar.
 - **Sprint 8 (cierre):** HU-2.7, HU-1.8, HU-1.5 y HU-4.5 completas (9 pts). El backlog queda en 78 de 102 pts; quedan 24, de HU-2.8, HU-2.6, HU-3.2, HU-1.11, HU-4.6, HU-4.9 y HU-4.8.
 - **Sprint 7 (cierre):** sprint de transferencia al equipo nuevo, sin historias completadas. El ajuste T-3.1.4 de HU-3.1 (PR #40) cambió el valor de CA3 sin sumar puntos. Las 4 historias que eligió el equipo (HU-2.7, HU-1.8, HU-1.5 y HU-4.5, 9 pts) son del Sprint 8.
 - **Sprint 7 (refinamiento):** se refinaron las 11 historias pendientes con la Definición de Listo; todas tienen su archivo en [`historias/`](historias/README.md). Cambiaron la redacción de HU-1.8, HU-1.11, HU-2.6, HU-2.7, HU-2.8, HU-3.2 y HU-4.6. Con los criterios a la vista se reestimaron HU-2.8 (de 2 a 3 pts: guarda la huella al aprobar y la verificación avisa si los datos cambiaron), HU-3.2 (de 3 a 5: dos acciones, estados nuevos, regla de duplicados y dos estados en la verificación) y HU-4.6 (de 2 a 3: usuarios iniciales por variables de entorno). El total sube de 98 a 102 pts. Las decisiones de alcance están en [visión y MVP](vision-y-mvp.md#decisiones-de-alcance).
