@@ -34,7 +34,7 @@ Un resumen por sprint: qué se completó, cómo se midió y qué se aprendió. S
 | Maria Gonzalez | HU-1.5 · Página de inicio de sesión propia (3) | #45 y #48 |
 | Carolina Rodriguez | HU-4.5 · Páginas de error propias (2) | #44 |
 
-Además entraron los PR de documentación #43 (el cambio de Product Owner en el plan) y #46 (cierre del Sprint 7), y la corrección #49.
+Además entraron los PR de documentación #43 (documentación del plan) y #46 (cierre del Sprint 7), y la corrección #49.
 
 **Mediciones:**
 
@@ -160,4 +160,4 @@ Se reajusta en cada planificación. Quedan 24 pts (el total es 102, tras la rees
 
 | Sprint | Propuesta | Notas |
 |---|---|---|
-| 9 y 10 | Las otras 7 historias (24 pts): HU-2.8, HU-2.6, HU-3.2, HU-1.11, HU-4.6, HU-4.9 y HU-4.8; ajustes pedidos en las revisiones y preparación de la entrega | Los planifica el nuevo Product Owner con el equipo. Dependencias: HU-3.2 necesita HU-2.6 (HU-2.7 ya está completa); HU-2.8 y HU-3.2 cambian los mismos estados de la verificación. HU-4.6 (modo demostración) debe estar antes de la entrega del producto (primera semana de diciembre de 2026); la parte visual ya está en el inicio de sesión (HU-1.5) |
+| 9 y 10 | Las otras 7 historias (24 pts): HU-2.8, HU-2.6, HU-3.2, HU-1.11, HU-4.6, HU-4.9 y HU-4.8; ajustes pedidos en las revisiones y preparación de la entrega | Los planifica el Product Owner con el equipo. Dependencias: HU-3.2 necesita HU-2.6 (HU-2.7 ya está completa); HU-2.8 y HU-3.2 cambian los mismos estados de la verificación. HU-4.6 (modo demostración) debe estar antes de la entrega del producto (primera semana de diciembre de 2026); la parte visual ya está en el inicio de sesión (HU-1.5) |
