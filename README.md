@@ -34,7 +34,7 @@ Versiones, qué instalar y cómo comprobarlo: [stack y versiones](docs/tecnico/s
 
 ## Equipo
 
-Francisco Lata (Product Owner, sprints 1 a 8). Desde el Sprint 7: Carolina Rodriguez, Aldo Bovell, Marleni Barria y Maria Gonzalez. Sprints 1 a 6: Henry Birminghan, Anel Gonzalez y Edinson Ramirez. Desde el Sprint 9 cambia el Product Owner. Integrantes y usuarios de GitHub: [cómo trabajamos](docs/proceso/como-trabajamos.md#equipo).
+Francisco Lata (Product Owner). Desde el Sprint 7: Carolina Rodriguez, Aldo Bovell, Marleni Barria y Maria Gonzalez. Sprints 1 a 6: Henry Birminghan, Anel Gonzalez y Edinson Ramirez. Integrantes y usuarios de GitHub: [cómo trabajamos](docs/proceso/como-trabajamos.md#equipo).
 
 ## Documentación
 
