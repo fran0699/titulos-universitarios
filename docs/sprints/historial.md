@@ -156,8 +156,8 @@ La planificación entró en el PR de documentación #31.
 
 ## Próximos sprints (plan tentativo)
 
-Se reajusta en cada planificación. Quedan 24 pts (el total es 102, tras la reestimación del refinamiento del Sprint 7). Todas las historias pendientes están refinadas en [`historias/`](../producto/historias/README.md). El reparto sigue la regla de independencia ([cómo trabajamos](../proceso/como-trabajamos.md)): nadie espera a que otro termine.
+Se reajusta en cada planificación. Quedan 29 pts (el total es 107: 102 tras la reestimación del refinamiento del Sprint 7 más los 5 pts de las 2 innovaciones). Todas las historias pendientes están refinadas en [`historias/`](../producto/historias/README.md). El reparto sigue la regla de independencia ([cómo trabajamos](../proceso/como-trabajamos.md)): nadie espera a que otro termine.
 
 | Sprint | Propuesta | Notas |
 |---|---|---|
-| 9 y 10 | Las otras 7 historias (24 pts): HU-2.8, HU-2.6, HU-3.2, HU-1.11, HU-4.6, HU-4.9 y HU-4.8; ajustes pedidos en las revisiones y preparación de la entrega | Los planifica el Product Owner con el equipo. Dependencias: HU-3.2 necesita HU-2.6 (HU-2.7 ya está completa); HU-2.8 y HU-3.2 cambian los mismos estados de la verificación. HU-4.6 (modo demostración) debe estar antes de la entrega del producto (primera semana de diciembre de 2026); la parte visual ya está en el inicio de sesión (HU-1.5) |
+| 9 y 10 | Las otras 7 historias (24 pts): HU-2.8, HU-2.6, HU-3.2, HU-1.11, HU-4.6, HU-4.9 y HU-4.8, y las 2 innovaciones (5 pts): HU-3.5 y HU-4.12; ajustes pedidos en las revisiones y preparación de la entrega | Los planifica el Product Owner con el equipo. Dependencias: HU-3.2 necesita HU-2.6 (HU-2.7 ya está completa); HU-2.8 y HU-3.2 cambian los mismos estados de la verificación. HU-4.6 (modo demostración) debe estar antes de la entrega del producto (primera semana de diciembre de 2026); la parte visual ya está en el inicio de sesión (HU-1.5) |
